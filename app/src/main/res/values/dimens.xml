@@ -58,4 +58,5 @@
     <!-- 通用 圆角 -->
     <dimen name="radius">5dp</dimen>
     <dimen name="device_info_size">18dp</dimen>
+    <dimen name="device_title_size">25dp</dimen>
 </resources>

@@ -312,6 +312,24 @@
             android:text=""
             />
     </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/device_info_size"
+                android:text="设备展示："
+                />
+            <ImageView
+                android:id="@+id/device_pic"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                />
+        </LinearLayout>
     </LinearLayout>
     </ScrollView>
 </LinearLayout>
