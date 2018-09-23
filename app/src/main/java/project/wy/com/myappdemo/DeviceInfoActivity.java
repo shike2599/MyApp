@@ -1,10 +1,13 @@
-package project.wy.com.myappdemo.widget.loading;
+package project.wy.com.myappdemo;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,7 @@ public class DeviceInfoActivity extends AppCompatActivity {
 
     private RadioGroup mRg_device;
     private List<BaseFragment> mBaseFragment;
+    private TextView title_show;
     /**
      * 选中的Fragment的对应的位置
      */
@@ -30,6 +34,7 @@ public class DeviceInfoActivity extends AppCompatActivity {
      * 上次切换的Fragment
      */
     private Fragment mContent;
+    private ImageView back_img;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,12 +61,15 @@ public class DeviceInfoActivity extends AppCompatActivity {
             switch (checkedId){
                 case R.id.rb_deiveinfo://device_info
                     position = 0;
+                    title_show.setText("设备信息");
                     break;
                 case R.id.rb_running://runing
                     position = 1;
+                    title_show.setText("运行信息");
                     break;
                 case R.id.rb_miantenan://维护
                     position = 2;
+                    title_show.setText("维护信息");
                     break;
                 default:
                     position = 0;
@@ -132,6 +140,14 @@ public class DeviceInfoActivity extends AppCompatActivity {
     private void initView() {
         setContentView(R.layout.activity_main);
         mRg_device = (RadioGroup) findViewById(R.id.rg_main);
-
+        title_show = (TextView) findViewById(R.id.title_msg);
+        back_img = (ImageView) findViewById(R.id.back_img);
+        back_img.setVisibility(View.VISIBLE);
+        back_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DeviceInfoActivity.this.finish();
+            }
+        });
     }
 }

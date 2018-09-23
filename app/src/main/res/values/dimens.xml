@@ -57,4 +57,5 @@
     <dimen name="dialog_width">300dp</dimen>
     <!-- 通用 圆角 -->
     <dimen name="radius">5dp</dimen>
+    <dimen name="device_info_size">18dp</dimen>
 </resources>

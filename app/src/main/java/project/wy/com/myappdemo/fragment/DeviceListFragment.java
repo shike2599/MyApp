@@ -1,6 +1,7 @@
 package project.wy.com.myappdemo.fragment;
 
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.json.JSONException;
@@ -30,12 +31,12 @@ public class DeviceListFragment extends BaseFragment {
     protected View initView() {
         View view = View.inflate(mContext, R.layout.deivelist_fargment_layout,null);
         mListView = (ListView) view.findViewById(R.id.listview);
-//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//            }
-//        });
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
         return view;
     }
 
@@ -62,7 +63,7 @@ public class DeviceListFragment extends BaseFragment {
             }
         });
         //设置适配器
-//        adapter = new DeviceListAdapter(mContext,datas);
-//        mListView.setAdapter(adapter);
+//        adapter = new DeviceListAdapter(mContext,);
+        mListView.setAdapter(adapter);
     }
 }

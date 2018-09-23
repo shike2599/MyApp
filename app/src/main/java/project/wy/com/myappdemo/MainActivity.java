@@ -1,11 +1,16 @@
 package project.wy.com.myappdemo;
 
+import android.media.Image;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +32,7 @@ public class MainActivity extends FragmentActivity {
      * 上次切换的Fragment
      */
     private Fragment mContent;
+    private TextView title_show;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,9 +62,11 @@ public class MainActivity extends FragmentActivity {
                     break;
                 case R.id.rb_warning://warning
                     position = 1;
+                    title_show.setText("报警信息");
                     break;
                 case R.id.rb_user_info://user
                     position = 2;
+                    title_show.setText("我的");
                     break;
                 default:
                     position = 0;
@@ -129,6 +137,24 @@ public class MainActivity extends FragmentActivity {
     private void initView() {
         setContentView(R.layout.activity_main);
         mRg_main = (RadioGroup) findViewById(R.id.rg_main);
-
+        title_show = (TextView) findViewById(R.id.title_msg);
     }
+
+    //记录用户首次点击返回键的时间
+    private long firstTime=0;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK && event.getAction()==KeyEvent.ACTION_DOWN){
+            if (System.currentTimeMillis()-firstTime>2000){
+                Toast.makeText(MainActivity.this,"再按一次退出程序！",Toast.LENGTH_SHORT).show();
+                firstTime=System.currentTimeMillis();
+            }else{
+                finish();
+                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 }
