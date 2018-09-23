@@ -104,7 +104,7 @@ public class DeviceInfoActivity extends AppCompatActivity {
                 }
                 //添加to
                 if(to != null){
-                    ft.add(R.id.fl_content,to).commit();
+                    ft.add(R.id.fl_device,to).commit();
                 }
             }else{
                 //to已经被添加
@@ -138,8 +138,8 @@ public class DeviceInfoActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        setContentView(R.layout.activity_main);
-        mRg_device = (RadioGroup) findViewById(R.id.rg_main);
+//        setContentView(R.layout.activity_device_info);
+        mRg_device = (RadioGroup) findViewById(R.id.rg_deivice);
         title_show = (TextView) findViewById(R.id.title_msg);
         back_img = (ImageView) findViewById(R.id.back_img);
         back_img.setVisibility(View.VISIBLE);

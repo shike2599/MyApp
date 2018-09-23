@@ -11,7 +11,7 @@ public class DeviceInfragment extends BaseFragment {
     }
     @Override
     protected View initView() {
-        View view = View.inflate(mContext, R.layout.deivelist_fargment_layout,null);
-        return null;
+        View view = View.inflate(mContext, R.layout.device_info_layout,null);
+        return view;
     }
 }

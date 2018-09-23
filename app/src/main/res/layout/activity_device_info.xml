@@ -38,7 +38,7 @@
             android:id="@+id/rb_running"
             style="@style/bottom_tag_style"
             android:drawableTop="@drawable/rb_thirdparty_drawable_selector"
-            android:text="@string/warning_info"
+            android:text="@string/runing_info"
 
             />
 
@@ -46,7 +46,7 @@
             android:id="@+id/rb_miantenan"
             style="@style/bottom_tag_style"
             android:drawableTop="@drawable/rb_custom_drawable_selector"
-            android:text="@string/user_set" />
+            android:text="@string/miantenan_info" />
 
 
     </RadioGroup>
