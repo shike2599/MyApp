@@ -38,6 +38,7 @@ public class DeviceInfoActivity extends FragmentActivity {
     private Fragment mContent;
     private ImageView back_img;
     private EquipmentBean equInfoBean;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,7 +138,9 @@ public class DeviceInfoActivity extends FragmentActivity {
     private void initFragment() {
         mBaseFragment = new ArrayList<>();
         mBaseFragment.add(new DeviceInfragment());//
-        mBaseFragment.add(new RunningInfoFragment());//
+        RunningInfoFragment runningInfoFragment = new RunningInfoFragment();
+        runningInfoFragment.setEquId(equInfoBean.getEquip_id());
+        mBaseFragment.add(runningInfoFragment);//
         mBaseFragment.add(new Maintenanfragment());//
 
         DeviceInfragment.setInfoBean(equInfoBean);
