@@ -15,6 +15,7 @@ public class Constant {
     public static final int FAILURE = 0X102;
 
     public static final String QUEST_ALL_DEVICE = "http://116.62.186.91:8080/gywyext/equipEquipment/getEquipmentListByPage.do"; //根据页数获取设备信息
+    public static final String QUEST_DEVICE_RUN_INFO = "http://116.62.186.91:8080/gywyext/equipRealInfo/getEquipRealDataByTime.do"; //根据设备id查找设备运行信息
     public static final String QUEST_DEVICE_PRAMS = "http://116.62.186.91:8080/gywyext/equipRealInfo/getEquipPara.do";//根据设备id查找设备特征参数
     public static final String QUEST_DEVICE_STATE = "http://116.62.186.91:8080/gywyext/equipRealInfo/getEquipRealData.do";//根据设备参数id获取实时数据
      public static final String QUEST_DEVICE_INFO = "http://116.62.186.91:8080/gywyext/equipEquipment/selectEquipmentById.do";//根据id获取设备信息

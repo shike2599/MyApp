@@ -2,31 +2,15 @@ package project.wy.com.myappdemo.bean;
 
 import java.io.Serializable;
 
+/**
+ * @author lichee
+ */
 public  class EquipmentBean implements Serializable {
+
     /**
-     * equip_mdate : 20
-     * equip_isdeleted : 0
-     * equip_name : ?????
-     * equip_no : ?????
-     * equip_udate : {"date":31,"hours":0,"seconds":0,"month":7,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1535644800000,"day":5}
-     * equip_state : 0
-     * equip_tel : 13255555555
-     * equip_id : 7
-     * equip_atime : 0
-     * equip_num : ?????
-     * equip_ndate : {"date":7,"hours":0,"seconds":0,"month":8,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1536249600000,"day":5}
-     * equip_snum : 0
-     * file_id : null
-     * equip_manu : ?????
-     * equip_pdate : {"date":24,"hours":0,"seconds":0,"month":7,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1535040000000,"day":5}
-     * equip_life : 24
-     * equip_memo :
-     * equip_qrcode :
-     * equip_bfee : 24
-     * user : null
-     * equip_room : null
-     * equip_type : null
+     * equipment : {"equip_mdate":20,"equip_isdeleted":0,"equip_name":"?????","equip_no":"?????","equip_udate":{"date":31,"hours":0,"seconds":0,"month":7,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1535644800000,"day":5},"equip_state":0,"equip_tel":"13255555555","equip_id":7,"equip_atime":0,"equip_num":"?????","equip_ndate":{"date":7,"hours":0,"seconds":0,"month":8,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1536249600000,"day":5},"equip_snum":0,"file_id":{"file_path":"D:\\Tomcat7.0\\webapps\\gywyext\\picture\\8b2187ecec4d28820180923110257542.jpg","file_isdelete":0,"file_ctime":{"date":23,"hours":23,"seconds":57,"month":8,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":2,"time":1537714977000,"day":0},"file_name":"8b2187ecec4d288.jpg","file_type":"jpg","file_id":3},"equip_manu":"?????","equip_pdate":{"date":24,"hours":0,"seconds":0,"month":7,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1535040000000,"day":5},"equip_life":24,"equip_memo":"","equip_qrcode":"","equip_bfee":24,"user":null,"equip_room":null,"equip_type":null}
      */
+
 
     private int equip_mdate;
     private int equip_isdeleted;
@@ -40,9 +24,11 @@ public  class EquipmentBean implements Serializable {
     private String equip_num;
     private EquipNdateBean equip_ndate;//
     private int equip_snum;
-    private Object file_id;
+
     private String equip_manu;
     private EquipPdateBean equip_pdate;//
+
+    private FileIdBean file_id;
     private int equip_life;
     private String equip_memo;
     private String equip_qrcode;
@@ -67,6 +53,13 @@ public  class EquipmentBean implements Serializable {
         this.equip_isdeleted = equip_isdeleted;
     }
 
+    public FileIdBean getFile_id() {
+        return file_id;
+    }
+
+    public void setFile_id(FileIdBean file_id) {
+        this.file_id = file_id;
+    }
     public String getEquip_name() {
         return equip_name;
     }
@@ -145,14 +138,6 @@ public  class EquipmentBean implements Serializable {
 
     public void setEquip_snum(int equip_snum) {
         this.equip_snum = equip_snum;
-    }
-
-    public Object getFile_id() {
-        return file_id;
-    }
-
-    public void setFile_id(Object file_id) {
-        this.file_id = file_id;
     }
 
     public String getEquip_manu() {
