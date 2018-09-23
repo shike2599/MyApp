@@ -1,12 +1,13 @@
 package project.wy.com.myappdemo.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by lichee on 2018/9/23.
  */
 
-public class DeviceBean {
+public class DeviceBean implements Serializable{
 
     /**
      * list : [{"equip_mdate":20,"equip_isdeleted":0,"equip_name":"?????","equip_no":"?????","equip_udate":{"date":31,"hours":0,"seconds":0,"month":7,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1535644800000,"day":5},"equip_state":0,"equip_tel":"13255555555","equip_id":7,"equip_atime":0,"equip_num":"?????","equip_ndate":{"date":7,"hours":0,"seconds":0,"month":8,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1536249600000,"day":5},"equip_snum":0,"file_id":null,"equip_manu":"?????","equip_pdate":{"date":24,"hours":0,"seconds":0,"month":7,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1535040000000,"day":5},"equip_life":24,"equip_memo":"","equip_qrcode":"","equip_bfee":24,"user":null,"equip_room":null,"equip_type":null},{"equip_mdate":12,"equip_isdeleted":0,"equip_name":"??????","equip_no":"??????","equip_udate":{"date":31,"hours":0,"seconds":0,"month":7,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1535644800000,"day":5},"equip_state":0,"equip_tel":"13255555555","equip_id":6,"equip_atime":0,"equip_num":"??????","equip_ndate":{"date":7,"hours":0,"seconds":0,"month":8,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1536249600000,"day":5},"equip_snum":0,"file_id":null,"equip_manu":"??????","equip_pdate":{"date":22,"hours":0,"seconds":0,"month":7,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1534867200000,"day":3},"equip_life":20,"equip_memo":"","equip_qrcode":"","equip_bfee":32,"user":null,"equip_room":null,"equip_type":null},{"equip_mdate":20,"equip_isdeleted":0,"equip_name":"???????","equip_no":"???????","equip_udate":{"date":24,"hours":0,"seconds":0,"month":7,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1535040000000,"day":5},"equip_state":0,"equip_tel":"13255555555","equip_id":5,"equip_atime":0,"equip_num":"???????","equip_ndate":{"date":31,"hours":0,"seconds":0,"month":7,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1535644800000,"day":5},"equip_snum":0,"file_id":null,"equip_manu":"???????","equip_pdate":{"date":23,"hours":0,"seconds":0,"month":7,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1534953600000,"day":4},"equip_life":20,"equip_memo":"","equip_qrcode":"","equip_bfee":20,"user":null,"equip_room":null,"equip_type":null},{"equip_mdate":20,"equip_isdeleted":0,"equip_name":"???????","equip_no":"???????","equip_udate":{"date":24,"hours":0,"seconds":0,"month":7,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1535040000000,"day":5},"equip_state":0,"equip_tel":"13255555555","equip_id":4,"equip_atime":0,"equip_num":"???????","equip_ndate":{"date":1,"hours":0,"seconds":0,"month":8,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1535731200000,"day":6},"equip_snum":0,"file_id":null,"equip_manu":"???????","equip_pdate":{"date":23,"hours":0,"seconds":0,"month":7,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1534953600000,"day":4},"equip_life":20,"equip_memo":"???????","equip_qrcode":"","equip_bfee":2000,"user":null,"equip_room":null,"equip_type":null},{"equip_mdate":20,"equip_isdeleted":0,"equip_name":"????????","equip_no":"????????","equip_udate":{"date":24,"hours":0,"seconds":0,"month":7,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1535040000000,"day":5},"equip_state":0,"equip_tel":"13255555555","equip_id":3,"equip_atime":0,"equip_num":"????????","equip_ndate":{"date":30,"hours":0,"seconds":0,"month":7,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1535558400000,"day":4},"equip_snum":0,"file_id":null,"equip_manu":"????????","equip_pdate":{"date":23,"hours":0,"seconds":0,"month":7,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1534953600000,"day":4},"equip_life":20,"equip_memo":"","equip_qrcode":"","equip_bfee":2000,"user":null,"equip_room":null,"equip_type":null},{"equip_mdate":20,"equip_isdeleted":0,"equip_name":"???????","equip_no":"???????","equip_udate":{"date":16,"hours":0,"seconds":0,"month":7,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1534348800000,"day":4},"equip_state":0,"equip_tel":"13255555555","equip_id":2,"equip_atime":0,"equip_num":"???????","equip_ndate":{"date":30,"hours":0,"seconds":0,"month":7,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1535558400000,"day":4},"equip_snum":20180505,"file_id":null,"equip_manu":"???????","equip_pdate":{"date":15,"hours":0,"seconds":0,"month":7,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1534262400000,"day":3},"equip_life":20,"equip_memo":"???????","equip_qrcode":"","equip_bfee":2000,"user":null,"equip_room":null,"equip_type":null},{"equip_mdate":1,"equip_isdeleted":0,"equip_name":"???","equip_no":"???","equip_udate":{"date":17,"hours":0,"seconds":0,"month":7,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1534435200000,"day":5},"equip_state":0,"equip_tel":"13255555555","equip_id":1,"equip_atime":0,"equip_num":"???","equip_ndate":{"date":1,"hours":0,"seconds":0,"month":8,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1535731200000,"day":6},"equip_snum":20180505,"file_id":null,"equip_manu":"??","equip_pdate":{"date":16,"hours":0,"seconds":0,"month":7,"nanos":0,"timezoneOffset":-480,"year":118,"minutes":0,"time":1534348800000,"day":4},"equip_life":20,"equip_memo":"????????????","equip_qrcode":"","equip_bfee":20000,"user":null,"equip_room":null,"equip_type":null}]
@@ -32,7 +33,7 @@ public class DeviceBean {
         this.list = list;
     }
 
-    public static class ListBean {
+    public static class ListBean implements Serializable{
         /**
          * equip_mdate : 20
          * equip_isdeleted : 0
@@ -62,17 +63,17 @@ public class DeviceBean {
         private int equip_isdeleted;
         private String equip_name;
         private String equip_no;
-        private EquipUdateBean equip_udate;
+        private EquipUdateBean equip_udate;//
         private int equip_state;
         private String equip_tel;
         private int equip_id;
         private int equip_atime;
         private String equip_num;
-        private EquipNdateBean equip_ndate;
+        private EquipNdateBean equip_ndate;//
         private int equip_snum;
         private Object file_id;
         private String equip_manu;
-        private EquipPdateBean equip_pdate;
+        private EquipPdateBean equip_pdate;//
         private int equip_life;
         private String equip_memo;
         private String equip_qrcode;
@@ -257,7 +258,7 @@ public class DeviceBean {
             this.equip_type = equip_type;
         }
 
-        public static class EquipUdateBean {
+        public static class EquipUdateBean implements Serializable {
             /**
              * date : 31
              * hours : 0
@@ -363,7 +364,7 @@ public class DeviceBean {
             }
         }
 
-        public static class EquipNdateBean {
+        public static class EquipNdateBean implements Serializable{
             /**
              * date : 7
              * hours : 0
@@ -469,7 +470,7 @@ public class DeviceBean {
             }
         }
 
-        public static class EquipPdateBean {
+        public static class EquipPdateBean implements Serializable{
             /**
              * date : 24
              * hours : 0

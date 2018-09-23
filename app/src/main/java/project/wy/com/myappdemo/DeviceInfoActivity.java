@@ -1,6 +1,8 @@
 package project.wy.com.myappdemo;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,13 +16,14 @@ import java.util.List;
 
 import project.wy.com.myappdemo.R;
 import project.wy.com.myappdemo.base.BaseFragment;
+import project.wy.com.myappdemo.bean.DeviceBean;
 import project.wy.com.myappdemo.fragment.DeviceInfragment;
 import project.wy.com.myappdemo.fragment.Maintenanfragment;
 import project.wy.com.myappdemo.fragment.RunningInfoFragment;
 
 
 
-public class DeviceInfoActivity extends AppCompatActivity {
+public class DeviceInfoActivity extends FragmentActivity {
 
     private RadioGroup mRg_device;
     private List<BaseFragment> mBaseFragment;
@@ -35,10 +38,13 @@ public class DeviceInfoActivity extends AppCompatActivity {
      */
     private Fragment mContent;
     private ImageView back_img;
+    private DeviceBean.ListBean listBean;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_info);
+        Intent beanInent = this.getIntent();
+        listBean = (DeviceBean.ListBean) beanInent.getSerializableExtra("DeviceBean");
 
         //初始化View
         initView();
@@ -135,6 +141,8 @@ public class DeviceInfoActivity extends AppCompatActivity {
         mBaseFragment.add(new DeviceInfragment());//
         mBaseFragment.add(new RunningInfoFragment());//
         mBaseFragment.add(new Maintenanfragment());//
+
+        DeviceInfragment.setListBrean(listBean);
     }
 
     private void initView() {

@@ -1,5 +1,6 @@
 package project.wy.com.myappdemo;
 
+import android.content.Intent;
 import android.media.Image;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -7,32 +8,47 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.znq.zbarcode.CaptureActivity;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import project.wy.com.myappdemo.base.BaseFragment;
 import project.wy.com.myappdemo.fragment.DeviceListFragment;
 import project.wy.com.myappdemo.fragment.UserFragment;
 import project.wy.com.myappdemo.fragment.WarningFragment;
+import project.wy.com.myappdemo.http.HttpCallback;
+import project.wy.com.myappdemo.untils.Constant;
+import project.wy.com.myappdemo.untils.DialogUtil;
+import project.wy.com.myappdemo.untils.LogUtil;
+import project.wy.com.myappdemo.untils.OkhttpUtils;
+import project.wy.com.myappdemo.untils.ToastUtil;
 
 public class MainActivity extends FragmentActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
     private RadioGroup mRg_main;
     private List<BaseFragment> mBaseFragment;
     /**
      * 选中的Fragment的对应的位置
      */
     private int position;
-
+    private int QR_CODE =1;
     /**
      * 上次切换的Fragment
      */
     private Fragment mContent;
     private TextView title_show;
+
+    private TextView qrCode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +75,7 @@ public class MainActivity extends FragmentActivity {
             switch (checkedId){
                 case R.id.rb_deivelist://device_list
                     position = 0;
+                    title_show.setText("设备信息");
                     break;
                 case R.id.rb_warning://warning
                     position = 1;
@@ -138,6 +155,17 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         mRg_main = (RadioGroup) findViewById(R.id.rg_main);
         title_show = (TextView) findViewById(R.id.title_msg);
+
+        qrCode = (TextView) findViewById(R.id.qrcode_textView);
+        //点击扫一扫
+        qrCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,CaptureActivity.class);
+                MainActivity.this.startActivityForResult(intent, QR_CODE);
+
+            }
+        });
     }
 
     //记录用户首次点击返回键的时间
@@ -155,6 +183,21 @@ public class MainActivity extends FragmentActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == QR_CODE) {
+            if(data!=null){
+                Bundle b = data.getExtras();
+                if(b!=null){
+                    String result = b.getString(CaptureActivity.EXTRA_STRING);
+                    Toast.makeText(this, result + "", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        }
     }
 
 }

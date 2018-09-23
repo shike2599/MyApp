@@ -12,6 +12,14 @@
       android:text="设备基本信息"
       android:textSize="@dimen/device_info_size"
       />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,7 +33,7 @@
             android:text="设备名称："
             />
         <TextView
-            android:id="@+id/device_name"
+            android:id="@+id/device_name_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/device_info_size"
@@ -33,6 +41,26 @@
             />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/device_info_size"
+            android:text="设备型号："
+            />
+        <TextView
+            android:id="@+id/device_type_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/device_info_size"
+            android:text="楼顶消防栓"
+            />
+    </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -155,7 +183,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/device_info_size"
-            android:text="楼顶消防栓"
+            android:text=""
             />
     </LinearLayout>
 
@@ -176,7 +204,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/device_info_size"
-            android:text="楼顶消防栓"
+            android:text=""
             />
     </LinearLayout>
 
@@ -197,7 +225,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/device_info_size"
-            android:text="楼顶消防栓"
+            android:text=""
             />
     </LinearLayout>
 
@@ -218,7 +246,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/device_info_size"
-            android:text="楼顶消防栓"
+            android:text=""
             />
     </LinearLayout>
 
@@ -239,7 +267,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/device_info_size"
-            android:text="楼顶消防栓"
+            android:text=""
             />
     </LinearLayout>
 
@@ -260,7 +288,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/device_info_size"
-            android:text="楼顶消防栓"
+            android:text=""
             />
     </LinearLayout>
 
@@ -274,14 +302,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/device_info_size"
-            android:text="备注："
+            android:text="设备备注："
             />
         <TextView
             android:id="@+id/device_remarks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/device_info_size"
-            android:text="楼顶消防栓"
+            android:text=""
             />
     </LinearLayout>
+    </LinearLayout>
+    </ScrollView>
 </LinearLayout>
