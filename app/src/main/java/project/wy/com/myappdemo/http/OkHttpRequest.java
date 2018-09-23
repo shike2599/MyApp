@@ -121,6 +121,7 @@ public class OkHttpRequest {
             } else {
                 RequestBody body = builderFormData(params);
                 builder.post(body);
+                builder.addHeader("Accept", "application/json");
             }
         } else if (methodType == HttpMethodType.GET) {
             builder.get();
@@ -140,7 +141,6 @@ public class OkHttpRequest {
                 builder.add(key, params.get(key));
             }
         }
-
         return builder.build();
     }
 

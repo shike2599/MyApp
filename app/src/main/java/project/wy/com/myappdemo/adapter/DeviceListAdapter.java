@@ -5,25 +5,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import project.wy.com.myappdemo.bean.DeviceBean;
+
 public class DeviceListAdapter extends BaseAdapter {
 
-    public DeviceListAdapter(Context mContext, String[] datas) {
-
+    private Context mContext;
+    private DeviceBean deviceList;
+    public DeviceListAdapter(Context context) {
+        mContext = context;
     }
 
+    public void setData(DeviceBean deviceBean) {
+        deviceList = deviceBean;
+    }
     @Override
     public int getCount() {
-        return 0;
+        return deviceList.getList().size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return deviceList.getList().get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
