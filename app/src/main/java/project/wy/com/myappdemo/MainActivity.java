@@ -157,6 +157,7 @@ public class MainActivity extends FragmentActivity {
         title_show = (TextView) findViewById(R.id.title_msg);
 
         qrCode = (TextView) findViewById(R.id.qrcode_textView);
+        qrCode.setVisibility(View.VISIBLE);
         //点击扫一扫
         qrCode.setOnClickListener(new View.OnClickListener() {
             @Override

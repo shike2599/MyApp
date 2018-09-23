@@ -10,7 +10,9 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -19,6 +21,7 @@ import project.wy.com.myappdemo.R;
 import project.wy.com.myappdemo.adapter.DeviceListAdapter;
 import project.wy.com.myappdemo.base.BaseFragment;
 import project.wy.com.myappdemo.bean.DeviceInfoBean;
+import project.wy.com.myappdemo.bean.EquipmentBean;
 import project.wy.com.myappdemo.bean.EquipmentInfoBean;
 import project.wy.com.myappdemo.http.HttpCallback;
 import project.wy.com.myappdemo.untils.Constant;
@@ -32,8 +35,9 @@ public class DeviceListFragment extends BaseFragment {
     private EditText search_edit;
     private Button search_btn;
     private DeviceListAdapter adapter;
-    private DeviceInfoBean deviceBean;
+    private static DeviceInfoBean deviceBean;
     private EquipmentInfoBean equInfoBean;
+
     @Override
     protected View initView() {
         View view = View.inflate(mContext, R.layout.deivelist_fargment_layout, null);
@@ -117,6 +121,14 @@ public class DeviceListFragment extends BaseFragment {
                 }
             }
         });
-
+    }
+    public static List<Integer> getDeviceBeanList(){
+        List<Integer> id_list = new ArrayList<>();
+        if(deviceBean!=null){
+            for(EquipmentBean equipmentBean : deviceBean.getList()){
+                 id_list.add(equipmentBean.getEquip_id());
+            }
+        }
+        return id_list;
     }
 }
