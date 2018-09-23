@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingTop="10dp"
+    >
+   <ImageView
+       android:id="@+id/decice_icon"
+       android:layout_width="50dp"
+       android:layout_height="50dp"
+       android:src="@mipmap/ic_launcher"
+       />
+    <TextView
+        android:id="@+id/device_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="设备的名称"
+        android:layout_toRightOf="@id/decice_icon"
+        android:layout_marginLeft="15dp"
+        android:textSize="18dp"
+        android:textColor="#000000"
+        />
+
+    <TextView
+        android:id="@+id/device_model"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/decice_icon"
+        android:layout_alignLeft="@id/device_name"
+        android:text="设备的型号" />
+</RelativeLayout>
