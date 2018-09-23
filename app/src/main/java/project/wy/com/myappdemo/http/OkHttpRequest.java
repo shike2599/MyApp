@@ -33,6 +33,7 @@ import okhttp3.WebSocketListener;
 import okio.BufferedSink;
 import okio.ByteString;
 import project.wy.com.myappdemo.R;
+import project.wy.com.myappdemo.untils.LogUtil;
 import project.wy.com.myappdemo.untils.OkhttpUtils;
 import project.wy.com.myappdemo.untils.UIUtils;
 
@@ -118,8 +119,7 @@ public class OkHttpRequest {
                 RequestBody body = RequestBody.create(MEDIA_TYPE_JSON, json);
                 builder.post(body);
             } else {
-//                RequestBody body = builderFormData(params);
-                RequestBody body = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded;charset=gbk"),"Page=1&searchKey=\"\"");
+                RequestBody body = builderFormData(params);
                 builder.post(body);
             }
         } else if (methodType == HttpMethodType.GET) {
@@ -154,15 +154,18 @@ public class OkHttpRequest {
 
             @Override
             public void onFailure(Call call, IOException e) {
-                OkhttpUtils.sendFailResultCallback(-1, e.getMessage(), callback);
+                OkhttpUtils.sendFailResultCallback(-2, e.getMessage(), callback);
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 try {
                     if (response.isSuccessful()) {
-                        OkhttpUtils.sendSuccessResultCallback(DataAnalysis.getReturnData(response.body().string()), callback);
+//                        LogUtil.d("Response","Response is Successful"+response.body().string());
+                        String resutlt = response.body().string();
+                        OkhttpUtils.sendSuccessResultCallback(DataAnalysis.getReturnData(resutlt), callback);
                     } else {
+                        LogUtil.d("Response","Response is noSuccessful");
                         OkhttpUtils.sendFailResultCallback(response.code(), response.message(), callback);
                     }
                 } catch (Exception e) {
@@ -307,7 +310,7 @@ public class OkHttpRequest {
                         OkhttpUtils.sendProgressResultCallback(currentTotalLen, totalLen, callback);
                     }
                     fileOutputStream.flush();
-                    OkhttpUtils.sendSuccessResultCallback(new ResultDesc(0, UIUtils.getString(R.string.download_success), file.getAbsolutePath()), callback);
+                    OkhttpUtils.sendSuccessResultCallback(UIUtils.getString(R.string.download_success), callback);
                 } catch (IOException e) {
                     e.printStackTrace();
                     OkhttpUtils.sendFailResultCallback(-1, e.getMessage(), callback);

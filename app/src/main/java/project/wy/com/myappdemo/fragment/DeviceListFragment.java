@@ -43,25 +43,17 @@ public class DeviceListFragment extends BaseFragment {
     protected void initData() {
         super.initData();
         DialogUtil.showDialogLoading(mContext, "");
+
         //准备数据
-//        Map<String,String> params = new HashMap<>();
-//        params.put("page",String.valueOf(1));
-//        params.put("searchKey","");
-
-        JSONObject json = new JSONObject();
-        try {
-            json.put("page", "1");
-            json.put("searchKey", null);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        OkhttpUtils.postAync(Constant.QUEST_ALL_DEVICE, json.toString(), new HttpCallback() {
+        Map<String,String> params = new HashMap<>();
+        params.put("page",String.valueOf(1));
+        params.put("searchKey","");
+        OkhttpUtils.postAsyn(Constant.QUEST_ALL_DEVICE, params, new HttpCallback() {
             @Override
-            public void onSuccess(ResultDesc resultDesc) {
+            public void onSuccess(String resultDesc) {
                 super.onSuccess(resultDesc);
                 DialogUtil.hideDialogLoading();
-                LogUtil.d(TAG,resultDesc.toString());
+                LogUtil.d(TAG,""+resultDesc);
             }
 
             @Override

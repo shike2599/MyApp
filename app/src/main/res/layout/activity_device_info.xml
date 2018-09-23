@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--标题栏-->
+    <include layout="@layout/titlebar" />
+
+    <!--FrameLayout-->
+
+    <FrameLayout
+        android:id="@+id/fl_device"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!--底部的RadioGroup-->
+    <RadioGroup
+        android:id="@+id/rg_deivice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#11000000"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+
+        <RadioButton
+            android:id="@+id/rb_deiveinfo"
+            style="@style/bottom_tag_style"
+            android:drawableTop="@drawable/rb_common_frame_drawable_selector"
+            android:text="@string/device_info"
+
+            />
+
+        <RadioButton
+            android:id="@+id/rb_running"
+            style="@style/bottom_tag_style"
+            android:drawableTop="@drawable/rb_thirdparty_drawable_selector"
+            android:text="@string/warning_info"
+
+            />
+
+        <RadioButton
+            android:id="@+id/rb_miantenan"
+            style="@style/bottom_tag_style"
+            android:drawableTop="@drawable/rb_custom_drawable_selector"
+            android:text="@string/user_set" />
+
+
+    </RadioGroup>
+
+
+</LinearLayout>

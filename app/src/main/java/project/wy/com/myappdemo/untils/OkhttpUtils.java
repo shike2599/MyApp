@@ -61,7 +61,7 @@ public class OkhttpUtils {
         });
     }
 
-    public static void sendSuccessResultCallback(final ResultDesc result, final HttpCallback callback) {
+    public static void sendSuccessResultCallback(final String result, final HttpCallback callback) {
         if (callback == null) {
             return;
         }

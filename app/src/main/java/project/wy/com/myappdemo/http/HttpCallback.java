@@ -13,7 +13,7 @@ public abstract class HttpCallback {
      * @param resultDesc 返回数据
      * @Description 请求成功时回调
      */
-    public void onSuccess(ResultDesc resultDesc) {
+    public void onSuccess(String resultDesc) {
     }
 
     /**

@@ -56,30 +56,30 @@ public class DataAnalysis {
      * @param result 请求返回字符串
      * @Description 返回数据解析
      */
-    public static ResultDesc getReturnData(String result) {
+    public static String getReturnData(String result) {
         ResultDesc resultDesc = null;
 
         if (StringUtil.isEmpty(result)) {
             //返回数据为空
             resultDesc = dataRestructuring(-1, UIUtils.getString(R.string.back_abnormal_results), "");
-            return resultDesc;
+            return "";
         }
 
-        try {
-            JSONObject jsonObject = new JSONObject(result);
-            //返回码
-            int error_code = jsonObject.getInt("error_code");
-            //返回说明
-            String reason = jsonObject.getString("reason");
-            //返回数据
-            String resultData = jsonObject.getString("result");
+//        try {
+//            JSONObject jsonObject = new JSONObject(result);
+//            //返回码
+//            int error_code = jsonObject.getInt("error_code");
+//            //返回说明
+//            String reason = jsonObject.getString("reason");
+//            //返回数据
+//            String resultData = jsonObject.getString("result");
+//
+//            resultDesc = dataRestructuring(error_code, reason, resultData);
+//        } catch (JSONException e) {
+//            resultDesc = dataRestructuring(-1, UIUtils.getString(R.string.back_abnormal_results), "");
+//        }
 
-            resultDesc = dataRestructuring(error_code, reason, resultData);
-        } catch (JSONException e) {
-            resultDesc = dataRestructuring(-1, UIUtils.getString(R.string.back_abnormal_results), "");
-        }
-
-        return resultDesc;
+        return result;
     }
 
     /**
