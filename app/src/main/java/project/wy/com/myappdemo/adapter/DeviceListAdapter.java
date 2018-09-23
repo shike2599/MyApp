@@ -9,19 +9,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import project.wy.com.myappdemo.R;
-import project.wy.com.myappdemo.bean.DeviceBean;
+import project.wy.com.myappdemo.bean.DeviceInfoBean;
 
 public class DeviceListAdapter extends BaseAdapter {
 
     private Context mContext;
-    private DeviceBean deviceList;
+    private DeviceInfoBean deviceList;
     private int item_layout;
     public DeviceListAdapter(Context context) {
         mContext = context;
         this.item_layout = item_layout;
     }
 
-    public void setData(DeviceBean deviceBean) {
+    public void setData(DeviceInfoBean deviceBean) {
         deviceList = deviceBean;
     }
     @Override

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,9 +13,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import project.wy.com.myappdemo.R;
+
 import project.wy.com.myappdemo.base.BaseFragment;
-import project.wy.com.myappdemo.bean.DeviceBean;
+import project.wy.com.myappdemo.bean.EquipmentBean;
 import project.wy.com.myappdemo.fragment.DeviceInfragment;
 import project.wy.com.myappdemo.fragment.Maintenanfragment;
 import project.wy.com.myappdemo.fragment.RunningInfoFragment;
@@ -38,14 +37,13 @@ public class DeviceInfoActivity extends FragmentActivity {
      */
     private Fragment mContent;
     private ImageView back_img;
-    private DeviceBean.ListBean listBean;
+    private EquipmentBean equInfoBean;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_info);
         Intent beanInent = this.getIntent();
-        listBean = (DeviceBean.ListBean) beanInent.getSerializableExtra("DeviceBean");
-
+        equInfoBean = (EquipmentBean) beanInent.getSerializableExtra("DeviceInfoBean");
         //初始化View
         initView();
         //初始化Fragment
@@ -142,7 +140,7 @@ public class DeviceInfoActivity extends FragmentActivity {
         mBaseFragment.add(new RunningInfoFragment());//
         mBaseFragment.add(new Maintenanfragment());//
 
-        DeviceInfragment.setListBrean(listBean);
+        DeviceInfragment.setInfoBean(equInfoBean);
     }
 
     private void initView() {

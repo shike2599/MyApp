@@ -10,7 +10,6 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,11 +18,11 @@ import project.wy.com.myappdemo.DeviceInfoActivity;
 import project.wy.com.myappdemo.R;
 import project.wy.com.myappdemo.adapter.DeviceListAdapter;
 import project.wy.com.myappdemo.base.BaseFragment;
-import project.wy.com.myappdemo.bean.DeviceBean;
+import project.wy.com.myappdemo.bean.DeviceInfoBean;
+import project.wy.com.myappdemo.bean.EquipmentInfoBean;
 import project.wy.com.myappdemo.http.HttpCallback;
 import project.wy.com.myappdemo.untils.Constant;
 import project.wy.com.myappdemo.untils.DialogUtil;
-import project.wy.com.myappdemo.untils.LogUtil;
 import project.wy.com.myappdemo.untils.OkhttpUtils;
 import project.wy.com.myappdemo.untils.ToastUtil;
 
@@ -33,7 +32,8 @@ public class DeviceListFragment extends BaseFragment {
     private EditText search_edit;
     private Button search_btn;
     private DeviceListAdapter adapter;
-    private DeviceBean deviceBean;
+    private DeviceInfoBean deviceBean;
+    private EquipmentInfoBean equInfoBean;
     @Override
     protected View initView() {
         View view = View.inflate(mContext, R.layout.deivelist_fargment_layout, null);
@@ -58,7 +58,7 @@ public class DeviceListFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                  Intent intent = new Intent();
                  intent.setClass(mContext, DeviceInfoActivity.class);
-                 intent.putExtra("DeviceBean", deviceBean.getList().get(position));
+                 intent.putExtra("DeviceInfoBean", deviceBean.getList().get(position));
                  mContext.startActivity(intent);
             }
         });
@@ -85,17 +85,23 @@ public class DeviceListFragment extends BaseFragment {
             @Override
             public void onSuccess(String resultDesc) {
                 super.onSuccess(resultDesc);
-                LogUtil.d(TAG,resultDesc);
+                //LogUtil.d(TAG,resultDesc);
                 DialogUtil.hideDialogLoading();
                 if(type.equals("list")){
                     Gson gson = new Gson();
-                     deviceBean = gson.fromJson(resultDesc, DeviceBean.class);
+                     deviceBean = gson.fromJson(resultDesc, DeviceInfoBean.class);
                     //设置适配器
                     adapter.setData(deviceBean);
                     mListView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-                }else{
-
+                }else if(type.equals("info")){
+                    Gson gson = new Gson();
+                     equInfoBean = gson.fromJson(resultDesc, EquipmentInfoBean.class);
+                    Log.i(TAG,"xwz::::"+resultDesc);
+                    Intent intent = new Intent();
+                    intent.setClass(mContext, DeviceInfoActivity.class);
+                    intent.putExtra("DeviceInfoBean", equInfoBean.getEquipment());
+                    mContext.startActivity(intent);
                 }
 
             }
