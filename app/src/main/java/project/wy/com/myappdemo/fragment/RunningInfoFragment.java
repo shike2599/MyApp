@@ -7,7 +7,11 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import com.bigkoo.pickerview.TimePickerView;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -24,9 +28,12 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -34,34 +41,66 @@ import java.util.Map;
 
 import project.wy.com.myappdemo.R;
 import project.wy.com.myappdemo.base.BaseFragment;
+import project.wy.com.myappdemo.bean.DeviceInfoBean;
+import project.wy.com.myappdemo.bean.EquipmentBean;
 import project.wy.com.myappdemo.bean.EquipmentOperBean;
 import project.wy.com.myappdemo.bean.EquipmentOperInfoBean;
 import project.wy.com.myappdemo.http.HttpCallback;
 import project.wy.com.myappdemo.untils.Constant;
 import project.wy.com.myappdemo.untils.DialogUtil;
+import project.wy.com.myappdemo.untils.LogUtil;
 import project.wy.com.myappdemo.untils.OkhttpUtils;
+import project.wy.com.myappdemo.untils.StringUtil;
 import project.wy.com.myappdemo.untils.ToastUtil;
 
-public class RunningInfoFragment extends BaseFragment {
+public class RunningInfoFragment extends BaseFragment implements View.OnClickListener{
 
     private CombinedChart barChart;
+    private TextView show_device_id,show_deivce_name;
+    private EditText input_time,input_info;
+
+    private Button start_select_btn,start_input_info;
+
     private YAxis leftAxis;             //左侧Y轴
     private YAxis rightAxis;            //右侧Y轴
     private XAxis xAxis;                //X轴
 
     private EquipmentOperInfoBean eopInfoBean;
 
+    private EquipmentBean equipmentBean;
+
     public void setEquId(int equId) {
         this.equId = equId;
     }
 
+    public void setBean(EquipmentBean bean) {
+        this.equipmentBean = bean;
+    }
+
     private int equId;
     private final static String TAG = RunningInfoFragment.class.getSimpleName();
+    private TimePickerView tmPicker;
 
     @Override
     protected View initView() {
         View view = View.inflate(mContext, R.layout.running_info_layout, null);
         barChart = view.findViewById(R.id.bar_chart);
+        show_device_id = view.findViewById(R.id.runing_deivce_id);
+        show_deivce_name = view.findViewById(R.id.runing_deivce_name);
+        input_time = view.findViewById(R.id.select_timer);
+        input_info = view.findViewById(R.id.input_running_info);
+        start_select_btn = view.findViewById(R.id.start_search_runing_btn);
+        start_input_info = view.findViewById(R.id.start_push_runing_info);
+
+        input_time.setOnClickListener(this);
+        start_select_btn.setOnClickListener(this);
+        start_input_info.setOnClickListener(this);
+
+        if(equipmentBean!=null){
+            show_deivce_name.setText(equipmentBean.getEquip_name());
+            show_device_id.setText(equipmentBean.getEquip_id()+"");
+        }
+
         return view;
     }
 
@@ -80,7 +119,9 @@ public class RunningInfoFragment extends BaseFragment {
         Map<String, String> params = new HashMap<>();
         params.put("equip_para_id", String.valueOf(equId));
         Log.i(TAG, "equip_para_id:" + equId);
-        params.put("startDate", "2018-09-10 00:00:00");
+//        params.put("startDate", StringUtil.getTime(new Date()));
+        params.put("startDate","2018-09-10 00:00:00");
+        Log.i(TAG, "init----startDate:" + StringUtil.getTime(new Date()));
         doPost(params, Constant.QUEST_DEVICE_RUN_INFO);
 
     }
@@ -92,26 +133,33 @@ public class RunningInfoFragment extends BaseFragment {
             @Override
             public void onSuccess(String resultDesc) {
                 super.onSuccess(resultDesc);
+                LogUtil.d(TAG,resultDesc);
                 Gson gson = new Gson();
                 eopInfoBean = gson.fromJson(resultDesc, EquipmentOperInfoBean.class);
-                //处理数据是 记得判断每条柱状图对应的数据集合 长度是否一致
-                LinkedHashMap<String, List<Float>> chartDataMap = new LinkedHashMap<>();
-                List<String> xValues = new ArrayList<>();
-                List<Float> yValues = new ArrayList<>();
-                List<Integer> colors = Arrays.asList(
-                        mContext.getResources().getColor(R.color.blue), mContext.getResources().getColor(R.color.blue)
-                );
-                List<EquipmentOperBean> valueList = eopInfoBean.getData();
-                Collections.reverse(valueList);
+                if(eopInfoBean.getData()!=null&&eopInfoBean.getData().size()>0){
+                    //处理数据是 记得判断每条柱状图对应的数据集合 长度是否一致
+                    LinkedHashMap<String, List<Float>> chartDataMap = new LinkedHashMap<>();
+                    List<String> xValues = new ArrayList<>();
+                    List<Float> yValues = new ArrayList<>();
+                    List<Integer> colors = Arrays.asList(
+                            mContext.getResources().getColor(R.color.blue), mContext.getResources().getColor(R.color.blue)
+                    );
+                    List<EquipmentOperBean> valueList = eopInfoBean.getData();
+                    Collections.reverse(valueList);
 
-                for (EquipmentOperBean valueBean : valueList) {
-                    xValues.add(valueBean.getEquip_oper_time());
-                    yValues.add(Float.parseFloat(valueBean.getEquip_oper_info()));
+                    for (EquipmentOperBean valueBean : valueList) {
+                        xValues.add(valueBean.getEquip_oper_time());
+                        yValues.add(Float.parseFloat(valueBean.getEquip_oper_info()));
+                    }
+                    chartDataMap.put("设备运行信息", yValues);
+                    initBarChart(barChart);
+                    showBarChart(xValues, chartDataMap, colors);
+                    DialogUtil.hideDialogLoading();
+                }else{
+                    DialogUtil.hideDialogLoading();
+                    ToastUtil.showText("未查找到运行数据！");
                 }
-                chartDataMap.put("设备运行信息", yValues);
-                initBarChart(barChart);
-                showBarChart(xValues, chartDataMap, colors);
-                DialogUtil.hideDialogLoading();
+
             }
 
             @Override
@@ -176,11 +224,11 @@ public class RunningInfoFragment extends BaseFragment {
         rightAxis.setEnabled(false);
         rightAxis.setDrawGridLines(false);
         barChart.setExtraOffsets(15, 30, 20, 10);//设置视图窗口大小
-        barChart.animateX(1500);//数据显示动画，从左往右依次显示
+        barChart.animateX(5000);//数据显示动画，从左往右依次显示
         barChart.setPinchZoom(true);//设置按比例放缩柱状图
         barChart.setMaxVisibleValueCount(100);
         Matrix mMatrix = new Matrix();
-        mMatrix.postScale(25f, 1f);
+        mMatrix.postScale(25f, 1f);//柱形图放大
         barChart.getViewPortHandler().refresh(mMatrix, barChart, false);
         barChart.invalidate();
     }
@@ -195,6 +243,7 @@ public class RunningInfoFragment extends BaseFragment {
         barDataSet.setColor(color);
         barDataSet.setFormLineWidth(20f);
         barDataSet.setFormSize(15f);
+        barDataSet.setValueTextSize(10f);
         //显示柱状图顶部值
         barDataSet.setDrawValues(true);
     }
@@ -222,8 +271,6 @@ public class RunningInfoFragment extends BaseFragment {
                 entries.add(new BarEntry(i, yValueList.get(i)));
             }
 
-            Log.i(TAG,"MAX:"+Collections.max(yValueList));
-            Log.i(TAG,"MIN:"+Collections.min(yValueList));
             leftAxis.setAxisMinValue(Collections.min(yValueList));
             leftAxis.setAxisMaxValue(Collections.max(yValueList));
 
@@ -248,4 +295,89 @@ public class RunningInfoFragment extends BaseFragment {
         barChart.setData(combinedData); // 为组合图设置数据源
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.start_search_runing_btn:
+                String time = input_time.getText().toString();
+                if(time!=null&&!time.equals("")){
+                    Map<String,String> prams = new HashMap<>();
+                    prams.put("equip_para_id", String.valueOf(equId));
+                    Log.i(TAG, "equip_para_id:" + equId);
+                    prams.put("startDate",time);
+                    Log.i(TAG, "startDate:" + time);
+                    doPost(prams,Constant.QUEST_DEVICE_RUN_INFO);
+                }else{
+                    ToastUtil.showText("请输入时间！");
+                }
+                break;
+            case R.id.start_push_runing_info:
+                String info = input_info.getText().toString();
+                if(info!=null&&!info.equals("")){
+                    Map<String,String> parms = new HashMap();
+                    parms.put("equip_para_id",equId+"");
+                    parms.put("equip_operation_info",info.trim());
+                    startPost(Constant.ADD_RUNNING_INFO,parms);
+                }else{
+                    ToastUtil.showText("请输入运行信息然后开始查询！");
+                }
+                break;
+            case R.id.select_timer:
+
+                Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+                SimpleDateFormat formatter_year = new SimpleDateFormat("yyyy ");
+                String year_str = formatter_year.format(curDate);
+                int year_int = (int) Double.parseDouble(year_str);
+
+
+                SimpleDateFormat formatter_mouth = new SimpleDateFormat("MM ");
+                String mouth_str = formatter_mouth.format(curDate);
+                int mouth_int = (int) Double.parseDouble(mouth_str);
+
+                SimpleDateFormat formatter_day = new SimpleDateFormat("dd ");
+                String day_str = formatter_day.format(curDate);
+                int day_int = (int) Double.parseDouble(day_str);
+
+                Calendar selectedDate = Calendar.getInstance();//系统当前时间
+                Calendar startDate = Calendar.getInstance();
+                startDate.set(1900, 0, 1);
+                Calendar endDate = Calendar.getInstance();
+                endDate.set(year_int, mouth_int - 1, day_int);
+
+                tmPicker = new TimePickerView.Builder(mContext, new TimePickerView.OnTimeSelectListener() {
+                    @Override
+                    public void onTimeSelect(Date date, View v) {
+                       input_time.setText(StringUtil.getTime(date));
+                    }
+                }).setTextColorOut(Color.BLUE)//设置没有被选中项的颜色
+                    .setContentSize(15)
+                    .setDate(selectedDate)
+                    .setLineSpacingMultiplier(1.5f)
+                    .setTextXOffset(-10, 0,10, 0, 0, 0)//设置X轴倾斜角度[ -90 , 90°]
+                    .setRangDate(startDate, endDate)
+                    .setDecorView(null)
+                    .build();
+                tmPicker.show();
+                break;
+        }
+    }
+   //上传
+    private void startPost(String url, Map<String,String> parms) {
+        OkhttpUtils.postAsyn(url, parms, new HttpCallback() {
+            @Override
+            public void onSuccess(String resultDesc) {
+                super.onSuccess(resultDesc);
+                DialogUtil.hideDialogLoading();
+                LogUtil.d(TAG,resultDesc);
+                ToastUtil.showText("运行参数上传成功！");
+            }
+
+            @Override
+            public void onFailure(int code, String message) {
+                super.onFailure(code, message);
+                DialogUtil.hideDialogLoading();
+                ToastUtil.showText("服务器异常！！！");
+            }
+        });
+    }
 }

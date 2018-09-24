@@ -103,10 +103,15 @@ public class DeviceListFragment extends BaseFragment {
                     Gson gson = new Gson();
                     equInfoBean = gson.fromJson(resultDesc, EquipmentInfoBean.class);
                     Log.i(TAG, "xwz::::" + resultDesc);
-                    Intent intent = new Intent();
-                    intent.setClass(mContext, DeviceInfoActivity.class);
-                    intent.putExtra("DeviceInfoBean", equInfoBean.getEquipment());
-                    mContext.startActivity(intent);
+                    if(equInfoBean.getEquipment() != null){
+                        Intent intent = new Intent();
+                        intent.setClass(mContext, DeviceInfoActivity.class);
+                        intent.putExtra("DeviceInfoBean", equInfoBean.getEquipment());
+                        mContext.startActivity(intent);
+                    }else{
+                        ToastUtil.showText("未查找到设备！！");
+                    }
+
                 }
 
             }

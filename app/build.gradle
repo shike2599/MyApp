@@ -29,4 +29,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     implementation project(':zbarcode')
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    compile 'com.contrarywind:Android-PickerView:3.2.7'
 }

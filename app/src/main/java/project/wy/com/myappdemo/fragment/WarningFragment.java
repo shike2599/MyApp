@@ -62,7 +62,7 @@ public class WarningFragment extends BaseFragment {
         commit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(device_wainfo!=null){
+                if(device_wainfo!=null&&!device_wainfo.equals("")){
                     DialogUtil.showDialogLoading(mContext,"正在上传信息，请稍等...");
                     Map<String,String> parms = new HashMap<>();
                     parms.put("equip_id",deivice_id+"");
@@ -85,7 +85,7 @@ public class WarningFragment extends BaseFragment {
                         }
                     });
                 }else{
-                    ToastUtil.showText("设备ID或报警信息不能为空！");
+                    ToastUtil.showText("报警信息不能为空！");
                 }
             }
         });

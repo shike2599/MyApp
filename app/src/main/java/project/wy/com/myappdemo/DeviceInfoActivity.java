@@ -139,7 +139,9 @@ public class DeviceInfoActivity extends FragmentActivity {
         mBaseFragment = new ArrayList<>();
         mBaseFragment.add(new DeviceInfragment());//
         RunningInfoFragment runningInfoFragment = new RunningInfoFragment();
+
         runningInfoFragment.setEquId(equInfoBean.getEquip_id());
+        runningInfoFragment.setBean(equInfoBean);
         mBaseFragment.add(runningInfoFragment);//
         mBaseFragment.add(new Maintenanfragment());//
 

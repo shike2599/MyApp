@@ -23,4 +23,5 @@ public class Constant {
      public static final String QUEST_COMP_INFO = " http://116.62.186.91:8080/gywyext/systemProject/getCompanyInfo.do";//公司信息
 
     public static final String  QUEST_PRO_INFO = "http://116.62.186.91:8080/gywyext/systemProject/getProjectInfo.do?";//项目信息
+    public static final String  ADD_RUNNING_INFO= "http://116.62.186.91:8080/gywyext/moblieAdd/addOpeartion.do";//手动输入项目信息
 }

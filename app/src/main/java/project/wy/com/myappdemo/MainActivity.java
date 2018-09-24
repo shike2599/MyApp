@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.znq.zbarcode.CaptureActivity;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import project.wy.com.myappdemo.base.BaseFragment;
+import project.wy.com.myappdemo.bean.EquipmentInfoBean;
 import project.wy.com.myappdemo.fragment.DeviceListFragment;
 import project.wy.com.myappdemo.fragment.UserFragment;
 import project.wy.com.myappdemo.fragment.WarningFragment;
@@ -194,7 +197,37 @@ public class MainActivity extends FragmentActivity {
                 Bundle b = data.getExtras();
                 if(b!=null){
                     String result = b.getString(CaptureActivity.EXTRA_STRING);
-                    Toast.makeText(this, result + "", Toast.LENGTH_SHORT).show();
+                    DialogUtil.showDialogLoading(MainActivity.this,null);
+//                    Toast.makeText(this, result + "", Toast.LENGTH_SHORT).show();
+                    Map<String,String> prams = new HashMap<>();
+                    prams.put("equip_id", result.trim());
+                    OkhttpUtils.postAsyn(Constant.QUEST_DEVICE_INFO, prams, new HttpCallback() {
+                        @Override
+                        public void onSuccess(String resultDesc) {
+                            super.onSuccess(resultDesc);
+                            DialogUtil.hideDialogLoading();
+                            Gson gson = new Gson();
+                            EquipmentInfoBean equInfoBean = gson.fromJson(resultDesc, EquipmentInfoBean.class);
+                            Log.i(TAG, "xwz::::" + resultDesc);
+                            if(equInfoBean.getEquipment() != null){
+                                Intent intent = new Intent();
+                                intent.setClass(MainActivity.this, DeviceInfoActivity.class);
+                                intent.putExtra("DeviceInfoBean", equInfoBean.getEquipment());
+                                MainActivity.this.startActivity(intent);
+                            }else{
+                                ToastUtil.showText("未查找到设备!！");
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(int code, String message) {
+                            super.onFailure(code, message);
+                            DialogUtil.hideDialogLoading();
+                            ToastUtil.showText("查找失败，服务器异常！！！");
+                        }
+                    });
+
                 }
             }
 

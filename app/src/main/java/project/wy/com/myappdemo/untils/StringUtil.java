@@ -1,5 +1,8 @@
 package project.wy.com.myappdemo.untils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * @Description String类工具集合
  * @Author 一花一世界
@@ -16,5 +19,11 @@ public class StringUtil {
         } else {
             return true;
         }
+    }
+
+    public static String getTime(Date date) {//可根据需要自行截取数据显示
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(date);
     }
 }

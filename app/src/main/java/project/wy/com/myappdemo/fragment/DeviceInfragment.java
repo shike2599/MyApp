@@ -98,7 +98,6 @@ public class DeviceInfragment extends BaseFragment {
             public void onBitmapSuccess(Bitmap bitmap) {
                 super.onBitmapSuccess(bitmap);
                 DialogUtil.hideDialogLoading();
-//                ImageUtils.calculateInSampleSize()
                 device_pic.setImageBitmap(bitmap);
             }
 
