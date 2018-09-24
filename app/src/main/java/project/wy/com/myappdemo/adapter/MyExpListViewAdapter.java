@@ -124,7 +124,7 @@ public class MyExpListViewAdapter extends BaseExpandableListAdapter{
         childViewHolder.equip_id.setText( mEp_id+"");
         childViewHolder.equip_main_info.setText( mMaintenBean.getResult().get(groupPosition).getEquip_main_info());
         String data = StringUtil.stampToDate(mMaintenBean.getResult().get(groupPosition).getEquip_main_date().getTime()+"");
-        String time = data+"  "+"星期"+mMaintenBean.getResult().get(groupPosition).getEquip_main_date().getDay();
+        String time      = data+"  "+"星期"+mMaintenBean.getResult().get(groupPosition).getEquip_main_date().getDay();
         childViewHolder.equip_date.setText(time);
         childViewHolder.equip_main_time.setText( mMaintenBean.getResult().get(groupPosition).getEquip_main_time()+"");
         childViewHolder.equip_main_worker.setText( mMaintenBean.getResult().get(groupPosition).getEquip_main_worker());
