@@ -74,7 +74,7 @@ public class DeviceInfoActivity extends FragmentActivity {
                     break;
                 case R.id.rb_miantenan://维护
                     position = 2;
-                    title_show.setText("维护信息");
+                    title_show.setText("维保信息");
                     break;
                 default:
                     position = 0;
