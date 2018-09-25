@@ -84,7 +84,7 @@ public class LineXChart implements BaseXChart<LineChart> {
         rightAxis.setEnabled(false);
         rightAxis.setDrawGridLines(false);
         lineChart.setExtraOffsets(15, 30, 20, 10);//设置视图窗口大小
-        lineChart.animateX(3000);//数据显示动画，从左往右依次显示
+        lineChart.animateX(500);//数据显示动画，从左往右依次显示
         lineChart.setPinchZoom(true);//设置按比例放缩
         lineChart.setMaxVisibleValueCount(100);
         Matrix mMatrix = new Matrix();

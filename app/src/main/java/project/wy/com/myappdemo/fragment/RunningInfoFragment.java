@@ -42,7 +42,7 @@ public class RunningInfoFragment extends BaseFragment implements View.OnClickLis
 
     private CombinedChart barChart;
     private LineChart lineChart;
-    private TextView show_device_id,show_deivce_name;
+    private TextView show_deivce_name;
     private EditText input_time,input_info;
     private Button start_select_btn,start_input_info;
     private EquipmentOperInfoBean eopInfoBean;
@@ -65,7 +65,6 @@ public class RunningInfoFragment extends BaseFragment implements View.OnClickLis
         View view = View.inflate(mContext, R.layout.running_info_layout, null);
         barChart = view.findViewById(R.id.bar_chart);
         lineChart = view.findViewById(R.id.line_chart);
-        show_device_id = view.findViewById(R.id.runing_deivce_id);
         show_deivce_name = view.findViewById(R.id.runing_deivce_name);
         input_time = view.findViewById(R.id.select_timer);
         input_info = view.findViewById(R.id.input_running_info);
@@ -78,7 +77,6 @@ public class RunningInfoFragment extends BaseFragment implements View.OnClickLis
 
         if(equipmentBean!=null){
             show_deivce_name.setText(equipmentBean.getEquip_name());
-            show_device_id.setText(equipmentBean.getEquip_id()+"");
         }
 
         return view;

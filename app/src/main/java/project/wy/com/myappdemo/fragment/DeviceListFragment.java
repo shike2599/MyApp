@@ -33,7 +33,6 @@ public class DeviceListFragment extends BaseFragment {
     private static final String TAG = DeviceListFragment.class.getSimpleName();
     private ListView mListView;
     private EditText search_edit;
-    private Button search_btn;
     private DeviceListAdapter adapter;
     private static DeviceInfoBean deviceBean;
     private EquipmentInfoBean equInfoBean;
@@ -43,20 +42,6 @@ public class DeviceListFragment extends BaseFragment {
         View view = View.inflate(mContext, R.layout.deivelist_fargment_layout, null);
         mListView = (ListView) view.findViewById(R.id.listview);
         search_edit = (EditText) view.findViewById(R.id.search_eidt);
-        search_btn = (Button) view.findViewById(R.id.start_search);
-        search_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String seach_key = search_edit.getText().toString();
-                if (seach_key != null & !seach_key.equals("")) {
-                    Map<String, String> params = new HashMap<>();
-                    params.put("equip_id", seach_key);
-                    doPost(params, "info", Constant.QUEST_DEVICE_INFO);
-                } else {
-                    ToastUtil.showText("请输入设备ID！！！");
-                }
-            }
-        });
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
