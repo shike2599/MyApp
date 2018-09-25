@@ -33,7 +33,7 @@ public class StringUtil {
      * @param GMT 秒单部位
      * @return
      */
-    public static String stampToDate(String GMT) {
+    public static String[] stampToDate(String GMT) {
          Long newGTM = Long.parseLong(GMT) / 1000;
         long lt = newGTM+8*3600;
         String res = null;
@@ -45,6 +45,6 @@ public class StringUtil {
             e.printStackTrace();
         }
 
-        return res;
+        return res.split(" ");
     }
 }

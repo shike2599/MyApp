@@ -2,12 +2,17 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-   <ExpandableListView
-       android:id="@+id/mainten_exp_listview"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+   <!--<ExpandableListView-->
+       <!--android:id="@+id/mainten_exp_listview"-->
+       <!--android:layout_width="match_parent"-->
+       <!--android:layout_height="wrap_content"-->
+       <!--android:groupIndicator="@color/transparent"-->
+       <!--&gt;-->
+   <!--</ExpandableListView>-->
+   <ListView
+       android:id="@+id/mainten_listView"
        android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:groupIndicator="@color/transparent"
-       >
-   </ExpandableListView>
+       android:layout_height="match_parent"/>
 </LinearLayout>

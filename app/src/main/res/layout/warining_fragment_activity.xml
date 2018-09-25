@@ -3,56 +3,73 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp"
+    android:paddingRight="19dp"
     >
-    <LinearLayout
-        android:layout_marginTop="20dp"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-
+        android:layout_marginTop="23dp"
         >
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/spinner_select_id"
+            android:text="请选择设备"
+            android:textColor="@color/textcolor"
             android:textSize="@dimen/device_info_size"
-            android:text="设备编号："
+            android:layout_toLeftOf="@+id/spinner_select_id"
+            android:layout_marginRight="12dp"
             />
-        <!--<EditText-->
-            <!--android:id="@+id/device_warn_id"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:hint="请输入设备编号！"-->
-            <!--android:inputType="number"-->
-            <!--/>-->
         <Spinner
             android:id="@+id/spinner_select_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:tooltipText="请选择设备"
+            />
+    </RelativeLayout>
 
-    <LinearLayout
-        android:layout_marginTop="20dp"
+    <RelativeLayout
+        android:layout_marginTop="13dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="请输入报警信息"
+            android:textColor="@color/textcolor"
             android:textSize="@dimen/device_info_size"
-            android:text="报警信息："
+
+            android:layout_toStartOf="@+id/device_warn_info"
+            android:layout_toLeftOf="@+id/device_warn_info"
+            android:layout_marginRight="9dp"
+
             />
         <EditText
             android:id="@+id/device_warn_info"
-            android:layout_width="match_parent"
+            android:layout_width="210dp"
             android:layout_height="wrap_content"
             android:hint="请输入报警信息！"
             android:inputType="textMultiLine"
-        />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="20dp"
+            android:textColor="@color/textcolor"
+            android:background="@drawable/bg_edittext"
+            android:layout_alignParentRight="true"
+            android:minLines="5"
+            android:gravity="top"
+            android:textSize="@dimen/device_info_size"
+
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="19dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -61,23 +78,39 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/device_info_size"
-            android:text="输入备注："
+            android:text="请输入备注"
+            android:textColor="@color/textcolor"
+            android:layout_toStartOf="@+id/device_warn_rmaker"
+            android:layout_toLeftOf="@+id/device_warn_rmaker"
+            android:layout_marginRight="12dp"
+
             />
         <EditText
             android:id="@+id/device_warn_rmaker"
-            android:layout_width="match_parent"
+            android:layout_width="210dp"
             android:layout_height="wrap_content"
             android:hint="请输入备注！"
             android:inputType="textMultiLine"
+            android:textColor="@color/textcolor"
+            android:background="@drawable/bg_edittext"
+            android:layout_alignParentRight="true"
+            android:minLines="5"
+            android:gravity="top"
+            android:textSize="@dimen/device_info_size"
+
             />
 
-    </LinearLayout>
+    </RelativeLayout>
+
     <Button
-        android:layout_marginTop="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="确认提交"
-        android:background="@drawable/button_style_bg"
         android:id="@+id/commit_btn"
-        />
+        android:layout_width="321dp"
+        android:layout_height="41dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="21dp"
+        android:background="@drawable/button_style_bg"
+        android:textColor="@color/white"
+        android:layout_marginLeft="6dp"
+        android:textSize="16dp"
+        android:text="确认提交" />
 </LinearLayout>

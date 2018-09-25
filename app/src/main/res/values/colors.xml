@@ -21,4 +21,6 @@
     <color name="blue_pressed">#99ccee</color>
     <color name="black">#333333</color>
     <color name="transparent">#00000000</color>
+    <color name="textcolor">#666666</color>
+    <color name="mainten_text_color">#666666</color>
 </resources>

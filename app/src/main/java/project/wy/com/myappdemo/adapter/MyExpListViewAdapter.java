@@ -85,7 +85,8 @@ public class MyExpListViewAdapter extends BaseExpandableListAdapter{
         } else {
             groupViewHolder = (GroupViewHolder) convertView.getTag();
         }
-        String time_1 = StringUtil.stampToDate(mMaintenBean.getResult().get(groupPosition).getEquip_main_date().getTime()+"");
+       // String time_1 = StringUtil.stampToDate(mMaintenBean.getResult().get(groupPosition).getEquip_main_date().getTime()+"");
+        String time_1 = "";
         String time_2 = time_1+"  "+"星期"+mMaintenBean.getResult().get(groupPosition).getEquip_main_date().getDay();
         //      把位置和图标添加到Map
         mIndicators.put(groupPosition, groupViewHolder.ivIndicator);
@@ -123,7 +124,8 @@ public class MyExpListViewAdapter extends BaseExpandableListAdapter{
         childViewHolder.equip_main_id.setText( mMaintenBean.getResult().get(groupPosition).getEquip_main_id()+"");
         childViewHolder.equip_id.setText( mEp_id+"");
         childViewHolder.equip_main_info.setText( mMaintenBean.getResult().get(groupPosition).getEquip_main_info());
-        String data = StringUtil.stampToDate(mMaintenBean.getResult().get(groupPosition).getEquip_main_date().getTime()+"");
+//        String data = StringUtil.stampToDate(mMaintenBean.getResult().get(groupPosition).getEquip_main_date().getTime()+"");
+        String data = "";
         String time      = data+"  "+"星期"+mMaintenBean.getResult().get(groupPosition).getEquip_main_date().getDay();
         childViewHolder.equip_date.setText(time);
         childViewHolder.equip_main_time.setText( mMaintenBean.getResult().get(groupPosition).getEquip_main_time()+"");
