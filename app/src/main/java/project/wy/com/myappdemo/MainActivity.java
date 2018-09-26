@@ -10,21 +10,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.znq.zbarcode.CaptureActivity;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import project.wy.com.myappdemo.base.BaseFragment;
 import project.wy.com.myappdemo.bean.CompanyInfoBean;
 import project.wy.com.myappdemo.bean.EquipmentInfoBean;
@@ -35,7 +30,6 @@ import project.wy.com.myappdemo.fragment.WarningFragment;
 import project.wy.com.myappdemo.http.HttpCallback;
 import project.wy.com.myappdemo.untils.Constant;
 import project.wy.com.myappdemo.untils.DialogUtil;
-import project.wy.com.myappdemo.untils.LogUtil;
 import project.wy.com.myappdemo.untils.OkhttpUtils;
 import project.wy.com.myappdemo.untils.ToastUtil;
 import project.wy.com.myappdemo.widget.window.MenuPopupWindow;
@@ -277,7 +271,6 @@ public class MainActivity extends FragmentActivity {
                 if (b != null) {
                     String result = b.getString(CaptureActivity.EXTRA_STRING);
                     DialogUtil.showDialogLoading(MainActivity.this, null);
-//                    Toast.makeText(this, result + "", Toast.LENGTH_SHORT).show();
                     Map<String, String> prams = new HashMap<>();
                     prams.put("equip_id", result.trim());
                     OkhttpUtils.postAsyn(Constant.QUEST_DEVICE_INFO, prams, new HttpCallback() {
@@ -287,12 +280,17 @@ public class MainActivity extends FragmentActivity {
                             DialogUtil.hideDialogLoading();
                             Gson gson = new Gson();
                             EquipmentInfoBean equInfoBean = gson.fromJson(resultDesc, EquipmentInfoBean.class);
-                            Log.i(TAG, "xwz::::" + resultDesc);
                             if (equInfoBean.getEquipment() != null) {
-                                Intent intent = new Intent();
-                                intent.setClass(MainActivity.this, DeviceInfoActivity.class);
-                                intent.putExtra("DeviceInfoBean", equInfoBean.getEquipment());
-                                MainActivity.this.startActivity(intent);
+                                if(position == 0) {
+                                    Intent intent = new Intent();
+                                    intent.setClass(MainActivity.this, DeviceInfoActivity.class);
+                                    intent.putExtra("DeviceInfoBean", equInfoBean.getEquipment());
+                                    MainActivity.this.startActivity(intent);
+                                }else if(position == 1){
+                                    WarningFragment warningFragment =  (WarningFragment)getFragment();
+                                    warningFragment.setData(equInfoBean.getEquipment());
+                                }
+
                             } else {
                                 ToastUtil.showText("未查找到设备!！");
                             }

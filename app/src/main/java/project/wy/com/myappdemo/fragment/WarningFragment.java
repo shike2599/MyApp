@@ -1,18 +1,17 @@
 package project.wy.com.myappdemo.fragment;
 
-import android.util.Log;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import project.wy.com.myappdemo.R;
 import project.wy.com.myappdemo.base.BaseFragment;
+import project.wy.com.myappdemo.bean.EquipmentBean;
 import project.wy.com.myappdemo.http.HttpCallback;
 import project.wy.com.myappdemo.untils.Constant;
 import project.wy.com.myappdemo.untils.DialogUtil;
@@ -25,17 +24,24 @@ public class WarningFragment extends BaseFragment {
     private EditText input_info,input_remark;
     private Button commit_btn;
     private Spinner input_num;
+    private Spinner location;
     private ArrayAdapter<Integer> adapter;
     private int deivice_id;
-
+    private EquipmentBean equBean;
     @Override
     protected View initView() {
         View view = View.inflate(mContext, R.layout.warining_fragment_activity,null);
         commit_btn = view.findViewById(R.id.commit_btn);
         input_num = view.findViewById(R.id.spinner_select_id);
+        location = view.findViewById(R.id.spinner_select_location);
         input_info = view.findViewById(R.id.device_warn_info);
         input_remark = view.findViewById(R.id.device_warn_rmaker);
         return view;
+    }
+
+    public void setData(EquipmentBean equBean) {
+        this.equBean = equBean;
+        input_num.setSelection(input_num.getCount() - equBean.getEquip_id());
     }
 
     @Override
