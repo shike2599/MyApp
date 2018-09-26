@@ -1,16 +1,17 @@
 package project.wy.com.myappdemo;
 
 import android.content.Intent;
-import android.media.Image;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -25,7 +26,9 @@ import java.util.List;
 import java.util.Map;
 
 import project.wy.com.myappdemo.base.BaseFragment;
+import project.wy.com.myappdemo.bean.CompanyInfoBean;
 import project.wy.com.myappdemo.bean.EquipmentInfoBean;
+import project.wy.com.myappdemo.bean.ProjectInfoBean;
 import project.wy.com.myappdemo.fragment.DeviceListFragment;
 import project.wy.com.myappdemo.fragment.UserFragment;
 import project.wy.com.myappdemo.fragment.WarningFragment;
@@ -35,23 +38,55 @@ import project.wy.com.myappdemo.untils.DialogUtil;
 import project.wy.com.myappdemo.untils.LogUtil;
 import project.wy.com.myappdemo.untils.OkhttpUtils;
 import project.wy.com.myappdemo.untils.ToastUtil;
+import project.wy.com.myappdemo.widget.window.MenuPopupWindow;
 
 public class MainActivity extends FragmentActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private RadioGroup mRg_main;
     private List<BaseFragment> mBaseFragment;
+    private ImageView menu_id;
+    private MenuPopupWindow popWindow;
     /**
      * 选中的Fragment的对应的位置
      */
     private int position;
-    private int QR_CODE =1;
+    private int QR_CODE = 1;
+
+    private final static int SEACH = 1;
+    private final static int END = 2;
     /**
      * 上次切换的Fragment
      */
     private Fragment mContent;
     private TextView title_show;
-
     private TextView qrCode;
+    private CompanyInfoBean mCompanyInfoBean;
+    private List<ProjectInfoBean> mProjectInfoBeanList = new ArrayList<>();
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case SEACH:
+                    findProjectInfo();
+                    break;
+                case END:
+                    popWindow.setData(mCompanyInfoBean,mProjectInfoBeanList);
+                    break;
+            }
+        }
+    };
+
+    private void findProjectInfo() {
+        for (int i = 0; i < mCompanyInfoBean.getResult().size(); i++) {
+            String comp_id_seach = mCompanyInfoBean.getResult().get(i).getComp_id() + "";
+            Map<String, String> map = new HashMap<>();
+            map.put("company_id", comp_id_seach);
+            doPost(Constant.QUEST_PRO_INFO, map, "pro");
+        }
+        mHandler.sendEmptyMessage(END);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +98,36 @@ public class MainActivity extends FragmentActivity {
         initFragment();
         //设置RadioGroup的监听
         setListener();
+
+        initPopupData();
+    }
+
+    private void initPopupData() {
+        doPost(Constant.QUEST_COMP_INFO, null, "comp");
+    }
+
+    private void doPost(String url, final Map<String, String> parms, final String type) {
+        OkhttpUtils.postAsyn(url, parms, new HttpCallback() {
+            @Override
+            public void onSuccess(String resultDesc) {
+                super.onSuccess(resultDesc);
+                if (type.equals("comp")) {
+                    Gson gson = new Gson();
+                    mCompanyInfoBean = gson.fromJson(resultDesc, CompanyInfoBean.class);
+                    mHandler.sendEmptyMessageAtTime(SEACH, 100);
+                } else {
+                    Gson gson = new Gson();
+                    ProjectInfoBean projectInfoBean = gson.fromJson(resultDesc, ProjectInfoBean.class);
+                    mProjectInfoBeanList.add(projectInfoBean);
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String message) {
+                super.onFailure(code, message);
+                ToastUtil.showText("服务器异常！！！");
+            }
+        });
     }
 
     private void setListener() {
@@ -75,18 +140,21 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
-            switch (checkedId){
+            switch (checkedId) {
                 case R.id.rb_deivelist://device_list
                     position = 0;
-                    title_show.setText("设备信息");
+                    menu_id.setVisibility(View.GONE);
+                    title_show.setText(getResources().getText(R.string.device_info));
                     break;
                 case R.id.rb_warning://warning
                     position = 1;
-                    title_show.setText("报警信息");
+                    menu_id.setVisibility(View.GONE);
+                    title_show.setText(getResources().getText(R.string.warning_info));
                     break;
                 case R.id.rb_user_info://user
                     position = 2;
-                    title_show.setText("我的");
+                    menu_id.setVisibility(View.VISIBLE);
+                    title_show.setText(getResources().getText(R.string.user_set));
                     break;
                 default:
                     position = 0;
@@ -96,41 +164,40 @@ public class MainActivity extends FragmentActivity {
             //根据位置得到对应的Fragment
             BaseFragment to = getFragment();
             //替换
-            switchFrament(mContent,to);
+            switchFrament(mContent, to);
 
         }
     }
 
 
     /**
-     *
      * @param from 刚显示的Fragment,马上就要被隐藏了
-     * @param to 马上要切换到的Fragment，一会要显示
+     * @param to   马上要切换到的Fragment，一会要显示
      */
-    private void switchFrament(Fragment from,Fragment to) {
-        if(from != to){
+    private void switchFrament(Fragment from, Fragment to) {
+        if (from != to) {
             mContent = to;
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             //才切换
             //判断有没有被添加
-            if(!to.isAdded()){
+            if (!to.isAdded()) {
                 //to没有被添加
                 //from隐藏
-                if(from != null){
+                if (from != null) {
                     ft.hide(from);
                 }
                 //添加to
-                if(to != null){
-                    ft.add(R.id.fl_content,to).commit();
+                if (to != null) {
+                    ft.add(R.id.fl_content, to).commit();
                 }
-            }else{
+            } else {
                 //to已经被添加
                 // from隐藏
-                if(from != null){
+                if (from != null) {
                     ft.hide(from);
                 }
                 //显示to
-                if(to != null){
+                if (to != null) {
                     ft.show(to).commit();
                 }
             }
@@ -140,6 +207,7 @@ public class MainActivity extends FragmentActivity {
 
     /**
      * 根据位置得到对应的Fragment
+     *
      * @return
      */
     private BaseFragment getFragment() {
@@ -158,29 +226,39 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         mRg_main = (RadioGroup) findViewById(R.id.rg_main);
         title_show = (TextView) findViewById(R.id.title_msg);
-
         qrCode = (TextView) findViewById(R.id.qrcode_textView);
         qrCode.setVisibility(View.VISIBLE);
         //点击扫一扫
         qrCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,CaptureActivity.class);
+                Intent intent = new Intent(MainActivity.this, CaptureActivity.class);
                 MainActivity.this.startActivityForResult(intent, QR_CODE);
 
             }
         });
+
+        popWindow = new MenuPopupWindow(this);
+        menu_id = (ImageView) findViewById(R.id.menu_img);
+        menu_id.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popWindow.showPopupWindow(v);
+            }
+        });
+
     }
 
     //记录用户首次点击返回键的时间
-    private long firstTime=0;
+    private long firstTime = 0;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode==KeyEvent.KEYCODE_BACK && event.getAction()==KeyEvent.ACTION_DOWN){
-            if (System.currentTimeMillis()-firstTime>2000){
-                Toast.makeText(MainActivity.this,"再按一次退出程序！",Toast.LENGTH_SHORT).show();
-                firstTime=System.currentTimeMillis();
-            }else{
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (System.currentTimeMillis() - firstTime > 2000) {
+                Toast.makeText(MainActivity.this, "再按一次退出程序！", Toast.LENGTH_SHORT).show();
+                firstTime = System.currentTimeMillis();
+            } else {
                 finish();
                 System.exit(0);
             }
@@ -193,13 +271,13 @@ public class MainActivity extends FragmentActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == QR_CODE) {
-            if(data!=null){
+            if (data != null) {
                 Bundle b = data.getExtras();
-                if(b!=null){
+                if (b != null) {
                     String result = b.getString(CaptureActivity.EXTRA_STRING);
-                    DialogUtil.showDialogLoading(MainActivity.this,null);
+                    DialogUtil.showDialogLoading(MainActivity.this, null);
 //                    Toast.makeText(this, result + "", Toast.LENGTH_SHORT).show();
-                    Map<String,String> prams = new HashMap<>();
+                    Map<String, String> prams = new HashMap<>();
                     prams.put("equip_id", result.trim());
                     OkhttpUtils.postAsyn(Constant.QUEST_DEVICE_INFO, prams, new HttpCallback() {
                         @Override
@@ -209,12 +287,12 @@ public class MainActivity extends FragmentActivity {
                             Gson gson = new Gson();
                             EquipmentInfoBean equInfoBean = gson.fromJson(resultDesc, EquipmentInfoBean.class);
                             Log.i(TAG, "xwz::::" + resultDesc);
-                            if(equInfoBean.getEquipment() != null){
+                            if (equInfoBean.getEquipment() != null) {
                                 Intent intent = new Intent();
                                 intent.setClass(MainActivity.this, DeviceInfoActivity.class);
                                 intent.putExtra("DeviceInfoBean", equInfoBean.getEquipment());
                                 MainActivity.this.startActivity(intent);
-                            }else{
+                            } else {
                                 ToastUtil.showText("未查找到设备!！");
                             }
 
