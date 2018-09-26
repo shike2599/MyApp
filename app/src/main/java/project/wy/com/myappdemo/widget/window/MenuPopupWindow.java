@@ -80,7 +80,7 @@ public class MenuPopupWindow extends PopupWindow {
     public void showPopupWindow(View parent) {
         if (!this.isShowing()) {
             // 以下拉方式显示popupwindow
-            this.showAsDropDown(parent, -15, 55);
+            this.showAsDropDown(parent, -80, 70);
         } else {
             this.dismiss();
         }

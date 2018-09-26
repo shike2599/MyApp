@@ -75,67 +75,67 @@ public class MyExpListViewAdapter extends BaseExpandableListAdapter{
     //        获取显示指定分组的视图
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        GroupViewHolder groupViewHolder;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.mainten_expandable_item_layout, parent, false);
-            groupViewHolder = new GroupViewHolder();
-            groupViewHolder.tvTitle = (TextView) convertView.findViewById(R.id.mainten_exp_father_textivew);
-            groupViewHolder.ivIndicator = (ImageView) convertView.findViewById(R.id.iv_indicator);
-            convertView.setTag(groupViewHolder);
-        } else {
-            groupViewHolder = (GroupViewHolder) convertView.getTag();
-        }
-       // String time_1 = StringUtil.stampToDate(mMaintenBean.getResult().get(groupPosition).getEquip_main_date().getTime()+"");
-        String time_1 = "";
-        String time_2 = time_1+"  "+"星期"+mMaintenBean.getResult().get(groupPosition).getEquip_main_date().getDay();
-        //      把位置和图标添加到Map
-        mIndicators.put(groupPosition, groupViewHolder.ivIndicator);
-        //      根据分组状态设置Indicator
-        setIndicatorState(groupPosition, isExpanded);
-        groupViewHolder.tvTitle.setText(time_2);
+//        GroupViewHolder groupViewHolder;
+//        if (convertView == null) {
+//            convertView = LayoutInflater.from(mContext).inflate(R.layout.mainten_expandable_item_layout, parent, false);
+//            groupViewHolder = new GroupViewHolder();
+//            groupViewHolder.tvTitle = (TextView) convertView.findViewById(R.id.mainten_exp_father_textivew);
+//            groupViewHolder.ivIndicator = (ImageView) convertView.findViewById(R.id.iv_indicator);
+//            convertView.setTag(groupViewHolder);
+//        } else {
+//            groupViewHolder = (GroupViewHolder) convertView.getTag();
+//        }
+//       // String time_1 = StringUtil.stampToDate(mMaintenBean.getResult().get(groupPosition).getEquip_main_date().getTime()+"");
+//        String time_1 = "";
+//        String time_2 = time_1+"  "+"星期"+mMaintenBean.getResult().get(groupPosition).getEquip_main_date().getDay();
+//        //      把位置和图标添加到Map
+//        mIndicators.put(groupPosition, groupViewHolder.ivIndicator);
+//        //      根据分组状态设置Indicator
+//        setIndicatorState(groupPosition, isExpanded);
+//        groupViewHolder.tvTitle.setText(time_2);
         return convertView;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        ChildViewHolder childViewHolder;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_expand_child, parent, false);
-            childViewHolder = new ChildViewHolder();
-            childViewHolder.equipment = (TextView) convertView.findViewById(R.id.equipment);
-            childViewHolder.equip_main_id = (TextView) convertView.findViewById(R.id.equip_maintenance_id);
-            childViewHolder.equip_id = (TextView) convertView.findViewById(R.id.equip_id);
-            childViewHolder.equip_main_info = (TextView) convertView.findViewById(R.id.equip_maintenance_info);
-            childViewHolder.equip_date = (TextView) convertView.findViewById(R.id.equip_maintenance_date);
-            childViewHolder.equip_main_time = (TextView) convertView.findViewById(R.id.quip_maintenance_time);
-            childViewHolder.equip_main_worker = (TextView) convertView.findViewById(R.id.equip_maintenance_worker);
-            childViewHolder.equip_main_result = (TextView) convertView.findViewById(R.id.equip_maintenance_result);
-            childViewHolder.equip_main_memo = (TextView) convertView.findViewById(R.id.equip_maintenance_memo);
-            convertView.setTag(childViewHolder);
-        } else {
-            childViewHolder = (ChildViewHolder) convertView.getTag();
-        }
-        Object obj = mMaintenBean.getResult().get(groupPosition).getEquipment();
-        if(obj != null&& !obj.equals("")){
-            childViewHolder.equipment.setText((String)obj);
-        }else{
-            childViewHolder.equipment.setText("");
-        }
-        childViewHolder.equip_main_id.setText( mMaintenBean.getResult().get(groupPosition).getEquip_main_id()+"");
-        childViewHolder.equip_id.setText( mEp_id+"");
-        childViewHolder.equip_main_info.setText( mMaintenBean.getResult().get(groupPosition).getEquip_main_info());
-//        String data = StringUtil.stampToDate(mMaintenBean.getResult().get(groupPosition).getEquip_main_date().getTime()+"");
-        String data = "";
-        String time      = data+"  "+"星期"+mMaintenBean.getResult().get(groupPosition).getEquip_main_date().getDay();
-        childViewHolder.equip_date.setText(time);
-        childViewHolder.equip_main_time.setText( mMaintenBean.getResult().get(groupPosition).getEquip_main_time()+"");
-        childViewHolder.equip_main_worker.setText( mMaintenBean.getResult().get(groupPosition).getEquip_main_worker());
-        if(mMaintenBean.getResult().get(groupPosition).getEquip_main_result() == 0){
-            childViewHolder.equip_main_result.setText( "正常");
-        }else{
-            childViewHolder.equip_main_result.setText("维保失败，需要更换");
-        }
-        childViewHolder.equip_main_memo.setText( mMaintenBean.getResult().get(groupPosition).getEquip_main_memo());
+//        ChildViewHolder childViewHolder;
+//        if (convertView == null) {
+//            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_expand_child, parent, false);
+//            childViewHolder = new ChildViewHolder();
+//            childViewHolder.equipment = (TextView) convertView.findViewById(R.id.equipment);
+//            childViewHolder.equip_main_id = (TextView) convertView.findViewById(R.id.equip_maintenance_id);
+//            childViewHolder.equip_id = (TextView) convertView.findViewById(R.id.equip_id);
+//            childViewHolder.equip_main_info = (TextView) convertView.findViewById(R.id.equip_maintenance_info);
+//            childViewHolder.equip_date = (TextView) convertView.findViewById(R.id.equip_maintenance_date);
+//            childViewHolder.equip_main_time = (TextView) convertView.findViewById(R.id.quip_maintenance_time);
+//            childViewHolder.equip_main_worker = (TextView) convertView.findViewById(R.id.equip_maintenance_worker);
+//            childViewHolder.equip_main_result = (TextView) convertView.findViewById(R.id.equip_maintenance_result);
+//            childViewHolder.equip_main_memo = (TextView) convertView.findViewById(R.id.equip_maintenance_memo);
+//            convertView.setTag(childViewHolder);
+//        } else {
+//            childViewHolder = (ChildViewHolder) convertView.getTag();
+//        }
+//        Object obj = mMaintenBean.getResult().get(groupPosition).getEquipment();
+//        if(obj != null&& !obj.equals("")){
+//            childViewHolder.equipment.setText((String)obj);
+//        }else{
+//            childViewHolder.equipment.setText("");
+//        }
+//        childViewHolder.equip_main_id.setText( mMaintenBean.getResult().get(groupPosition).getEquip_main_id()+"");
+//        childViewHolder.equip_id.setText( mEp_id+"");
+//        childViewHolder.equip_main_info.setText( mMaintenBean.getResult().get(groupPosition).getEquip_main_info());
+////        String data = StringUtil.stampToDate(mMaintenBean.getResult().get(groupPosition).getEquip_main_date().getTime()+"");
+//        String data = "";
+//        String time      = data+"  "+"星期"+mMaintenBean.getResult().get(groupPosition).getEquip_main_date().getDay();
+//        childViewHolder.equip_date.setText(time);
+//        childViewHolder.equip_main_time.setText( mMaintenBean.getResult().get(groupPosition).getEquip_main_time()+"");
+//        childViewHolder.equip_main_worker.setText( mMaintenBean.getResult().get(groupPosition).getEquip_main_worker());
+//        if(mMaintenBean.getResult().get(groupPosition).getEquip_main_result() == 0){
+//            childViewHolder.equip_main_result.setText( "正常");
+//        }else{
+//            childViewHolder.equip_main_result.setText("维保失败，需要更换");
+//        }
+//        childViewHolder.equip_main_memo.setText( mMaintenBean.getResult().get(groupPosition).getEquip_main_memo());
         return convertView;
     }
 

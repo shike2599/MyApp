@@ -9,19 +9,34 @@
             android:id="@+id/mainten_exp_father_textivew"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/device_info_size"
-            android:layout_centerInParent="true"
-            android:text="sss"
+            android:textSize="@dimen/device_list_group_size"
+            android:layout_centerVertical="true"
+            android:text="这是设备的安装区域"
+            android:layout_marginLeft="30dp"
+            android:textColor="@color/black"
             />
 
         <ImageView
-            android:id="@+id/iv_indicator"
+            android:id="@+id/iv_carmer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="20dp"
             android:src="@mipmap/ic_expand_right_new"/>
-" />
+
+        <ImageView
+            android:id="@+id/iv_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@id/iv_carmer"
+            android:src="@mipmap/ic_expand_right_new"/>
+
+
+
+ />
 </RelativeLayout>

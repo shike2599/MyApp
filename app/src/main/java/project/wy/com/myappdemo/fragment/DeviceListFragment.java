@@ -1,11 +1,10 @@
 package project.wy.com.myappdemo.fragment;
 
 import android.content.Intent;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -32,16 +31,35 @@ import project.wy.com.myappdemo.untils.ToastUtil;
 public class DeviceListFragment extends BaseFragment {
     private static final String TAG = DeviceListFragment.class.getSimpleName();
     private ListView mListView;
-    private EditText search_edit;
     private DeviceListAdapter adapter;
     private static DeviceInfoBean deviceBean;
     private EquipmentInfoBean equInfoBean;
-
+    private SearchView search_edit;
     @Override
     protected View initView() {
         View view = View.inflate(mContext, R.layout.deivelist_fargment_layout, null);
         mListView = (ListView) view.findViewById(R.id.listview);
-        search_edit = (EditText) view.findViewById(R.id.search_eidt);
+        search_edit = (SearchView) view.findViewById(R.id.search_device_view);
+        search_edit.setSubmitButtonEnabled(true);
+        search_edit.setQueryHint("请输入设备名称或型号查找设备");
+        //s设置搜素框监听时间
+        search_edit.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                String searchKey = query.trim();
+                DialogUtil.showDialogLoading(mContext, "");
+                //准备数据
+                Map<String, String> params = new HashMap<>();
+                params.put("equip_id", searchKey);
+                doPost(params,"info",Constant.QUEST_DEVICE_INFO);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -58,7 +76,6 @@ public class DeviceListFragment extends BaseFragment {
     protected void initData() {
         super.initData();
         adapter = new DeviceListAdapter(mContext);
-//        mListView.setAdapter(adapter);
         DialogUtil.showDialogLoading(mContext, "");
         //准备数据
         Map<String, String> params = new HashMap<>();

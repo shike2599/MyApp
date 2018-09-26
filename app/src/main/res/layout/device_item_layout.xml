@@ -18,7 +18,7 @@
         android:text="设备的名称"
         android:layout_toRightOf="@id/decice_icon"
         android:layout_marginLeft="15dp"
-        android:textSize="18dp"
+        android:textSize="14dp"
         android:textColor="#000000"
         />
 
@@ -28,5 +28,14 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/decice_icon"
         android:layout_alignLeft="@id/device_name"
+        android:textSize="13dp"
         android:text="设备的型号" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:src="@mipmap/back_close_p"
+        />
 </RelativeLayout>

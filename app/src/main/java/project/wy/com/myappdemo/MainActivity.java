@@ -155,6 +155,7 @@ public class MainActivity extends FragmentActivity {
                     position = 2;
                     menu_id.setVisibility(View.VISIBLE);
                     title_show.setText(getResources().getText(R.string.user_set));
+                    title_show.setText("公司信息");
                     break;
                 default:
                     position = 0;
