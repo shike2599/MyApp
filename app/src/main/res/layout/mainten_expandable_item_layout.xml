@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:orientation="horizontal"
+    android:background="@color/white"
     >
         >
         <TextView
@@ -23,20 +24,19 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="20dp"
-            android:src="@mipmap/ic_expand_right_new"/>
+            android:layout_marginRight="28dp"
+            android:src="@mipmap/ic_camera"/>
 
-        <ImageView
-            android:id="@+id/iv_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="20dp"
-            android:layout_toLeftOf="@id/iv_carmer"
-            android:src="@mipmap/ic_expand_right_new"/>
-
-
+    <ImageView
+        android:id="@+id/iv_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:src="@mipmap/ic_add"
+        android:layout_toLeftOf="@id/iv_carmer"
+        android:layout_marginRight="20dp"
+        />
 
  />
 </RelativeLayout>

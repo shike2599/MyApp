@@ -1,204 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingLeft="20dp"
+    android:paddingLeft="30dp"
     android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:background="@color/white"
     >
-   <!--<LinearLayout-->
-       <!--android:layout_width="match_parent"-->
-       <!--android:layout_height="wrap_content"-->
-       <!--android:orientation="horizontal"-->
-       <!--android:layout_marginTop="10dp"-->
-       <!--&gt;-->
-       <!--<TextView-->
-           <!--android:layout_width="wrap_content"-->
-           <!--android:layout_height="wrap_content"-->
-           <!--android:textSize="@dimen/device_info_size"-->
-           <!--android:text="设备："-->
-           <!--/>-->
-       <!--<TextView-->
-           <!--android:id="@+id/equipment"-->
-           <!--android:layout_width="wrap_content"-->
-           <!--android:layout_height="wrap_content"-->
-           <!--android:textSize="@dimen/device_info_size"-->
-           <!--android:text=""-->
-           <!--/>-->
-   <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--&gt;-->
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textSize="@dimen/device_info_size"-->
-            <!--android:text="设备维护信息编号："-->
-            <!--/>-->
-        <!--<TextView-->
-            <!--android:id="@+id/equip_maintenance_id"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textSize="@dimen/device_info_size"-->
-            <!--android:text=""-->
-            <!--/>-->
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_marginTop="10dp"-->
-
-        <!--&gt;-->
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textSize="@dimen/device_info_size"-->
-            <!--android:text="设备编号："-->
-            <!--/>-->
-        <!--<TextView-->
-            <!--android:id="@+id/equip_id"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textSize="@dimen/device_info_size"-->
-            <!--android:text=""-->
-            <!--/>-->
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_marginTop="10dp"-->
-
-        <!--&gt;-->
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textSize="@dimen/device_info_size"-->
-            <!--android:text="维保内容："-->
-            <!--/>-->
-        <!--<TextView-->
-            <!--android:id="@+id/equip_maintenance_info"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textSize="@dimen/device_info_size"-->
-            <!--android:text=""-->
-            <!--/>-->
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_marginTop="10dp"-->
-
-        <!--&gt;-->
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textSize="@dimen/device_info_size"-->
-            <!--android:text="维保时间："-->
-            <!--/>-->
-        <!--<TextView-->
-            <!--android:id="@+id/equip_maintenance_date"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textSize="@dimen/device_info_size"-->
-            <!--android:text=""-->
-            <!--/>-->
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_marginTop="10dp"-->
-
-        <!--&gt;-->
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textSize="@dimen/device_info_size"-->
-            <!--android:text="维保用时："-->
-            <!--/>-->
-        <!--<TextView-->
-            <!--android:id="@+id/quip_maintenance_time"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textSize="@dimen/device_info_size"-->
-            <!--android:text=""-->
-            <!--/>-->
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_marginTop="10dp"-->
-
-        <!--&gt;-->
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textSize="@dimen/device_info_size"-->
-            <!--android:text="维保人员："-->
-            <!--/>-->
-        <!--<TextView-->
-            <!--android:id="@+id/equip_maintenance_worker"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textSize="@dimen/device_info_size"-->
-            <!--android:text=""-->
-            <!--/>-->
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--&gt;-->
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textSize="@dimen/device_info_size"-->
-            <!--android:text="维保结果："-->
-            <!--/>-->
-        <!--<TextView-->
-            <!--android:id="@+id/equip_maintenance_result"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textSize="@dimen/device_info_size"-->
-            <!--android:text=""-->
-            <!--/>-->
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--&gt;-->
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textSize="@dimen/device_info_size"-->
-            <!--android:text="维保备注："-->
-            <!--/>-->
-        <!--<TextView-->
-            <!--android:id="@+id/equip_maintenance_memo"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textSize="@dimen/device_info_size"-->
-            <!--android:text=""-->
-            <!--/>-->
-    <!--</LinearLayout>-->
     <ImageView
         android:id="@+id/decice_icon"
         android:layout_width="50dp"
@@ -223,4 +32,12 @@
         android:layout_alignBottom="@+id/decice_icon"
         android:layout_alignLeft="@id/device_name"
         android:text="设备的型号" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_right_arrow"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:layout_centerVertical="true"
+        />
 </RelativeLayout>

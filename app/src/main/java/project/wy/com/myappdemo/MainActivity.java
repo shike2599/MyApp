@@ -53,7 +53,7 @@ public class MainActivity extends FragmentActivity {
      */
     private Fragment mContent;
     private TextView title_show;
-    private TextView qrCode;
+    private TextView qrCode; //扫一扫
     private CompanyInfoBean mCompanyInfoBean;
     private List<ProjectInfoBean> mProjectInfoBeanList = new ArrayList<>();
 
@@ -138,18 +138,20 @@ public class MainActivity extends FragmentActivity {
                 case R.id.rb_deivelist://device_list
                     position = 0;
                     menu_id.setVisibility(View.GONE);
+                    qrCode.setVisibility(View.VISIBLE);
                     title_show.setText(getResources().getText(R.string.device_info));
                     break;
                 case R.id.rb_warning://warning
                     position = 1;
                     menu_id.setVisibility(View.GONE);
+                    qrCode.setVisibility(View.VISIBLE);
                     title_show.setText(getResources().getText(R.string.warning_info));
                     break;
                 case R.id.rb_user_info://user
                     position = 2;
                     menu_id.setVisibility(View.VISIBLE);
                     title_show.setText(getResources().getText(R.string.user_set));
-                    title_show.setText("公司信息");
+                    qrCode.setVisibility(View.GONE);
                     break;
                 default:
                     position = 0;

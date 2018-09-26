@@ -63,7 +63,7 @@
             android:id="@+id/select_timer"
             android:layout_width="172dp"
             android:layout_height="wrap_content"
-            android:hint="请输入查询时间"
+            android:hint="请选择起始时间"
             android:focusable="false"
             android:textSize="15dp"
 
@@ -89,7 +89,7 @@
             android:id="@+id/input_running_info"
             android:layout_width="172dp"
             android:layout_height="wrap_content"
-            android:hint="输入设备运行参数"
+            android:hint="请输入要录入的信息"
             android:inputType="number"
             android:textSize="15dp"
             />
