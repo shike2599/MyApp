@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import com.bigkoo.pickerview.TimePickerView;
 import com.github.mikephil.charting.charts.CombinedChart;
@@ -48,6 +51,9 @@ public class RunningInfoFragment extends BaseFragment implements View.OnClickLis
     private EquipmentOperInfoBean eopInfoBean;
     private EquipmentBean equipmentBean;
 
+    private Spinner parms_spinner;
+    private ArrayAdapter<String> adapter;
+
     public void setEquId(int equId) {
         this.equId = equId;
     }
@@ -71,6 +77,9 @@ public class RunningInfoFragment extends BaseFragment implements View.OnClickLis
         start_select_btn = view.findViewById(R.id.start_search_runing_btn);
         start_input_info = view.findViewById(R.id.start_push_runing_info);
 
+        parms_spinner = view.findViewById(R.id.device_prams_spinner);
+
+
         input_time.setOnClickListener(this);
         start_select_btn.setOnClickListener(this);
         start_input_info.setOnClickListener(this);
@@ -92,6 +101,24 @@ public class RunningInfoFragment extends BaseFragment implements View.OnClickLis
     @Override
     protected void initData() {
         super.initData();
+
+        adapter = new ArrayAdapter<>(mContext,android.R.layout.simple_spinner_item,new String[] {"请选择设备参数信息"});
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        parms_spinner.setAdapter(adapter);
+        parms_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                deivice_id = adapter.getItem(position);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         DialogUtil.showDialogLoading(mContext, "");
         //准备数据
         Map<String, String> params = new HashMap<>();

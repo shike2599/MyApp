@@ -29,6 +29,7 @@ public class DeviceInfragment extends BaseFragment {
                     device_life_cy, device_remarks;
     private static EquipmentBean  equInfoBean;
     private ImageView device_pic;
+    private ImageView healthy_img;
     public static void  setInfoBean(EquipmentBean infoBean){
         equInfoBean = infoBean;
     }
@@ -50,6 +51,7 @@ public class DeviceInfragment extends BaseFragment {
         this.device_remarks = view.findViewById(R.id.device_remarks);
 
         this.device_pic = view.findViewById(R.id.device_pic);
+        this.healthy_img = view.findViewById(R.id.healthy_imageView);
         return view;
     }
 
@@ -75,6 +77,9 @@ public class DeviceInfragment extends BaseFragment {
         device_period_of_depreciation.setText(equInfoBean.getEquip_life()+"");//有问题
 
         device_life_cy.setText(equInfoBean.getEquip_atime()+"");
+
+        int healthy_state  = equInfoBean.getEquip_state();
+        setHealthy_img(healthy_state);
 
 
         if(equInfoBean.getEquip_memo()!=null){
@@ -108,5 +113,30 @@ public class DeviceInfragment extends BaseFragment {
             }
         });
 
+    }
+
+    //选择健康状态
+    private void setHealthy_img(int state){
+        if(state == 1){
+            healthy_img.setBackgroundResource(R.mipmap.healthy_1_icon);
+        }else if(state == 2){
+            healthy_img.setBackgroundResource(R.mipmap.healthy_2_icon);
+        }else if(state == 3){
+            healthy_img.setBackgroundResource(R.mipmap.healthy_3_icon);
+        }else if(state == 4){
+            healthy_img.setBackgroundResource(R.mipmap.healthy_4_icon);
+        }else if(state == 5){
+            healthy_img.setBackgroundResource(R.mipmap.healthy_5_icon);
+        }else if(state == 6){
+            healthy_img.setBackgroundResource(R.mipmap.healthy_6_icon);
+        }else if(state == 7){
+            healthy_img.setBackgroundResource(R.mipmap.healthy_7_icon);
+        }else if(state == 8){
+            healthy_img.setBackgroundResource(R.mipmap.healthy_8_icon);
+        }else if(state == 9){
+            healthy_img.setBackgroundResource(R.mipmap.healthy_9_icon);
+        }else if(state == 10){
+            healthy_img.setBackgroundResource(R.mipmap.healthy_10_icon);
+        }
     }
 }
