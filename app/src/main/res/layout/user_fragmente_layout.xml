@@ -18,6 +18,25 @@
             android:layout_gravity="center"/>
 
     </me.crosswall.lib.coverflow.core.PagerContainer>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@mipmap/ic_circle"/>
+        <ImageView
+            android:paddingLeft="3dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@mipmap/ic_circle_s"/>
+        <ImageView
+            android:paddingLeft="3dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@mipmap/ic_circle"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
