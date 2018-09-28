@@ -30,4 +30,6 @@ dependencies {
     implementation project(':zbarcode')
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation 'com.contrarywind:Android-PickerView:3.2.7'
+    implementation 'com.github.crosswall:Android-Coverflow:release-v1.0.5'
+    implementation 'com.android.support:support-v4:27.1.1'
 }
