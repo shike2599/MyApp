@@ -74,7 +74,6 @@ public class Maintenanfragment extends BaseFragment {
             public void onSuccess(String resultDesc) {
                 super.onSuccess(resultDesc);
                 DialogUtil.hideDialogLoading();
-                LogUtil.d(TAG,resultDesc);
                 Gson gson = new Gson();
                 maintenanceInfoBean = gson.fromJson(resultDesc, MaintenanceInfoBean.class);
                 if(maintenanceInfoBean!=null&&maintenanceInfoBean.getResult().size()>0){
@@ -85,6 +84,8 @@ public class Maintenanfragment extends BaseFragment {
                     maintenListViewAdapter.setDate(maintenanceInfoBean);
                     mainten_listView.setAdapter(maintenListViewAdapter);
                     maintenListViewAdapter.notifyDataSetChanged();
+                }else{
+                    ToastUtil.showText("暂无数据！");
                 }
 
             }
