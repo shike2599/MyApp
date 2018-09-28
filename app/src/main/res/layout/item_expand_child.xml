@@ -12,7 +12,7 @@
         android:id="@+id/decice_icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@mipmap/ic_launcher"
+        android:src="@mipmap/deivce_icon"
         />
     <TextView
         android:id="@+id/device_name"

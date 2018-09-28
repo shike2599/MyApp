@@ -29,7 +29,7 @@
         <RadioButton
             android:id="@+id/rb_deiveinfo"
             style="@style/bottom_tag_style"
-            android:drawableTop="@drawable/rb_common_frame_drawable_selector"
+            android:drawableTop="@drawable/device_info_selector"
             android:text="@string/device_info"
 
             />
@@ -37,7 +37,7 @@
         <RadioButton
             android:id="@+id/rb_running"
             style="@style/bottom_tag_style"
-            android:drawableTop="@drawable/rb_thirdparty_drawable_selector"
+            android:drawableTop="@drawable/device_running_selector"
             android:text="@string/runing_info"
 
             />
@@ -45,7 +45,7 @@
         <RadioButton
             android:id="@+id/rb_miantenan"
             style="@style/bottom_tag_style"
-            android:drawableTop="@drawable/rb_custom_drawable_selector"
+            android:drawableTop="@drawable/device_mainten_selector"
             android:text="@string/miantenan_info" />
 
 

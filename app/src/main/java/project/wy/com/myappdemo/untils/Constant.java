@@ -25,4 +25,8 @@ public class Constant {
     public static final String  QUEST_PRO_INFO = "http://116.62.186.91:8080/gywyext/systemProject/getProjectInfo.do?";//项目信息
     public static final String  ADD_RUNNING_INFO= "http://116.62.186.91:8080/gywyext/moblieAdd/addOpeartion.do";//手动输入项目信息
     public static final String  QUEST_MAINTEN_INFO = "http://116.62.186.91:8080/gywyext/moblieAdd/getmaintenance.do";//维保信息
+    public static final String  QUEST_MAINTEN_BYID_INFO = "http://116.62.186.91:8080/gywyext/moblieAdd/getMaintenanceById.do";//维保信息
+
+
+    public static final String  QUEST_DEVCE_PRAMS_INFO = "http://116.62.186.91:8080/gywyext/moblieAdd/getParaById.do";//获取设备特征参数信息
 }

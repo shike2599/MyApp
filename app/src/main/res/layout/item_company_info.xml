@@ -1,31 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
+<com.dd.ShadowLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:sl_dx="3dp"
+    app:sl_dy="3dp"
+    app:sl_shadowRadius="4dp"
+    android:layout_centerHorizontal="true"
+    >
+
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingLeft="60dp"
+    android:layout_gravity="center_horizontal"
+    android:paddingLeft="38dp"
+    android:paddingBottom="7dp"
     android:background="@drawable/whilte_border">
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="5dp"
         >
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="公司名称："
-            android:textSize="@dimen/device_info_size"
-            />
+            android:textSize="@dimen/device_info_size" />
         <TextView
             android:id="@+id/comp_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/device_info_size"
+
             />
     </LinearLayout>
+
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="5dp"
@@ -35,16 +50,18 @@
             android:layout_height="wrap_content"
             android:text="公司级别："
             android:textSize="@dimen/device_info_size"
+
             />
         <TextView
             android:id="@+id/comp_rank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/device_info_size"
+
             />
     </LinearLayout>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="5dp"
@@ -54,16 +71,18 @@
             android:layout_height="wrap_content"
             android:text="员工数量："
             android:textSize="@dimen/device_info_size"
+
             />
         <TextView
             android:id="@+id/comp_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/device_info_size"
+
             />
     </LinearLayout>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="5dp"
@@ -73,17 +92,19 @@
             android:layout_height="wrap_content"
             android:text="公司地址："
             android:textSize="@dimen/device_info_size"
+
             />
         <TextView
             android:id="@+id/comp_addr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/device_info_size"
+
             />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="5dp"
@@ -93,6 +114,7 @@
             android:layout_height="wrap_content"
             android:text="备&#160;&#160;&#8201;&#160;&#160;&#8201;&#160;&#160;&#160;注："
             android:textSize="@dimen/device_info_size"
+
             />
         <TextView
             android:id="@+id/comp_memo"
@@ -103,3 +125,4 @@
     </LinearLayout>
 
 </LinearLayout>
+</com.dd.ShadowLayout>

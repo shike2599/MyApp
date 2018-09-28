@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.bigkoo.pickerview.TimePickerView;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -27,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import project.wy.com.myappdemo.R;
 import project.wy.com.myappdemo.base.BaseFragment;
+import project.wy.com.myappdemo.bean.DevicePramsInfo;
 import project.wy.com.myappdemo.bean.EquipmentBean;
 import project.wy.com.myappdemo.bean.EquipmentOperBean;
 import project.wy.com.myappdemo.bean.EquipmentOperInfoBean;
@@ -53,6 +56,9 @@ public class RunningInfoFragment extends BaseFragment implements View.OnClickLis
 
     private Spinner parms_spinner;
     private ArrayAdapter<String> adapter;
+    private DevicePramsInfo devicePramsInfo;
+    private String equip_para_id;
+    private int equip_prams_rate; //参数的额定值
 
     public void setEquId(int equId) {
         this.equId = equId;
@@ -70,6 +76,7 @@ public class RunningInfoFragment extends BaseFragment implements View.OnClickLis
     protected View initView() {
         View view = View.inflate(mContext, R.layout.running_info_layout, null);
         barChart = view.findViewById(R.id.bar_chart);
+
         lineChart = view.findViewById(R.id.line_chart);
         show_deivce_name = view.findViewById(R.id.runing_deivce_name);
         input_time = view.findViewById(R.id.select_timer);
@@ -94,76 +101,96 @@ public class RunningInfoFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initData();
+
     }
 
 
     @Override
     protected void initData() {
         super.initData();
-
-        adapter = new ArrayAdapter<>(mContext,android.R.layout.simple_spinner_item,new String[] {"请选择设备参数信息"});
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        parms_spinner.setAdapter(adapter);
-        parms_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                deivice_id = adapter.getItem(position);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
         DialogUtil.showDialogLoading(mContext, "");
-        //准备数据
         Map<String, String> params = new HashMap<>();
-        params.put("equip_para_id", String.valueOf(equId));
-        Log.i(TAG, "equip_para_id:" + equId);
-        params.put("startDate", StringUtil.getTime(new Date()));
-//        params.put("startDate","2018-09-10 00:00:00");
-        Log.i(TAG, "init----startDate:" + StringUtil.getTime(new Date()));
-        doPost(params, Constant.QUEST_DEVICE_RUN_INFO);
+        params.put("equip_id", String.valueOf(equId));
+        Log.i(TAG, "equip_id:" + equId);
+        doPost(params, Constant.QUEST_DEVCE_PRAMS_INFO,"prams");
 
     }
 
     //开始查找
-    private void doPost(Map<String, String> params, String Url) {
+    private void doPost(final Map<String, String> params, String Url, final String type) {
         DialogUtil.showDialogLoading(mContext, "正在查找，请稍等...");
         OkhttpUtils.postAsyn(Url, params, new HttpCallback() {
             @Override
             public void onSuccess(String resultDesc) {
                 super.onSuccess(resultDesc);
                 LogUtil.d(TAG,resultDesc);
-                Gson gson = new Gson();
-                eopInfoBean = gson.fromJson(resultDesc, EquipmentOperInfoBean.class);
-                if(eopInfoBean.getData()!=null&&eopInfoBean.getData().size()>0){
-                    //处理数据是 记得判断每条柱状图对应的数据集合 长度是否一致
-                    LinkedHashMap<String, List<Float>> chartDataMap = new LinkedHashMap<>();
-                    List<String> xValues = new ArrayList<>();
-                    List<Float> yValues = new ArrayList<>();
-                    List<Integer> colors = Arrays.asList(
-                            mContext.getResources().getColor(R.color.blue), mContext.getResources().getColor(R.color.blue)
-                    );
-                    List<EquipmentOperBean> valueList = eopInfoBean.getData();
-                    Collections.reverse(valueList);
+                DialogUtil.hideDialogLoading();
+                //获取设备参数信息
+                if(type.equals("prams")){
+                    Gson gson = new Gson();
+                    devicePramsInfo = gson.fromJson(resultDesc, DevicePramsInfo.class);
+                    if(devicePramsInfo!=null&&devicePramsInfo.getResult().size()>0){
+                        String data[] = new String[devicePramsInfo.getResult().size()+1];
+                        data[0] = "请选择设备参数信息";
+                        for(int i = 1;i<devicePramsInfo.getResult().size()+1;i++){
+                            LogUtil.d(TAG,devicePramsInfo.getResult().get(i-1).getEquip_para_name());
+                            data[i] = devicePramsInfo.getResult().get(i-1).getEquip_para_name();
+                        }
+                        adapter = new ArrayAdapter<>(mContext,android.R.layout.simple_spinner_item,data);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                        parms_spinner.setAdapter(adapter);
+                        parms_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-                    for (EquipmentOperBean valueBean : valueList) {
-                        xValues.add(valueBean.getEquip_oper_time());
-                        yValues.add(Float.parseFloat(valueBean.getEquip_oper_info()));
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                if(position == 0){
+                                    TextView textView = view.findViewById(android.R.id.text1);
+                                    textView.setTextColor(0xFFBBBBBB);
+                                }else{
+                                    equip_para_id = devicePramsInfo.getResult().get(position-1).getEquip_para_id()+"";
+                                    equip_prams_rate = devicePramsInfo.getResult().get(position-1).getEquip_para_rate();
+                                }
+
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
+                        parms_spinner.setSelection(0);
+                    }else{
+                        ToastUtil.showText("未查找到数据！！！");
                     }
-                    chartDataMap.put("设备运行信息", yValues);
-                    BaseXChart<LineChart> xchart = new LineXChart();
-                    xchart.initXChart(lineChart);
-                    xchart.showXChart(lineChart,xValues, chartDataMap, colors);
-                    DialogUtil.hideDialogLoading();
-                }else{
-                    DialogUtil.hideDialogLoading();
-                    ToastUtil.showText("未查找到运行数据！");
+
+
+                }else if(type.equals("running")){
+                    Gson gson = new Gson();
+                    eopInfoBean = gson.fromJson(resultDesc, EquipmentOperInfoBean.class);
+                    if(eopInfoBean.getData()!=null&&eopInfoBean.getData().size()>0){
+                        //处理数据是 记得判断每条柱状图对应的数据集合 长度是否一致
+                        LinkedHashMap<String, List<Float>> chartDataMap = new LinkedHashMap<>();
+                        List<String> xValues = new ArrayList<>();
+                        List<Float> yValues = new ArrayList<>();
+                        List<Integer> colors = Arrays.asList(
+                                mContext.getResources().getColor(R.color.blue), mContext.getResources().getColor(R.color.blue)
+                        );
+                        List<EquipmentOperBean> valueList = eopInfoBean.getData();
+                        Collections.reverse(valueList);
+
+                        for (EquipmentOperBean valueBean : valueList) {
+                            xValues.add(valueBean.getEquip_oper_time());
+                            yValues.add(Float.parseFloat(valueBean.getEquip_oper_info()));
+                        }
+                        chartDataMap.put("设备运行信息", yValues);
+                        BaseXChart<LineChart> xchart = new LineXChart();
+                        xchart.initXChart(lineChart);
+                        xchart.showXChart(lineChart,xValues, chartDataMap, colors);
+                        DialogUtil.hideDialogLoading();
+                    }else{
+                        DialogUtil.hideDialogLoading();
+                        ToastUtil.showText("未查找到运行数据！");
+                    }
                 }
 
             }
@@ -182,22 +209,23 @@ public class RunningInfoFragment extends BaseFragment implements View.OnClickLis
         switch (v.getId()){
             case R.id.start_search_runing_btn:
                 String time = input_time.getText().toString();
-                if(time!=null&&!time.equals("")){
+                if(time!=null&&!time.equals("")&&equip_para_id!=null
+                        &&!equip_para_id.equals("")){
                     Map<String,String> prams = new HashMap<>();
-                    prams.put("equip_para_id", String.valueOf(equId));
-                    Log.i(TAG, "equip_para_id:" + equId);
+                    prams.put("equip_para_id", String.valueOf(equip_para_id.trim()));
+                    Log.i(TAG, "equip_para_id:" + String.valueOf(equip_para_id.trim()));
                     prams.put("startDate",time);
                     Log.i(TAG, "startDate:" + time);
-                    doPost(prams,Constant.QUEST_DEVICE_RUN_INFO);
+                    doPost(prams,Constant.QUEST_DEVICE_RUN_INFO,"running");
                 }else{
-                    ToastUtil.showText("请输入时间！");
+                    ToastUtil.showText("请输入时间和设备参数信息");
                 }
                 break;
             case R.id.start_push_runing_info:
                 String info = input_info.getText().toString();
                 if(info!=null&&!info.equals("")){
                     Map<String,String> parms = new HashMap();
-                    parms.put("equip_para_id",equId+"");
+                    parms.put("equip_para_id",String.valueOf(equip_para_id.trim()));
                     parms.put("equip_operation_info",info.trim());
                     startPost(Constant.ADD_RUNNING_INFO,parms);
                 }else{

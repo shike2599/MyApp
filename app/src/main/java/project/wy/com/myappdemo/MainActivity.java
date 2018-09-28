@@ -34,7 +34,7 @@ import project.wy.com.myappdemo.untils.OkhttpUtils;
 import project.wy.com.myappdemo.untils.ToastUtil;
 import project.wy.com.myappdemo.widget.window.MenuPopupWindow;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements MenuPopupWindow.OnDeviceBeanUpdate{
     private static final String TAG = MainActivity.class.getSimpleName();
     private RadioGroup mRg_main;
     private List<BaseFragment> mBaseFragment;
@@ -130,6 +130,11 @@ public class MainActivity extends FragmentActivity {
         mRg_main.check(R.id.rb_deivelist);
     }
 
+    @Override
+    public void setUI(Object object) {
+
+    }
+
     class MyOnCheckedChangeListener implements RadioGroup.OnCheckedChangeListener {
 
         @Override
@@ -137,7 +142,7 @@ public class MainActivity extends FragmentActivity {
             switch (checkedId) {
                 case R.id.rb_deivelist://device_list
                     position = 0;
-                    menu_id.setVisibility(View.GONE);
+                    menu_id.setVisibility(View.VISIBLE);
                     qrCode.setVisibility(View.VISIBLE);
                     title_show.setText(getResources().getText(R.string.device_info));
                     break;
@@ -149,7 +154,7 @@ public class MainActivity extends FragmentActivity {
                     break;
                 case R.id.rb_user_info://user
                     position = 2;
-                    menu_id.setVisibility(View.VISIBLE);
+                    menu_id.setVisibility(View.GONE);
                     title_show.setText(getResources().getText(R.string.user_set));
                     qrCode.setVisibility(View.GONE);
                     break;
@@ -236,6 +241,8 @@ public class MainActivity extends FragmentActivity {
         });
 
         popWindow = new MenuPopupWindow(this);
+        popWindow.setOnDeviceUpdate(this);
+
         menu_id = (ImageView) findViewById(R.id.menu_img);
         menu_id.setOnClickListener(new View.OnClickListener() {
             @Override

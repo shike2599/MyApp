@@ -1,6 +1,7 @@
 package project.wy.com.myappdemo.widget.window;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ public class MenuPopupWindow extends PopupWindow {
     private ExpandableListView popList;
     private  NormalExpandableListAdapter adapter;
     private final static String TAG = "MenuPopupWindow";
+
     public MenuPopupWindow(Context context) {
         this.context = context;
         //获得 LayoutInflater 的实例
@@ -56,6 +58,8 @@ public class MenuPopupWindow extends PopupWindow {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 Log.i(TAG,"onChildClick: groupPosition:" + groupPosition + ", childPosition:" + childPosition);
+                Object obj = null;
+                updateUI.setUI(obj);
                 return true;
             }
         });
@@ -101,5 +105,13 @@ public class MenuPopupWindow extends PopupWindow {
             }
         }
         return result;
+    }
+
+    public OnDeviceBeanUpdate updateUI;
+    public interface OnDeviceBeanUpdate{
+       void setUI(Object object);
+    }
+    public void setOnDeviceUpdate(OnDeviceBeanUpdate deviceUpdate){
+        updateUI = deviceUpdate;
     }
 }

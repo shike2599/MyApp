@@ -66,6 +66,7 @@
             android:hint="请选择起始时间"
             android:focusable="false"
             android:textSize="15dp"
+            android:textColorHint="#FFBBBBBB"
 
             />
         <Button
@@ -90,8 +91,8 @@
             android:layout_width="172dp"
             android:layout_height="wrap_content"
             android:hint="请输入要录入的信息"
-            android:inputType="number"
             android:textSize="15dp"
+            android:textColorHint="#FFBBBBBB"
             />
         <Button
             android:id="@+id/start_push_runing_info"

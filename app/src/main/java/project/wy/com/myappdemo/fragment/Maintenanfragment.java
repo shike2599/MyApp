@@ -7,6 +7,9 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import project.wy.com.myappdemo.R;
 import project.wy.com.myappdemo.adapter.MaintenListViewAdapter;
 import project.wy.com.myappdemo.adapter.MyExpListViewAdapter;
@@ -64,7 +67,9 @@ public class Maintenanfragment extends BaseFragment {
     protected void initData() {
         super.initData();
         DialogUtil.showDialogLoading(mContext,null);
-        OkhttpUtils.postAsyn(Constant.QUEST_MAINTEN_INFO, null, new HttpCallback() {
+        Map<String,String> parms = new HashMap<>();
+        parms.put("equip_id",String.valueOf(mEp_id));
+        OkhttpUtils.postAsyn(Constant.QUEST_MAINTEN_BYID_INFO, parms, new HttpCallback() {
             @Override
             public void onSuccess(String resultDesc) {
                 super.onSuccess(resultDesc);
