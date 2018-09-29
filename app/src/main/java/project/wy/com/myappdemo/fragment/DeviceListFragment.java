@@ -4,24 +4,22 @@ import android.content.Intent;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.ExpandableListView;
 
 import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
 import project.wy.com.myappdemo.DeviceInfoActivity;
 import project.wy.com.myappdemo.R;
-import project.wy.com.myappdemo.adapter.DeviceListAdapter;
+import project.wy.com.myappdemo.adapter.MyExpListViewAdapter;
 import project.wy.com.myappdemo.base.BaseFragment;
 import project.wy.com.myappdemo.bean.DeviceInfoBean;
 import project.wy.com.myappdemo.bean.EquipmentBean;
 import project.wy.com.myappdemo.bean.EquipmentInfoBean;
+import project.wy.com.myappdemo.bean.LocalDeviceInfoBean;
+import project.wy.com.myappdemo.bean.RoomBean;
 import project.wy.com.myappdemo.http.HttpCallback;
 import project.wy.com.myappdemo.untils.Constant;
 import project.wy.com.myappdemo.untils.DialogUtil;
@@ -29,16 +27,21 @@ import project.wy.com.myappdemo.untils.OkhttpUtils;
 import project.wy.com.myappdemo.untils.ToastUtil;
 
 public class DeviceListFragment extends BaseFragment {
+
     private static final String TAG = DeviceListFragment.class.getSimpleName();
-    private ListView mListView;
-    private DeviceListAdapter adapter;
-    private static DeviceInfoBean deviceBean;
+    private ExpandableListView mExpListView;
+    private MyExpListViewAdapter myExpListViewAdapter;
     private EquipmentInfoBean equInfoBean;
     private SearchView search_edit;
+    private static List<EquipmentBean> equipments;
+    private List<RoomBean> rooms;
+    private LocalDeviceInfoBean mLocalDeviceInfoBean;
+    private List<List<EquipmentBean>> equipmentList = new ArrayList<>();
+
     @Override
     protected View initView() {
         View view = View.inflate(mContext, R.layout.deivelist_fargment_layout, null);
-        mListView = (ListView) view.findViewById(R.id.listview);
+        mExpListView = (ExpandableListView)view.findViewById(R.id.device_list_ExpandableListView);
         search_edit = (SearchView) view.findViewById(R.id.search_device_view);
         search_edit.setSubmitButtonEnabled(true);
         search_edit.setQueryHint("请输入设备名称或型号查找设备");
@@ -60,13 +63,22 @@ public class DeviceListFragment extends BaseFragment {
                 return false;
             }
         });
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        mExpListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                return false;
+            }
+        });
+
+        mExpListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 Intent intent = new Intent();
                 intent.setClass(mContext, DeviceInfoActivity.class);
-                intent.putExtra("DeviceInfoBean", deviceBean.getList().get(position));
+                intent.putExtra("DeviceInfoBean",equipmentList.get(groupPosition).get(childPosition));
                 mContext.startActivity(intent);
+                return false;
             }
         });
         return view;
@@ -75,13 +87,13 @@ public class DeviceListFragment extends BaseFragment {
     @Override
     protected void initData() {
         super.initData();
-        adapter = new DeviceListAdapter(mContext);
+        myExpListViewAdapter = new MyExpListViewAdapter(mContext);
         DialogUtil.showDialogLoading(mContext, "");
         //准备数据
         Map<String, String> params = new HashMap<>();
         params.put("page", String.valueOf(1));
         params.put("searchKey", "");
-        doPost(params, "list", Constant.QUEST_ALL_DEVICE);
+     //   doPost(params, "list", Constant.QUEST_ALL_DEVICE);
 
     }
 
@@ -96,11 +108,27 @@ public class DeviceListFragment extends BaseFragment {
                 DialogUtil.hideDialogLoading();
                 if (type.equals("list")) {
                     Gson gson = new Gson();
-                    deviceBean = gson.fromJson(resultDesc, DeviceInfoBean.class);
+                    mLocalDeviceInfoBean = gson.fromJson(resultDesc, LocalDeviceInfoBean.class);
+                    rooms = mLocalDeviceInfoBean.getRoom();
+                    equipments = mLocalDeviceInfoBean.getEquipment();
+                    int rmlen =  rooms.size();
+                    int devlen = equipments.size();
+                    for(int i = 0; i < rmlen; i++){
+                        List<EquipmentBean> equipList = new ArrayList<>();
+                        for(int j = 0; j < devlen; j++){
+                            RoomBean  room = rooms.get(i);
+                            EquipmentBean equipmentBean = equipments.get(j);
+//                            if(room.getEquip_room_id() == equipmentBean.getEquip_room()){
+//                                equipList.add(equipmentBean);
+//                            }
+                        }
+                        equipmentList.add(i,equipList);
+                    }
+
                     //设置适配器
-                    adapter.setData(deviceBean);
-                    mListView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                    myExpListViewAdapter.setData(mLocalDeviceInfoBean.getRoom(),equipmentList);
+                    mExpListView.setAdapter(myExpListViewAdapter);
+                    myExpListViewAdapter.notifyDataSetChanged();
                 } else if (type.equals("info")) {
                     Gson gson = new Gson();
                     equInfoBean = gson.fromJson(resultDesc, EquipmentInfoBean.class);
@@ -133,8 +161,8 @@ public class DeviceListFragment extends BaseFragment {
 
     public static List<Integer> getDeviceBeanList() {
         List<Integer> id_list = new ArrayList<>();
-        if (deviceBean != null) {
-            for (EquipmentBean equipmentBean : deviceBean.getList()) {
+        if (equipments != null) {
+            for (EquipmentBean equipmentBean : equipments) {
                 id_list.add(equipmentBean.getEquip_id());
             }
         }

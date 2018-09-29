@@ -4,13 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-   <!--<ExpandableListView-->
-       <!--android:id="@+id/mainten_exp_listview"-->
-       <!--android:layout_width="match_parent"-->
-       <!--android:layout_height="wrap_content"-->
-       <!--android:groupIndicator="@color/transparent"-->
-       <!--&gt;-->
-   <!--</ExpandableListView>-->
    <ListView
        android:layout_marginTop="13dp"
        android:id="@+id/mainten_listView"

@@ -1,24 +1,17 @@
 package project.wy.com.myappdemo.fragment;
 
 import android.view.View;
-
-import android.widget.ExpandableListView;
 import android.widget.ListView;
-
 import com.google.gson.Gson;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import project.wy.com.myappdemo.R;
 import project.wy.com.myappdemo.adapter.MaintenListViewAdapter;
-import project.wy.com.myappdemo.adapter.MyExpListViewAdapter;
 import project.wy.com.myappdemo.base.BaseFragment;
 import project.wy.com.myappdemo.bean.MaintenanceInfoBean;
 import project.wy.com.myappdemo.http.HttpCallback;
 import project.wy.com.myappdemo.untils.Constant;
 import project.wy.com.myappdemo.untils.DialogUtil;
-import project.wy.com.myappdemo.untils.LogUtil;
 import project.wy.com.myappdemo.untils.OkhttpUtils;
 import project.wy.com.myappdemo.untils.ToastUtil;
 
@@ -28,13 +21,8 @@ import project.wy.com.myappdemo.untils.ToastUtil;
  */
 public class Maintenanfragment extends BaseFragment {
     private static final String TAG = Maintenanfragment.class.getSimpleName();
-//    private ExpandableListView mExpListView;
-//    private MyExpListViewAdapter myExpListViewAdapter;
-
     private MaintenanceInfoBean maintenanceInfoBean;
     private static int mEp_id;
-
-
     private ListView  mainten_listView;
     private MaintenListViewAdapter maintenListViewAdapter;
     public static void setEpId(int ep_id){
