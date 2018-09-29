@@ -88,30 +88,35 @@ public class DeviceInfragment extends BaseFragment {
             device_remarks.setText("");
         }
         FileIdBean fileIdBean = equInfoBean.getFile_id();
-        String fileArr[] = fileIdBean.getFile_path().split("\\\\");
-        //http://116.62.186.91:8080//gywyext//picture//8b2187ecec4d28820180923110257542.jpg
-        String realPath = "http://116.62.186.91:8080//"+fileArr[3]+"//"+fileArr[4]+"//"+fileArr[5];
-        LogUtil.d(TAG,"RealPaht---"+realPath);
-        OkhttpUtils.displayAsynImage(realPath, new HttpCallback() {
-            @Override
-            public void onSuccess(String resultDesc) {
-                super.onSuccess(resultDesc);
-            }
+        if(fileIdBean!=null && fileIdBean.getFile_path()!=null && !fileIdBean.getFile_path().equals("")){
+            String fileArr[] = fileIdBean.getFile_path().split("\\\\");
+            //http://116.62.186.91:8080//gywyext//picture//8b2187ecec4d28820180923110257542.jpg
+            String realPath = "http://116.62.186.91:8080//"+fileArr[3]+"//"+fileArr[4]+"//"+fileArr[5];
+            LogUtil.d(TAG,"RealPaht---"+realPath);
+            OkhttpUtils.displayAsynImage(realPath, new HttpCallback() {
+                @Override
+                public void onSuccess(String resultDesc) {
+                    super.onSuccess(resultDesc);
+                }
 
-            @Override
-            public void onBitmapSuccess(Bitmap bitmap) {
-                super.onBitmapSuccess(bitmap);
-                DialogUtil.hideDialogLoading();
-                device_pic.setImageBitmap(bitmap);
-            }
+                @Override
+                public void onBitmapSuccess(Bitmap bitmap) {
+                    super.onBitmapSuccess(bitmap);
+                    DialogUtil.hideDialogLoading();
+                    device_pic.setImageBitmap(bitmap);
+                }
 
-            @Override
-            public void onFailure(int code, String message) {
-                super.onFailure(code, message);
-                DialogUtil.hideDialogLoading();
-                ToastUtil.showText("图片加载失败！");
-            }
-        });
+                @Override
+                public void onFailure(int code, String message) {
+                    super.onFailure(code, message);
+                    DialogUtil.hideDialogLoading();
+                    ToastUtil.showText("图片加载失败！");
+                }
+            });
+        }else{
+            ToastUtil.showText("图片不存在");
+        }
+
 
     }
 

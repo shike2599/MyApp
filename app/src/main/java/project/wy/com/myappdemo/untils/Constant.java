@@ -30,4 +30,6 @@ public class Constant {
 
     public static final String  QUEST_DEVCE_PRAMS_INFO = "http://116.62.186.91:8080/gywyext/moblieAdd/getParaById.do";//获取设备特征参数信息
     public static final String  QUEST_DEVCE_BY_PROJ = "http://116.62.186.91:8080/gywyext/moblieAdd/selectBaseInfoByProj.do";//获取项目拿到设备信息
+    public static final String  ACCESSTOKE = "at.2earvrra9u2nd7j82ntup7t70cg4zmdi-86r7nmyy2p-1by02i5-igh7zed4e";//萤石云toke
+    public static final String  APP_KEY = "ca8ff88d26034fa69dd42af5e333fcc9";//萤石云toke
 }

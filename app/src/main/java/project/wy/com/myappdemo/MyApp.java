@@ -3,9 +3,13 @@ package project.wy.com.myappdemo;
 import android.app.Application;
 import android.content.Context;
 
+import com.ezvizuikit.open.EZUIKit;
+import com.videogo.openapi.EZOpenSDK;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import project.wy.com.myappdemo.untils.Constant;
 import project.wy.com.myappdemo.untils.OkhttpUtils;
 
 public class MyApp extends Application {
@@ -15,6 +19,19 @@ public class MyApp extends Application {
         super.onCreate();
         mContext = getApplicationContext();
         initOkHttp();
+
+        /** * sdk日志开关，正式发布需要去掉 */
+        EZOpenSDK.showSDKLog(true);
+        /** * 设置是否支持P2P取流,详见api */
+        EZOpenSDK.enableP2P(false);
+
+        /** * APP_KEY请替换成自己申请的 */
+//        EZOpenSDK.initLib(this, Constant.APP_KEY);
+//        EZOpenSDK.getInstance().setAccessToken(Constant.ACCESSTOKE);
+        EZUIKit.initWithAppKey(this, Constant.APP_KEY);
+        EZUIKit.setAccessToken(Constant.ACCESSTOKE);
+
+
     }
     //初始化Okhttp
     private void initOkHttp() {

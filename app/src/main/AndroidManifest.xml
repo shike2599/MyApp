@@ -6,6 +6,17 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    //网络权限
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    //存储权限
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    //wifi 状态权限
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
 
     <application
         android:name=".MyApp"
@@ -22,7 +33,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DeviceInfoActivity"></activity>
+        <activity android:name=".DeviceInfoActivity" />
+        <activity
+            android:name="com.videogo.main.EzvizWebViewActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <receiver
+            android:name=".broadcast.MyEZReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.videogo.action.OAUTH_SUCCESS_ACTION" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".OpenYSPlayerActivity" />
+        <activity android:name=".camera.EZRealPlayActivity"></activity>
     </application>
 
 </manifest>

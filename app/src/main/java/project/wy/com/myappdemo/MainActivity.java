@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.Gson;
+import com.videogo.openapi.EZOpenSDK;
 import com.znq.zbarcode.CaptureActivity;
 import java.util.ArrayList;
 import java.util.HashMap;
