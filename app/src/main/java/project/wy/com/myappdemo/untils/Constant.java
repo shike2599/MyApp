@@ -29,4 +29,5 @@ public class Constant {
 
 
     public static final String  QUEST_DEVCE_PRAMS_INFO = "http://116.62.186.91:8080/gywyext/moblieAdd/getParaById.do";//获取设备特征参数信息
+    public static final String  QUEST_DEVCE_BY_PROJ = "http://116.62.186.91:8080/gywyext/moblieAdd/selectBaseInfoByProj.do";//获取项目拿到设备信息
 }

@@ -10,26 +10,37 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 
+import com.google.gson.Gson;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import project.wy.com.myappdemo.R;
 import project.wy.com.myappdemo.bean.CompanyInfoBean;
+import project.wy.com.myappdemo.bean.LocalDeviceInfoBean;
 import project.wy.com.myappdemo.bean.ProjectInfoBean;
+import project.wy.com.myappdemo.http.HttpCallback;
 import project.wy.com.myappdemo.untils.Constant;
+import project.wy.com.myappdemo.untils.DialogUtil;
+import project.wy.com.myappdemo.untils.OkhttpUtils;
+import project.wy.com.myappdemo.untils.ToastUtil;
 
 /**
  * Created by lichee on 2018/9/26.
  */
 
 public class MenuPopupWindow extends PopupWindow {
-    private Context context;
+    private Context mContext;
     private View contentView;
     private ExpandableListView popList;
     private  NormalExpandableListAdapter adapter;
     private final static String TAG = "MenuPopupWindow";
+    private CompanyInfoBean companyInfoBean;
+    private List<ProjectInfoBean> projectInfoBeanList;
 
     public MenuPopupWindow(Context context) {
-        this.context = context;
+        this.mContext = context;
         //获得 LayoutInflater 的实例
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         contentView = inflater.inflate(R.layout.popup_company_info, null);
@@ -58,8 +69,33 @@ public class MenuPopupWindow extends PopupWindow {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 Log.i(TAG,"onChildClick: groupPosition:" + groupPosition + ", childPosition:" + childPosition);
+                int pro_id = projectInfoBeanList.get(childPosition).getResult().get(childPosition).getProj_id();
+                DialogUtil.showDialogLoading(mContext,"正在查询...");
+                Map<String,String> prams = new HashMap<>();
+                prams.put("proj_id",String.valueOf(pro_id));
+                OkhttpUtils.postAsyn(Constant.QUEST_DEVCE_BY_PROJ, prams, new HttpCallback() {
+                    @Override
+                    public void onSuccess(String resultDesc) {
+                        super.onSuccess(resultDesc);
+                        Gson gson = new Gson();
+                        LocalDeviceInfoBean localDeviceInfoBean = gson.fromJson(resultDesc, LocalDeviceInfoBean.class);
+                        if(localDeviceInfoBean!=null&&localDeviceInfoBean.getEquipment().size()>0){
+
+                            updateUI.setUI(localDeviceInfoBean);
+                        }else{
+                            ToastUtil.showText("未找到数据");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int code, String message) {
+                        super.onFailure(code, message);
+                        DialogUtil.hideDialogLoading();
+                        ToastUtil.showText("服务器异常！！！");
+                    }
+                });
                 Object obj = null;
-                updateUI.setUI(obj);
+
                 return true;
             }
         });
@@ -91,6 +127,8 @@ public class MenuPopupWindow extends PopupWindow {
     }
 
     public void setData(CompanyInfoBean companyInfoBean,List<ProjectInfoBean> projectInfoBeanList) {
+        this.companyInfoBean = companyInfoBean;
+        this.projectInfoBeanList = projectInfoBeanList;
         adapter.setData(companyInfoBean,projectInfoBeanList);
         adapter.notifyDataSetChanged();
     }

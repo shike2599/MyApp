@@ -22,8 +22,11 @@ import java.util.List;
 import java.util.Map;
 import project.wy.com.myappdemo.base.BaseFragment;
 import project.wy.com.myappdemo.bean.CompanyInfoBean;
+import project.wy.com.myappdemo.bean.EquipmentBean;
 import project.wy.com.myappdemo.bean.EquipmentInfoBean;
+import project.wy.com.myappdemo.bean.LocalDeviceInfoBean;
 import project.wy.com.myappdemo.bean.ProjectInfoBean;
+import project.wy.com.myappdemo.bean.RoomBean;
 import project.wy.com.myappdemo.fragment.DeviceListFragment;
 import project.wy.com.myappdemo.fragment.UserFragment;
 import project.wy.com.myappdemo.fragment.WarningFragment;
@@ -132,6 +135,11 @@ public class MainActivity extends FragmentActivity implements MenuPopupWindow.On
 
     @Override
     public void setUI(Object object) {
+        LocalDeviceInfoBean locadevBean = (LocalDeviceInfoBean) object;
+        List<EquipmentBean> equip_list = locadevBean.getEquipment();
+        List<RoomBean> room_list = locadevBean.getRoom();
+
+
 
     }
 
