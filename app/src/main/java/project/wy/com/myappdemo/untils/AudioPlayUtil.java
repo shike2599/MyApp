@@ -22,7 +22,8 @@ import android.media.SoundPool;
 
 import java.util.HashMap;
 
-import ezviz.ezopensdk.R;
+import project.wy.com.myappdemo.R;
+
 
 /**
  * 在此对类做相应的描述

@@ -16,7 +16,6 @@ import com.bumptech.glide.load.resource.bitmap.BitmapResource;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.videogo.EzvizApplication;
 import com.videogo.exception.InnerException;
 import com.videogo.openapi.bean.EZCameraInfo;
 import com.videogo.openapi.bean.EZDeviceInfo;
@@ -30,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 
+import project.wy.com.myappdemo.MyApp;
 import project.wy.com.myappdemo.R;
 
 
@@ -208,16 +208,14 @@ public class EZUtils {
                             output.close();
                             byte[] src = output.toByteArray();
                             if (src == null || src.length <= 0){
-                                LogUtil.d("EZUTils","图片加载错误！");
                                 return null;
                             }
                             if (!isEncrypt(url)){
                                 desBitmap = BitmapFactory.decodeByteArray(src, 0, src.length);
                             }else{
                             /*************** 开发者需要调用此接口解密 ****************/
-                            byte[] data1 = EzvizApplication.getOpenSDK().decryptData(output.toByteArray(), verifyCode);
+                            byte[] data1 = MyApp.getOpenSDK().decryptData(output.toByteArray(), verifyCode);
                                 if (data1 == null || data1.length <= 0){
-                                    LogUtil.d("EZUTils","verifyCodeError！");
                                     /*************** 验证码错误 ,此处回调是在子线程中，处理UI需调回到主线程****************/
                                     if (verifyCodeErrorListener != null) {
                                         verifyCodeErrorListener.verifyCodeError();

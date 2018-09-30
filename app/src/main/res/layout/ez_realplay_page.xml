@@ -67,7 +67,7 @@
 		    android:layout_height="wrap_content"
 		    android:layout_centerHorizontal="true"
 		    android:layout_alignBottom="@+id/realplay_sv"
-		    android:background="@drawable/left_twinkle"
+		    android:background="@mipmap/left_twinkle"
 		    android:scaleType="fitXY"
 		    android:visibility="gone" />
 		

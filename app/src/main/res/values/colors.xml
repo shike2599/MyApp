@@ -3,7 +3,6 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-
     <color name="theme_bg">#f6f6f6</color>
     <color name="theme_title">#63aade</color>
     <color name="prompt_bg">#eaecec</color>
@@ -11,23 +10,15 @@
     <color name="sliding_left_press">#50597b</color>
     <color name="sliding_left_normal">#394264</color>
     <color name="sliding_right_normal">#669999</color>
-    <color name="line_color">#e0e0e0</color>
-    <color name="white">#ffffff</color>
     <color name="running_title_color">#444444</color>
-    <color name="red">#ea5450</color>
     <color name="red_pressed">#fb6e6e</color>
-    <color name="gray">#888888</color>
     <color name="gray_pressed">#a8a8a8</color>
-    <color name="blue">#63aade</color>
     <color name="blue_pressed">#99ccee</color>
-    <color name="black">#333333</color>
-    <color name="transparent">#00000000</color>
     <color name="textcolor">#666666</color>
     <color name="mainten_text_color">#666666</color>
-
     <color name="mode_bg">#88000000</color>
     <color name="black_bg">#000000</color>
-    <color name="shadow">#80000000</color>
+    <!--<color name="shadow">#80000000</color>-->
     <color name="dark_bg_70p">#bb000000</color>
     <color name="dark_bg_20p">#33000000</color>
     <color name="common_bg">#f0f0f3</color>

@@ -9,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import project.wy.com.myappdemo.OpenYSPlayerActivity;
 import project.wy.com.myappdemo.R;
 import project.wy.com.myappdemo.bean.DeviceInfoBean;
 
@@ -70,8 +69,8 @@ public class DeviceListAdapter extends BaseAdapter {
         video_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, OpenYSPlayerActivity.class);
-                mContext.startActivity(intent);
+             //   Intent intent = new Intent(mContext, OpenYSPlayerActivity.class);
+              //  mContext.startActivity(intent);
             }
         });
         return convertView;

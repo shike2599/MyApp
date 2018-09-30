@@ -51,7 +51,6 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.videogo.constant.Config;
 import com.videogo.constant.Constant;
 import com.videogo.constant.IntentConsts;
@@ -69,7 +68,6 @@ import com.videogo.openapi.EZPlayer;
 import com.videogo.openapi.bean.EZCameraInfo;
 import com.videogo.openapi.bean.EZDeviceInfo;
 import com.videogo.realplay.RealPlayStatus;
-
 import com.videogo.util.ConnectionDetector;
 import com.videogo.util.LocalInfo;
 import com.videogo.util.LogUtil;
@@ -82,8 +80,6 @@ import com.videogo.widget.CustomRect;
 import com.videogo.widget.CustomTouchListener;
 import com.videogo.widget.RingView;
 import com.videogo.widget.TitleBar;
-
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -93,9 +89,12 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import project.wy.com.myappdemo.MyApp;
 import project.wy.com.myappdemo.R;
 import project.wy.com.myappdemo.camera.common.ScreenOrientationHelper;
+import project.wy.com.myappdemo.untils.ActivityUtils;
 import project.wy.com.myappdemo.untils.AudioPlayUtil;
+import project.wy.com.myappdemo.untils.DataManager;
 import project.wy.com.myappdemo.untils.EZUtils;
 import project.wy.com.myappdemo.untils.VerifyCodeInput;
 import project.wy.com.myappdemo.widget.WaitDialog;
@@ -107,6 +106,7 @@ import project.wy.com.myappdemo.widget.loading.LoadingTextView;
  * @author xiaxingsuo
  * @data 2015-11-11
  */
+@SuppressLint("Registered")
 public class EZRealPlayActivity extends Activity implements OnClickListener, SurfaceHolder.Callback,
         Handler.Callback, OnTouchListener, VerifyCodeInput.VerifyCodeInputListener {
     private static final String TAG = "RealPlayerActivity";
@@ -210,27 +210,21 @@ public class EZRealPlayActivity extends Activity implements OnClickListener, Sur
     private int mRecordSecond = 0;
 
     private HorizontalScrollView mRealPlayOperateBar = null;
-
     private LinearLayout mRealPlayPtzBtnLy = null;
     private LinearLayout mRealPlayTalkBtnLy = null;
     private LinearLayout mRealPlaySslBtnLy = null;
-    //    private LinearLayout mRealPlayPrivacyBtnLy = null;
     private LinearLayout mRealPlayCaptureBtnLy = null;
     private LinearLayout mRealPlayRecordContainerLy = null;
-
     private ImageButton mRealPlayPtzBtn = null;
     private ImageButton mRealPlayTalkBtn = null;
     private Button mRealPlaySslBtn = null;
     private ImageButton mRealPlayPrivacyBtn = null;
     private ImageButton mRealPlayCaptureBtn = null;
     private View mRealPlayRecordContainer = null;
-
     private ImageButton mRealPlayRecordBtn = null;
     private ImageButton mRealPlayRecordStartBtn = null;
     private RotateViewUtil mRecordRotateViewUtil = null;
-
     private Button mRealPlayQualityBtn = null;
-
     private RelativeLayout mRealPlayFullOperateBar = null;
     private ImageButton mRealPlayFullPlayBtn = null;
     private ImageButton mRealPlayFullSoundBtn = null;
@@ -244,7 +238,6 @@ public class EZRealPlayActivity extends Activity implements OnClickListener, Sur
     private TextView mRealPlayFullRateTv = null;
     private TextView mRealPlayFullFlowTv = null;
     private TextView mRealPlayRatioTv = null;
-
     // 横屏云台
     private ImageButton mRealPlayFullPtzAnimBtn = null;
     private ImageView mRealPlayFullPtzPromptIv = null;
@@ -253,14 +246,12 @@ public class EZRealPlayActivity extends Activity implements OnClickListener, Sur
     private ImageButton mRealPlayFullAnimBtn = null;
     private int[] mStartXy = new int[2];
     private int[] mEndXy = new int[2];
-
     private PopupWindow mQualityPopupWindow = null;
     private PopupWindow mPtzPopupWindow = null;
     private LinearLayout mPtzControlLy = null;
     private PopupWindow mTalkPopupWindow = null;
     private RingView mTalkRingView = null;
     private Button mTalkBackControlBtn = null;
-
     private WaitDialog mWaitDialog = null;
 
     /**
@@ -485,11 +476,11 @@ public class EZRealPlayActivity extends Activity implements OnClickListener, Sur
     @Override
     public void finish() {
         if (mCameraInfo != null){
-            Intent intent = new Intent();
-            intent.putExtra(IntentConsts.EXTRA_DEVICE_ID,mCameraInfo.getDeviceSerial());
-            intent.putExtra(IntentConsts.EXTRA_CAMERA_NO,mCameraInfo.getCameraNo());
-            intent.putExtra("video_level",mCameraInfo.getVideoLevel().getVideoLevel());
-            setResult(EZCameraListActivity.RESULT_CODE, intent);
+//            Intent intent = new Intent();
+//            intent.putExtra(IntentConsts.EXTRA_DEVICE_ID,mCameraInfo.getDeviceSerial());
+//            intent.putExtra(IntentConsts.EXTRA_CAMERA_NO,mCameraInfo.getCameraNo());
+//            intent.putExtra("video_level",mCameraInfo.getVideoLevel().getVideoLevel());
+//            setResult(EZCameraListActivity.RESULT_CODE, intent);
         }
         super.finish();
     }
@@ -842,25 +833,25 @@ public class EZRealPlayActivity extends Activity implements OnClickListener, Sur
                     LayoutParams.WRAP_CONTENT);
             switch (command) {
                 case RealPlayStatus.PTZ_LEFT:
-                    mRealPlayPtzDirectionIv.setBackgroundResource(R.drawable.left_twinkle);
+                    mRealPlayPtzDirectionIv.setBackgroundResource(R.mipmap.left_twinkle);
                     params.addRule(RelativeLayout.CENTER_VERTICAL);
                     params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                     mRealPlayPtzDirectionIv.setLayoutParams(params);
                     break;
                 case RealPlayStatus.PTZ_RIGHT:
-                    mRealPlayPtzDirectionIv.setBackgroundResource(R.drawable.right_twinkle);
+                    mRealPlayPtzDirectionIv.setBackgroundResource(R.mipmap.right_twinkle);
                     params.addRule(RelativeLayout.CENTER_VERTICAL);
                     params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                     mRealPlayPtzDirectionIv.setLayoutParams(params);
                     break;
                 case RealPlayStatus.PTZ_UP:
-                    mRealPlayPtzDirectionIv.setBackgroundResource(R.drawable.up_twinkle);
+                    mRealPlayPtzDirectionIv.setBackgroundResource(R.mipmap.up_twinkle);
                     params.addRule(RelativeLayout.CENTER_HORIZONTAL);
                     params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
                     mRealPlayPtzDirectionIv.setLayoutParams(params);
                     break;
                 case RealPlayStatus.PTZ_DOWN:
-                    mRealPlayPtzDirectionIv.setBackgroundResource(R.drawable.down_twinkle);
+                    mRealPlayPtzDirectionIv.setBackgroundResource(R.mipmap.down_twinkle);
                     params.addRule(RelativeLayout.CENTER_HORIZONTAL);
                     params.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.realplay_sv);
                     mRealPlayPtzDirectionIv.setLayoutParams(params);
@@ -880,28 +871,28 @@ public class EZRealPlayActivity extends Activity implements OnClickListener, Sur
             switch (errorCode) {
                 case ErrorCode.ERROR_CAS_PTZ_ROTATION_LEFT_LIMIT_FAILED:
                     params = new LayoutParams(LayoutParams.WRAP_CONTENT, svParams.height);
-                    mRealPlayPtzDirectionIv.setBackgroundResource(R.drawable.ptz_left_limit);
+                    mRealPlayPtzDirectionIv.setBackgroundResource(R.mipmap.ptz_left_limit);
                     params.addRule(RelativeLayout.CENTER_VERTICAL);
                     params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                     mRealPlayPtzDirectionIv.setLayoutParams(params);
                     break;
                 case ErrorCode.ERROR_CAS_PTZ_ROTATION_RIGHT_LIMIT_FAILED:
                     params = new LayoutParams(LayoutParams.WRAP_CONTENT, svParams.height);
-                    mRealPlayPtzDirectionIv.setBackgroundResource(R.drawable.ptz_right_limit);
+                    mRealPlayPtzDirectionIv.setBackgroundResource(R.mipmap.ptz_right_limit);
                     params.addRule(RelativeLayout.CENTER_VERTICAL);
                     params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                     mRealPlayPtzDirectionIv.setLayoutParams(params);
                     break;
                 case ErrorCode.ERROR_CAS_PTZ_ROTATION_UP_LIMIT_FAILED:
                     params = new LayoutParams(svParams.width, LayoutParams.WRAP_CONTENT);
-                    mRealPlayPtzDirectionIv.setBackgroundResource(R.drawable.ptz_top_limit);
+                    mRealPlayPtzDirectionIv.setBackgroundResource(R.mipmap.ptz_top_limit);
                     params.addRule(RelativeLayout.CENTER_HORIZONTAL);
                     params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
                     mRealPlayPtzDirectionIv.setLayoutParams(params);
                     break;
                 case ErrorCode.ERROR_CAS_PTZ_ROTATION_DOWN_LIMIT_FAILED:
                     params = new LayoutParams(svParams.width, LayoutParams.WRAP_CONTENT);
-                    mRealPlayPtzDirectionIv.setBackgroundResource(R.drawable.ptz_bottom_limit);
+                    mRealPlayPtzDirectionIv.setBackgroundResource(R.mipmap.ptz_bottom_limit);
                     params.addRule(RelativeLayout.CENTER_HORIZONTAL);
                     params.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.realplay_sv);
                     mRealPlayPtzDirectionIv.setLayoutParams(params);
@@ -1580,7 +1571,7 @@ public class EZRealPlayActivity extends Activity implements OnClickListener, Sur
             public void run() {
                 boolean ptz_result = false;
                 try {
-                    ptz_result = EzvizApplication.getOpenSDK().controlPTZ(mCameraInfo.getDeviceSerial(), mCameraInfo.getCameraNo(), command,
+                    ptz_result = MyApp.getOpenSDK().controlPTZ(mCameraInfo.getDeviceSerial(), mCameraInfo.getCameraNo(), command,
                             action, EZConstants.PTZ_SPEED_DEFAULT);
                 } catch (BaseException e) {
                     e.printStackTrace();
@@ -1687,7 +1678,7 @@ public class EZRealPlayActivity extends Activity implements OnClickListener, Sur
                 public void run() {
                     try {
                         // need to modify by yudan at 08-11
-                        EzvizApplication.getOpenSDK().setVideoLevel(mCameraInfo.getDeviceSerial(), mCameraInfo.getCameraNo(), mode.getVideoLevel());
+                        MyApp.getOpenSDK().setVideoLevel(mCameraInfo.getDeviceSerial(), mCameraInfo.getCameraNo(), mode.getVideoLevel());
                         mCurrentQulityMode = mode;
                         Message msg = Message.obtain();
                         msg.what = MSG_SET_VEDIOMODE_SUCCESS;
@@ -2155,7 +2146,7 @@ public class EZRealPlayActivity extends Activity implements OnClickListener, Sur
 
         if (mCameraInfo != null) {
             if (mEZPlayer == null) {
-                mEZPlayer = EzvizApplication.getOpenSDK().createPlayer(mCameraInfo.getDeviceSerial(), mCameraInfo.getCameraNo());
+                mEZPlayer = MyApp.getOpenSDK().createPlayer(mCameraInfo.getDeviceSerial(), mCameraInfo.getCameraNo());
             }
 
             if (mEZPlayer == null)
@@ -2171,7 +2162,7 @@ public class EZRealPlayActivity extends Activity implements OnClickListener, Sur
             mEZPlayer.setSurfaceHold(mRealPlaySh);
             mEZPlayer.startRealPlay();
         } else if (mRtspUrl != null) {
-            mEZPlayer = EzvizApplication.getOpenSDK().createPlayerWithUrl(mRtspUrl);
+            mEZPlayer = MyApp.getOpenSDK().createPlayerWithUrl(mRtspUrl);
             //mStub.setCameraId(mCameraInfo.getCameraId());////****  mj
             if (mEZPlayer == null)
                 return;
@@ -3348,7 +3339,6 @@ public class EZRealPlayActivity extends Activity implements OnClickListener, Sur
 
     @Override
     public void onInputVerifyCode(final String verifyCode) {
-        LogUtil.debugLog(TAG, "verify code is " + verifyCode);
         DataManager.getInstance().setDeviceSerialVerifyCode(mCameraInfo.getDeviceSerial(), verifyCode);
         if (mEZPlayer != null) {
             startRealPlay();

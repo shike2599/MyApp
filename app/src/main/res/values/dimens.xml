@@ -62,9 +62,6 @@
     <dimen name="mainten_text_sise">14dp</dimen>
     <dimen name="mainten_text_date_sise">15dp</dimen>
     <dimen name="device_list_group_size">16</dimen>
-    <dimen name="loading_text_size">15dp</dimen>
-
-
     <dimen name="title_button_padding">15dp</dimen>
     <dimen name="device_set_padding">15dp</dimen>
     <dimen name="device_set_arrow_padding">10dp</dimen>

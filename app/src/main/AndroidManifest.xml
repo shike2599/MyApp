@@ -47,8 +47,6 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".OpenYSPlayerActivity" />
-        <activity android:name=".camera.EZRealPlayActivity"></activity>
     </application>
 
 </manifest>
