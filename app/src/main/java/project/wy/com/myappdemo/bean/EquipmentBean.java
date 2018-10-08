@@ -34,7 +34,7 @@ public  class EquipmentBean implements Serializable {
     private String equip_qrcode;
     private int equip_bfee;
     private Object user;
-    private Object equip_room;
+    private RoomBean equip_room;
     private Object equip_type;
 
     public int getEquip_mdate() {
@@ -196,11 +196,11 @@ public  class EquipmentBean implements Serializable {
         this.user = user;
     }
 
-    public Object getEquip_room() {
+    public RoomBean getEquip_room() {
         return equip_room;
     }
 
-    public void setEquip_room(Object equip_room) {
+    public void setEquip_room(RoomBean equip_room) {
         this.equip_room = equip_room;
     }
 

@@ -7,9 +7,9 @@
 <animation-list
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:oneshot="false" >
-    	<item android:drawable="@drawable/play_full_multiple" android:duration="500"></item>
-  	<item android:drawable="@drawable/play_full_multiple2" android:duration="500"></item>
-  	<item android:drawable="@drawable/play_full_multiple3" android:duration="500"></item>
-  	<item android:drawable="@drawable/play_full_multiple4" android:duration="500"></item>
-  	<item android:drawable="@drawable/play_full_multiple5" android:duration="500"></item>
+    	<item android:drawable="@mipmap/play_full_multiple" android:duration="500"></item>
+  	<item android:drawable="@mipmap/play_full_multiple2" android:duration="500"></item>
+  	<item android:drawable="@mipmap/play_full_multiple3" android:duration="500"></item>
+  	<item android:drawable="@mipmap/play_full_multiple4" android:duration="500"></item>
+  	<item android:drawable="@mipmap/play_full_multiple5" android:duration="500"></item>
 </animation-list>

@@ -148,7 +148,7 @@ public class EZUtils {
         final String verifyCode = DataManager.getInstance().getDeviceSerialVerifyCode(deviceSerial);
         if (!isEncrypt(url)){
             Glide.with(context).load(url)
-                    .placeholder(R.drawable.notify_bg)
+                    .placeholder(R.mipmap.notify_bg)
                     .listener(new RequestListener<String, GlideDrawable>() {
                         @Override
                         public boolean onException(Exception e, String s, Target<GlideDrawable> target, boolean b) {
@@ -162,11 +162,11 @@ public class EZUtils {
                             return false;
                         }
                     })
-                    .error(R.drawable.event_list_fail_pic)
+                    .error(R.mipmap.event_list_fail_pic)
                     .into(imageView);
         }else{
             if (TextUtils.isEmpty(verifyCode)){
-                imageView.setImageResource(R.drawable.alarm_encrypt_image_mid);
+                imageView.setImageResource(R.mipmap.alarm_encrypt_image_mid);
                 if (verifyCodeErrorListener != null) {
                     verifyCodeErrorListener.verifyCodeError();
                 }
@@ -190,10 +190,10 @@ public class EZUtils {
                             return false;
                         }
                     })
-                    .placeholder(R.drawable.notify_bg)
+                    .placeholder(R.mipmap.notify_bg)
                     /**************加密图片本地文件缓存,开发者自己决定缓存机制*******************/
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                    .error(R.drawable.event_list_fail_pic)
+                    .error(R.mipmap.event_list_fail_pic)
                     .imageDecoder(new ResourceDecoder<InputStream, Bitmap>() {
                         @Override
                         public Resource<Bitmap> decode(InputStream source, int width, int height) throws IOException {

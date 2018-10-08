@@ -2,19 +2,19 @@
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:drawable="@drawable/speech_1"
+        android:drawable="@mipmap/speech_1"
         android:duration="200"/>
     <item
-        android:drawable="@drawable/speech_2"
+        android:drawable="@mipmap/speech_2"
         android:duration="200"/>
     <item
-        android:drawable="@drawable/speech_3"
+        android:drawable="@mipmap/speech_3"
         android:duration="200"/>
     <item
-        android:drawable="@drawable/speech_4"
+        android:drawable="@mipmap/speech_4"
         android:duration="200"/>
     <item
-        android:drawable="@drawable/speech_5"
+        android:drawable="@mipmap/speech_5"
         android:duration="200"/>
 
 </animation-list>

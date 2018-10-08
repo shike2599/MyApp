@@ -1346,14 +1346,14 @@ public class EZRealPlayActivity extends Activity implements OnClickListener, Sur
         mIsOnPtz = true;
         setPlayScaleUI(1, null, null);
         if (mLocalInfo.getPtzPromptCount() < 3) {
-            mRealPlayFullPtzPromptIv.setBackgroundResource(R.drawable.ptz_prompt);
+            mRealPlayFullPtzPromptIv.setBackgroundResource(R.mipmap.ptz_prompt);
             mRealPlayFullPtzPromptIv.setVisibility(View.VISIBLE);
             mLocalInfo.setPtzPromptCount(mLocalInfo.getPtzPromptCount() + 1);
             mHandler.removeMessages(MSG_CLOSE_PTZ_PROMPT);
             mHandler.sendEmptyMessageDelayed(MSG_CLOSE_PTZ_PROMPT, 2000);
         }
         if (startAnim) {
-            mRealPlayFullAnimBtn.setBackgroundResource(R.drawable.yuntai_pressed);
+            mRealPlayFullAnimBtn.setBackgroundResource(R.mipmap.yuntai_pressed);
             mRealPlayFullPtzBtn.getLocationInWindow(mStartXy);
             mEndXy[0] = Utils.dip2px(this, 20);
             mEndXy[1] = mStartXy[1];
@@ -1399,7 +1399,7 @@ public class EZRealPlayActivity extends Activity implements OnClickListener, Sur
         if (startAnim) {
             mRealPlayFullPtzAnimBtn.setVisibility(View.GONE);
             mFullscreenFullButton.setVisibility(View.GONE);
-            mRealPlayFullAnimBtn.setBackgroundResource(R.drawable.yuntai_pressed);
+            mRealPlayFullAnimBtn.setBackgroundResource(R.mipmap.yuntai_pressed);
             startFullBtnAnim(mRealPlayFullAnimBtn, mEndXy, mStartXy, new AnimationListener() {
 
                 @Override
@@ -1484,7 +1484,7 @@ public class EZRealPlayActivity extends Activity implements OnClickListener, Sur
         mRealPlayFullTalkBtn.setEnabled(false);
         mRealPlayFullTalkAnimBtn.setEnabled(false);
         if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            mRealPlayFullAnimBtn.setBackgroundResource(R.drawable.speech_1);
+            mRealPlayFullAnimBtn.setBackgroundResource(R.mipmap.speech_1);
             mRealPlayFullTalkBtn.getLocationInWindow(mStartXy);
             mEndXy[0] = Utils.dip2px(this, 20);
             mEndXy[1] = mStartXy[1];
@@ -1596,22 +1596,22 @@ public class EZRealPlayActivity extends Activity implements OnClickListener, Sur
                             mEZPlayer.setVoiceTalkStatus(true);
                             break;
                         case R.id.ptz_top_btn:
-                            mPtzControlLy.setBackgroundResource(R.drawable.ptz_up_sel);
+                            mPtzControlLy.setBackgroundResource(R.mipmap.ptz_up_sel);
                             setPtzDirectionIv(RealPlayStatus.PTZ_UP);
                             ptzOption(EZPTZCommand.EZPTZCommandUp, EZPTZAction.EZPTZActionSTART);
                             break;
                         case R.id.ptz_bottom_btn:
-                            mPtzControlLy.setBackgroundResource(R.drawable.ptz_bottom_sel);
+                            mPtzControlLy.setBackgroundResource(R.mipmap.ptz_bottom_sel);
                             setPtzDirectionIv(RealPlayStatus.PTZ_DOWN);
                             ptzOption(EZPTZCommand.EZPTZCommandDown, EZPTZAction.EZPTZActionSTART);
                             break;
                         case R.id.ptz_left_btn:
-                            mPtzControlLy.setBackgroundResource(R.drawable.ptz_left_sel);
+                            mPtzControlLy.setBackgroundResource(R.mipmap.ptz_left_sel);
                             setPtzDirectionIv(RealPlayStatus.PTZ_LEFT);
                             ptzOption(EZPTZCommand.EZPTZCommandLeft, EZPTZAction.EZPTZActionSTART);
                             break;
                         case R.id.ptz_right_btn:
-                            mPtzControlLy.setBackgroundResource(R.drawable.ptz_right_sel);
+                            mPtzControlLy.setBackgroundResource(R.mipmap.ptz_right_sel);
                             setPtzDirectionIv(RealPlayStatus.PTZ_RIGHT);
                             ptzOption(EZPTZCommand.EZPTZCommandRight, EZPTZAction.EZPTZActionSTART);
                             break;
@@ -1626,19 +1626,19 @@ public class EZRealPlayActivity extends Activity implements OnClickListener, Sur
                             mTalkRingView.setVisibility(View.GONE);
                             break;
                         case R.id.ptz_top_btn:
-                            mPtzControlLy.setBackgroundResource(R.drawable.ptz_bg);
+                            mPtzControlLy.setBackgroundResource(R.mipmap.ptz_bg);
                             ptzOption(EZPTZCommand.EZPTZCommandUp, EZPTZAction.EZPTZActionSTOP);
                             break;
                         case R.id.ptz_bottom_btn:
-                            mPtzControlLy.setBackgroundResource(R.drawable.ptz_bg);
+                            mPtzControlLy.setBackgroundResource(R.mipmap.ptz_bg);
                             ptzOption(EZPTZCommand.EZPTZCommandDown, EZPTZAction.EZPTZActionSTOP);
                             break;
                         case R.id.ptz_left_btn:
-                            mPtzControlLy.setBackgroundResource(R.drawable.ptz_bg);
+                            mPtzControlLy.setBackgroundResource(R.mipmap.ptz_bg);
                             ptzOption(EZPTZCommand.EZPTZCommandLeft, EZPTZAction.EZPTZActionSTOP);
                             break;
                         case R.id.ptz_right_btn:
-                            mPtzControlLy.setBackgroundResource(R.drawable.ptz_bg);
+                            mPtzControlLy.setBackgroundResource(R.mipmap.ptz_bg);
                             ptzOption(EZPTZCommand.EZPTZCommandRight, EZPTZAction.EZPTZActionSTOP);
                             break;
                         default:
@@ -2704,7 +2704,7 @@ public class EZRealPlayActivity extends Activity implements OnClickListener, Sur
             if (startAnim) {
                 mRealPlayFullTalkAnimBtn.setVisibility(View.GONE);
                 mFullscreenFullButton.setVisibility(View.GONE);
-                mRealPlayFullAnimBtn.setBackgroundResource(R.drawable.speech_1);
+                mRealPlayFullAnimBtn.setBackgroundResource(R.mipmap.speech_1);
                 startFullBtnAnim(mRealPlayFullAnimBtn, mEndXy, mStartXy, new AnimationListener() {
 
                     @Override

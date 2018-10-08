@@ -37,7 +37,7 @@
          android:id="@+id/realplay_top_bar"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
-         android:background="@drawable/top_bar_bg" >
+         android:background="@mipmap/top_bar_bg" >
 
             <ImageButton
                 android:id="@+id/realplay_back_btn"
@@ -67,7 +67,7 @@
          android:layout_width="fill_parent"
          android:layout_height="50dp"
          android:layout_alignParentBottom="true"
-         android:background="@drawable/control_bar_bg" 
+         android:background="@mipmap/control_bar_bg"
          android:orientation="horizontal" >
      
          <RelativeLayout

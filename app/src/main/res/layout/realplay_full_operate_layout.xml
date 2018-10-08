@@ -128,7 +128,7 @@
 	    android:layout_height="wrap_content"
 	    android:layout_marginBottom="15dp"
 	    android:layout_marginLeft="15dp"
-	    android:background="@drawable/yuntai_pressed"
+	    android:background="@mipmap/yuntai_pressed"
 	    android:onClick="onClick"
 	    android:visibility="gone" />
 	

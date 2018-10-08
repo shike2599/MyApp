@@ -1,6 +1,9 @@
 package project.wy.com.myappdemo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.nfc.Tag;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,7 @@ import project.wy.com.myappdemo.bean.RoomBean;
 
 
 public class MyExpListViewAdapter extends BaseExpandableListAdapter{
+
     private Context mContext;
     private List<List<EquipmentBean>> equipmentList = new ArrayList<>();
     private List<RoomBean> rooms;
@@ -27,16 +31,16 @@ public class MyExpListViewAdapter extends BaseExpandableListAdapter{
 
     public void setData( List<RoomBean> rooms,List<List<EquipmentBean>> equipmentList){
         this.rooms = rooms;
-        equipmentList = this.equipmentList;
+        this.equipmentList = equipmentList;
         mIndicators = new SparseArray<>();
     }
 
     //根据分组的展开闭合状态设置指示器
     public void setIndicatorState(int groupPosition, boolean isExpanded) {
         if (isExpanded) {
-            mIndicators.get(groupPosition).setImageResource(R.mipmap.ic_expand_rdown_new);
+            mIndicators.get(groupPosition).setImageResource(R.mipmap.ic_minus);
         } else {
-            mIndicators.get(groupPosition).setImageResource(R.mipmap.ic_expand_right_new);
+            mIndicators.get(groupPosition).setImageResource(R.mipmap.ic_add);
         }
     }
 
@@ -55,18 +59,16 @@ public class MyExpListViewAdapter extends BaseExpandableListAdapter{
 
     @Override
     public Object getGroup(int groupPosition) {
-        if(rooms != null){
-            return rooms.get(groupPosition).getEquip_room_name();
-        }
-        return "";
+
+        return rooms.get(groupPosition).getEquip_room_name();
+
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        if(rooms != null && equipmentList.get(groupPosition) != null ){
-            return equipmentList.get(groupPosition).get(childPosition).getEquip_name();
-        }
-        return "";
+
+        return equipmentList.get(groupPosition).get(childPosition).getEquip_name();
+
     }
 
     @Override
@@ -88,10 +90,12 @@ public class MyExpListViewAdapter extends BaseExpandableListAdapter{
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         GroupViewHolder groupViewHolder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.mainten_expandable_item_layout, parent, false);
+            convertView = View.inflate(mContext,R.layout.mainten_expandable_item_layout,null);
             groupViewHolder = new GroupViewHolder();
             groupViewHolder.tvLocal = (TextView) convertView.findViewById(R.id.tv_local);
             groupViewHolder.ivIndicator = (ImageView) convertView.findViewById(R.id.iv_indicator);
+            groupViewHolder.iv_camera = (ImageView) convertView.findViewById(R.id.iv_carmer);
+
             convertView.setTag(groupViewHolder);
         } else {
             groupViewHolder = (GroupViewHolder) convertView.getTag();
@@ -101,6 +105,14 @@ public class MyExpListViewAdapter extends BaseExpandableListAdapter{
         //根据分组状态设置Indicator
         setIndicatorState(groupPosition, isExpanded);
         groupViewHolder.tvLocal.setText(rooms.get(groupPosition).getEquip_room_name()+"");
+//        groupViewHolder.iv_camera.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("MyExpListViewAdapter","-----点击了摄像头-----");
+//                Intent intent = new Intent();
+//
+//            }
+//        });
         return convertView;
     }
 
@@ -123,12 +135,13 @@ public class MyExpListViewAdapter extends BaseExpandableListAdapter{
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return false;
+        return true;
     }
 
     static class GroupViewHolder {
         TextView tvLocal;
         ImageView ivIndicator;
+        ImageView iv_camera;
     }
 
     static class ChildViewHolder {

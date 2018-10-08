@@ -3,7 +3,7 @@
     android:oneshot="false" >
 
     <item
-        android:drawable="@drawable/download8"
+        android:drawable="@mipmap/download8"
         android:duration="150">
     </item>
 

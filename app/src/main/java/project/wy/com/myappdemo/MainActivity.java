@@ -61,6 +61,8 @@ public class MainActivity extends FragmentActivity implements MenuPopupWindow.On
     private CompanyInfoBean mCompanyInfoBean;
     private List<ProjectInfoBean> mProjectInfoBeanList = new ArrayList<>();
 
+    private DeviceListFragment deviceListFragment;
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -136,12 +138,9 @@ public class MainActivity extends FragmentActivity implements MenuPopupWindow.On
 
     @Override
     public void setUI(Object object) {
+        popWindow.dismiss();
         LocalDeviceInfoBean locadevBean = (LocalDeviceInfoBean) object;
-        List<EquipmentBean> equip_list = locadevBean.getEquipment();
-        List<RoomBean> room_list = locadevBean.getRoom();
-
-
-
+        deviceListFragment.setDeviceBean(locadevBean);
     }
 
     class MyOnCheckedChangeListener implements RadioGroup.OnCheckedChangeListener {
@@ -228,7 +227,10 @@ public class MainActivity extends FragmentActivity implements MenuPopupWindow.On
 
     private void initFragment() {
         mBaseFragment = new ArrayList<>();
-        mBaseFragment.add(new DeviceListFragment());//
+
+        deviceListFragment = new DeviceListFragment();
+
+        mBaseFragment.add(deviceListFragment);//
         mBaseFragment.add(new WarningFragment());//
         mBaseFragment.add(new UserFragment());//
     }

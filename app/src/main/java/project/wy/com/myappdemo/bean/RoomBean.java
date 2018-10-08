@@ -1,10 +1,12 @@
 package project.wy.com.myappdemo.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by lichee on 2018/9/29.
  */
 
-public  class RoomBean {
+public  class RoomBean implements Serializable{
     /**
      * equip_room_id : 1
      * equip_room_name : ???

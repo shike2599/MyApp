@@ -26,7 +26,7 @@
         android:src="@drawable/ez_leave_message_play_selector"
         android:visibility="gone" />
 
-    <com.videogo.widget.loading.LoadingTextView
+    <project.wy.com.myappdemo.widget.loading.LoadingTextView
         android:id="@+id/realplay_loading"
         style="@style/LoadingTextView_Percent"
         android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/preview_close1_video_ico"
+            android:background="@mipmap/preview_close1_video_ico"
             android:scaleType="fitXY" />
 
         <TextView

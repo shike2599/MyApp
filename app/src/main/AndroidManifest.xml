@@ -38,7 +38,11 @@
             android:name="com.videogo.main.EzvizWebViewActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".camera.realplay.EZRealPlayActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+        />
         <receiver
             android:name=".broadcast.MyEZReceiver"
             android:exported="false">

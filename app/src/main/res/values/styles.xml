@@ -62,7 +62,7 @@
     </style>
     <style name="TitleBar_Light">
         <item name="textColor">@color/common_text</item>
-        <item name="background">@drawable/common_title</item>
+        <item name="background">@mipmap/common_title</item>
         <item name="backButton">@drawable/common_title_back_selector</item>
     </style>
     <style name="TitleBar_Light_Web" parent="TitleBar_Light">

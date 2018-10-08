@@ -36,7 +36,7 @@
         <ExpandableListView
             android:id="@+id/device_list_ExpandableListView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:childDivider="@color/transparent"
             android:groupIndicator="@color/transparent"
             />

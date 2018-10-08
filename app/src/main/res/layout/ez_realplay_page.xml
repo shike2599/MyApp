@@ -55,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
-                android:src="@drawable/video_file_watermark"
+                android:src="@mipmap/video_file_watermark"
                 android:visibility="gone" />
         </RelativeLayout>
 
@@ -75,7 +75,7 @@
             android:id="@+id/realplay_full_anim_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/yuntai_pressed"
+            android:background="@mipmap/yuntai_pressed"
             android:visibility="gone" />			        
     </RelativeLayout>
     

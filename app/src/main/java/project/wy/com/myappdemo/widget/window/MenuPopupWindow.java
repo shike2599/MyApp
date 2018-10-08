@@ -23,6 +23,7 @@ import project.wy.com.myappdemo.bean.ProjectInfoBean;
 import project.wy.com.myappdemo.http.HttpCallback;
 import project.wy.com.myappdemo.untils.Constant;
 import project.wy.com.myappdemo.untils.DialogUtil;
+import project.wy.com.myappdemo.untils.LogUtil;
 import project.wy.com.myappdemo.untils.OkhttpUtils;
 import project.wy.com.myappdemo.untils.ToastUtil;
 
@@ -77,10 +78,11 @@ public class MenuPopupWindow extends PopupWindow {
                     @Override
                     public void onSuccess(String resultDesc) {
                         super.onSuccess(resultDesc);
+                        LogUtil.d(TAG,resultDesc);
+                        DialogUtil.hideDialogLoading();
                         Gson gson = new Gson();
                         LocalDeviceInfoBean localDeviceInfoBean = gson.fromJson(resultDesc, LocalDeviceInfoBean.class);
                         if(localDeviceInfoBean!=null&&localDeviceInfoBean.getEquipment().size()>0){
-
                             updateUI.setUI(localDeviceInfoBean);
                         }else{
                             ToastUtil.showText("未找到数据");

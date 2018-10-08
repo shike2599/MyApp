@@ -82,7 +82,7 @@
 			       android:text="@string/source_detection_off"
 			       android:textColor="@color/source_detection_btn_color"
 			       android:textSize="@dimen/source_detection_text_size"
-			       android:background="@drawable/sound_source"
+			       android:background="@mipmap/sound_source"
 			       android:onClick="onClick" />	
 			    
 	            <ProgressBar
@@ -177,7 +177,7 @@
 		            android:id="@+id/realplay_video_start_btn2"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
-		            android:background="@drawable/play_video_sel"
+		            android:background="@mipmap/play_video_sel"
 		            android:onClick="onClick"
 		            android:visibility="gone" />
 		    </FrameLayout>
