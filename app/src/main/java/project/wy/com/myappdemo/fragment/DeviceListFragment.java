@@ -1,7 +1,9 @@
 package project.wy.com.myappdemo.fragment;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.widget.SearchView;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -9,12 +11,23 @@ import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.videogo.constant.IntentConsts;
+import com.videogo.errorlayer.ErrorInfo;
+import com.videogo.exception.BaseException;
+import com.videogo.exception.ErrorCode;
+import com.videogo.openapi.bean.EZCameraInfo;
+import com.videogo.openapi.bean.EZDeviceInfo;
+import com.videogo.util.ConnectionDetector;
+import com.videogo.util.LogUtil;
+import com.videogo.util.Utils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import project.wy.com.myappdemo.DeviceInfoActivity;
+import project.wy.com.myappdemo.MyApp;
 import project.wy.com.myappdemo.R;
 import project.wy.com.myappdemo.adapter.MyExpListViewAdapter;
 import project.wy.com.myappdemo.base.BaseFragment;
@@ -28,12 +41,13 @@ import project.wy.com.myappdemo.camera.realplay.RealPlaySquareInfo;
 import project.wy.com.myappdemo.http.HttpCallback;
 import project.wy.com.myappdemo.untils.Constant;
 import project.wy.com.myappdemo.untils.DialogUtil;
+import project.wy.com.myappdemo.untils.EZUtils;
 import project.wy.com.myappdemo.untils.OkhttpUtils;
 import project.wy.com.myappdemo.untils.ShareUtils;
 import project.wy.com.myappdemo.untils.ToastUtil;
 import project.wy.com.myappdemo.widget.window.MenuPopupWindow;
 
-public class DeviceListFragment extends BaseFragment{
+public class DeviceListFragment extends BaseFragment {
 
     private static final String TAG = DeviceListFragment.class.getSimpleName();
     private ExpandableListView mExpListView;
@@ -44,12 +58,13 @@ public class DeviceListFragment extends BaseFragment{
     private List<RoomBean> rooms;
     private LocalDeviceInfoBean mLocalDeviceInfoBean;
     private List<List<EquipmentBean>> equipmentList = new ArrayList<>();
+    List<EZDeviceInfo> mDeviceList = null;
 
     @Override
     protected View initView() {
         View view = View.inflate(mContext, R.layout.deivelist_fargment_layout, null);
 
-        mExpListView = (ExpandableListView)view.findViewById(R.id.device_list_ExpandableListView);
+        mExpListView = (ExpandableListView) view.findViewById(R.id.device_list_ExpandableListView);
         search_edit = (SearchView) view.findViewById(R.id.search_device_view);
         search_edit.setSubmitButtonEnabled(true);
         search_edit.setQueryHint("请输入设备名称或型号查找设备");
@@ -62,7 +77,7 @@ public class DeviceListFragment extends BaseFragment{
                 //准备数据
                 Map<String, String> params = new HashMap<>();
                 params.put("equip_id", searchKey);
-                doPost(params,"info",Constant.QUEST_DEVICE_INFO);
+                doPost(params, "info", Constant.QUEST_DEVICE_INFO);
                 return true;
             }
 
@@ -79,11 +94,27 @@ public class DeviceListFragment extends BaseFragment{
                 carmer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.d(TAG,"-----carmer-----"+groupPosition);
-                        Intent intent = new Intent(mContext, EZRealPlayActivity.class);
-//                        intent.putExtra(IntentConsts.EXTRA_CAMERA_INFO, cameraInfo);
-//                        intent.putExtra(IntentConsts.EXTRA_DEVICE_INFO, deviceInfo);
-                        mContext.startActivity(intent);
+                        Log.d(TAG, "-----carmer-----" + groupPosition);
+                        // final EZDeviceInfo deviceInfo = mAdapter.getItem(groupPosition);
+                        if (mDeviceList != null && mDeviceList.size() > 0) {
+                            final EZDeviceInfo deviceInfo = mDeviceList.get(0);
+                            if (deviceInfo.getCameraNum() <= 0 || deviceInfo.getCameraInfoList() == null || deviceInfo.getCameraInfoList().size() <= 0) {
+                                Log.d(TAG, "cameralist is null or cameralist size is 0");
+                                return;
+                            }
+                            if (deviceInfo.getCameraNum() == 1 && deviceInfo.getCameraInfoList() != null && deviceInfo.getCameraInfoList().size() == 1) {
+                                Log.d(TAG, "cameralist have one camera");
+                                final EZCameraInfo cameraInfo = EZUtils.getCameraInfoFromDevice(deviceInfo, 0);
+                                if (cameraInfo == null) {
+                                    return;
+                                }
+                                Intent intent = new Intent(mContext, EZRealPlayActivity.class);
+                                intent.putExtra(IntentConsts.EXTRA_CAMERA_INFO, cameraInfo);
+                                intent.putExtra(IntentConsts.EXTRA_DEVICE_INFO, deviceInfo);
+                                mContext.startActivity(intent);
+                                return;
+                            }
+                        }
                     }
                 });
                 return false;
@@ -94,10 +125,10 @@ public class DeviceListFragment extends BaseFragment{
 
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                Log.d(TAG,"----Child----"+childPosition);
+                Log.d(TAG, "----Child----" + childPosition);
                 Intent intent = new Intent();
                 intent.setClass(mContext, DeviceInfoActivity.class);
-                intent.putExtra("DeviceInfoBean",equipmentList.get(groupPosition).get(childPosition));
+                intent.putExtra("DeviceInfoBean", equipmentList.get(groupPosition).get(childPosition));
                 mContext.startActivity(intent);
                 return false;
             }
@@ -105,20 +136,20 @@ public class DeviceListFragment extends BaseFragment{
         return view;
     }
 
+
     @Override
     protected void initData() {
         super.initData();
         myExpListViewAdapter = new MyExpListViewAdapter(mContext);
         mExpListView.setAdapter(myExpListViewAdapter);
-        int proj_id = (Integer) ShareUtils.getSharedPreference(mContext,"proj_id",-1);
-        if(proj_id != -1){
+        int proj_id = (Integer) ShareUtils.getSharedPreference(mContext, "proj_id", -1);
+        if (proj_id != -1) {
             DialogUtil.showDialogLoading(mContext, "");
-            Map<String,String> prams = new HashMap<>();
-            prams.put("proj_id",String.valueOf(proj_id));
+            Map<String, String> prams = new HashMap<>();
+            prams.put("proj_id", String.valueOf(proj_id));
             doPost(prams, "list", Constant.QUEST_DEVCE_BY_PROJ);
         }
-
-
+        new GetCamersInfoListTask().execute();
     }
 
     //开始查找
@@ -135,34 +166,34 @@ public class DeviceListFragment extends BaseFragment{
                     mLocalDeviceInfoBean = gson.fromJson(resultDesc, LocalDeviceInfoBean.class);
                     rooms = mLocalDeviceInfoBean.getRoom();
                     equipments = mLocalDeviceInfoBean.getEquipment();
-                    int rmlen =  rooms.size();
+                    int rmlen = rooms.size();
                     int devlen = equipments.size();
-                    for(int i = 0; i < rmlen; i++){
+                    for (int i = 0; i < rmlen; i++) {
                         List<EquipmentBean> equipList = new ArrayList<>();
-                        for(int j = 0; j < devlen; j++){
-                            RoomBean  room = rooms.get(i);
+                        for (int j = 0; j < devlen; j++) {
+                            RoomBean room = rooms.get(i);
                             EquipmentBean equipmentBean = equipments.get(j);
-                            if(room.getEquip_room_id() == equipmentBean.getEquip_room().getEquip_room_id()){
+                            if (room.getEquip_room_id() == equipmentBean.getEquip_room().getEquip_room_id()) {
                                 equipList.add(equipmentBean);
                             }
                         }
-                        equipmentList.add(i,equipList);
+                        equipmentList.add(i, equipList);
                     }
 
                     //设置适配器
-                    myExpListViewAdapter.setData(mLocalDeviceInfoBean.getRoom(),equipmentList);
+                    myExpListViewAdapter.setData(mLocalDeviceInfoBean.getRoom(), equipmentList);
                     mExpListView.setAdapter(myExpListViewAdapter);
                     myExpListViewAdapter.notifyDataSetChanged();
                 } else if (type.equals("info")) {
                     Gson gson = new Gson();
                     equInfoBean = gson.fromJson(resultDesc, EquipmentInfoBean.class);
                     Log.i(TAG, "xwz::::" + resultDesc);
-                    if(equInfoBean.getEquipment() != null){
+                    if (equInfoBean.getEquipment() != null) {
                         Intent intent = new Intent();
                         intent.setClass(mContext, DeviceInfoActivity.class);
                         intent.putExtra("DeviceInfoBean", equInfoBean.getEquipment());
                         mContext.startActivity(intent);
-                    }else{
+                    } else {
                         ToastUtil.showText("未查找到设备！！");
                     }
 
@@ -197,23 +228,58 @@ public class DeviceListFragment extends BaseFragment{
         this.mLocalDeviceInfoBean = deviceBean;
         rooms = mLocalDeviceInfoBean.getRoom();
         equipments = mLocalDeviceInfoBean.getEquipment();
-        int rmlen =  rooms.size();
+        int rmlen = rooms.size();
         int devlen = equipments.size();
-        for(int i = 0; i < rmlen; i++){
+        for (int i = 0; i < rmlen; i++) {
             List<EquipmentBean> equipList = new ArrayList<>();
-            for(int j = 0; j < devlen; j++){
-                RoomBean  room = rooms.get(i);
+            for (int j = 0; j < devlen; j++) {
+                RoomBean room = rooms.get(i);
                 EquipmentBean equipmentBean = equipments.get(j);
-                if(room.getEquip_room_id() == equipmentBean.getEquip_room().getEquip_room_id()){
+                if (room.getEquip_room_id() == equipmentBean.getEquip_room().getEquip_room_id()) {
                     equipList.add(equipmentBean);
                 }
             }
-            equipmentList.add(i,equipList);
+            equipmentList.add(i, equipList);
         }
 
 //        //设置适配器
 
-        myExpListViewAdapter.setData(mLocalDeviceInfoBean.getRoom(),equipmentList);
+        myExpListViewAdapter.setData(mLocalDeviceInfoBean.getRoom(), equipmentList);
         myExpListViewAdapter.notifyDataSetChanged();
     }
+
+
+    /**
+     * 获取事件消息任务
+     */
+    private class GetCamersInfoListTask extends AsyncTask<Void, Void, List<EZDeviceInfo>> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected List<EZDeviceInfo> doInBackground(Void... params) {
+            try {
+                List<EZDeviceInfo> result = null;
+                result = MyApp.getOpenSDK().getDeviceList(0, 20);
+                Log.i(TAG, "result:" + result);
+                return result;
+            } catch (BaseException e) {
+                ErrorInfo errorInfo = (ErrorInfo) e.getObject();
+                Log.i(TAG,"err message:"+e.getMessage()+",code:"+errorInfo.errorCode);
+                return null;
+            }
+        }
+        @Override
+        protected void onPostExecute(List<EZDeviceInfo> result) {
+            super.onPostExecute(result);
+            if (result != null) {
+                mDeviceList = result;
+            }
+        }
+    }
+
+
 }

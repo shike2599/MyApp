@@ -30,7 +30,7 @@ public class MyApp extends Application {
         /** * 设置是否支持P2P取流,详见api */
         EZOpenSDK.enableP2P(false);
         EZOpenSDK.initLib(this, Constant.APP_KEY);
-       // EZUIKit.setAccessToken(Constant.ACCESSTOKE);
+        getOpenSDK().setAccessToken("at.1slfn6120god3tr87fhjhznv6t9sa3gm-837m413qvb-06yybxo-xgfbcljr3");
     }
 
     //初始化Okhttp
