@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="238dp"
     android:layout_height="164dp"
+    android:layout_gravity="start"
     android:background="@android:color/white">
 
     <ExpandableListView

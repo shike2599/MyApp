@@ -60,13 +60,23 @@ public class DeviceInfragment extends BaseFragment {
         super.initData();
         DialogUtil.showDialogLoading(mContext,null);
         device_name.setText(equInfoBean.getEquip_name());
-        long first_time = equInfoBean.getEquip_ndate().getTime();
-        if(new Date().getTime()  > first_time){
-            next_mainten_time_TextVeiw.setTextColor(Color.argb(100,191,37,43));
-        }
-        next_mainten_time_TextVeiw.setText(StringUtil.stampToDate(String.valueOf(first_time))[0]);
 
-        device_use_data.setText(StringUtil.stampToDate(String.valueOf(equInfoBean.getEquip_udate().getTime()))[0]);
+        if(equInfoBean.getEquip_ndate()!=null){
+            long first_time = equInfoBean.getEquip_ndate().getTime();
+            if(new Date().getTime()  > first_time){
+                next_mainten_time_TextVeiw.setTextColor(Color.argb(100,191,37,43));
+            }
+            next_mainten_time_TextVeiw.setText(StringUtil.stampToDate(String.valueOf(first_time))[0]);
+            device_use_data.setText(StringUtil.stampToDate(String.valueOf(equInfoBean.getEquip_udate().getTime()))[0]);
+
+        }else{
+            next_mainten_time_TextVeiw.setText("未知时间");
+            device_use_data.setText("未知时间");
+        }
+
+
+
+
 
         device_product.setText(equInfoBean.getEquip_manu());
         device_phone.setText(equInfoBean.getEquip_tel());

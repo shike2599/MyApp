@@ -166,9 +166,22 @@ public class DeviceListFragment extends BaseFragment {
                     mLocalDeviceInfoBean = gson.fromJson(resultDesc, LocalDeviceInfoBean.class);
                     rooms = mLocalDeviceInfoBean.getRoom();
                     equipments = mLocalDeviceInfoBean.getEquipment();
-                    int rmlen = rooms.size();
-                    int devlen = equipments.size();
-                    for (int i = 0; i < rmlen; i++) {
+                    int rmlen = 0;
+                    int devlen = 0;
+                    if(rooms!=null&&rooms.size()>0){
+                        rmlen =  rooms.size();
+                    }else{
+                        ToastUtil.showText("暂无设备！");
+                        return;
+                    }
+                    if(equipments!=null&&equipments.size()>0){
+                        devlen = equipments.size();
+                    }else {
+                        ToastUtil.showText("暂无设备！");
+                        return;
+                    }
+
+                    for(int i = 0; i < rmlen; i++){
                         List<EquipmentBean> equipList = new ArrayList<>();
                         for (int j = 0; j < devlen; j++) {
                             RoomBean room = rooms.get(i);
