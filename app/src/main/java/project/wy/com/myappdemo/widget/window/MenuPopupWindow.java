@@ -25,6 +25,7 @@ import project.wy.com.myappdemo.untils.Constant;
 import project.wy.com.myappdemo.untils.DialogUtil;
 import project.wy.com.myappdemo.untils.LogUtil;
 import project.wy.com.myappdemo.untils.OkhttpUtils;
+import project.wy.com.myappdemo.untils.ShareUtils;
 import project.wy.com.myappdemo.untils.ToastUtil;
 
 /**
@@ -71,6 +72,8 @@ public class MenuPopupWindow extends PopupWindow {
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 Log.i(TAG,"onChildClick: groupPosition:" + groupPosition + ", childPosition:" + childPosition);
                 int pro_id = projectInfoBeanList.get(childPosition).getResult().get(childPosition).getProj_id();
+                //保存proj_id,第一次获取
+                ShareUtils.putSharedPreference(mContext,"proj_id",pro_id);
                 DialogUtil.showDialogLoading(mContext,"正在查询...");
                 Map<String,String> prams = new HashMap<>();
                 prams.put("proj_id",String.valueOf(pro_id));

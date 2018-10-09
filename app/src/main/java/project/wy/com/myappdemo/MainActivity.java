@@ -35,6 +35,7 @@ import project.wy.com.myappdemo.http.HttpCallback;
 import project.wy.com.myappdemo.untils.Constant;
 import project.wy.com.myappdemo.untils.DialogUtil;
 import project.wy.com.myappdemo.untils.OkhttpUtils;
+import project.wy.com.myappdemo.untils.ShareUtils;
 import project.wy.com.myappdemo.untils.ToastUtil;
 import project.wy.com.myappdemo.widget.window.MenuPopupWindow;
 
@@ -100,6 +101,16 @@ public class MainActivity extends FragmentActivity implements MenuPopupWindow.On
         setListener();
 
         initPopupData();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int proj_id = (Integer) ShareUtils.getSharedPreference(MainActivity.this,"proj_id",-1);
+        if(proj_id != -1){
+//            popWindow.showPopupWindow();
+        }
     }
 
     private void initPopupData() {

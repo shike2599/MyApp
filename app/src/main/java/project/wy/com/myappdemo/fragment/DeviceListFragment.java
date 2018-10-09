@@ -29,6 +29,7 @@ import project.wy.com.myappdemo.http.HttpCallback;
 import project.wy.com.myappdemo.untils.Constant;
 import project.wy.com.myappdemo.untils.DialogUtil;
 import project.wy.com.myappdemo.untils.OkhttpUtils;
+import project.wy.com.myappdemo.untils.ShareUtils;
 import project.wy.com.myappdemo.untils.ToastUtil;
 import project.wy.com.myappdemo.widget.window.MenuPopupWindow;
 
@@ -109,12 +110,14 @@ public class DeviceListFragment extends BaseFragment{
         super.initData();
         myExpListViewAdapter = new MyExpListViewAdapter(mContext);
         mExpListView.setAdapter(myExpListViewAdapter);
-//        DialogUtil.showDialogLoading(mContext, "");
-//        准备数据
-//        Map<String, String> params = new HashMap<>();
-//        params.put("page", String.valueOf(1));
-//        params.put("searchKey", "");
-//        doPost(params, "list", Constant.QUEST_ALL_DEVICE);
+        int proj_id = (Integer) ShareUtils.getSharedPreference(mContext,"proj_id",-1);
+        if(proj_id != -1){
+            DialogUtil.showDialogLoading(mContext, "");
+            Map<String,String> prams = new HashMap<>();
+            prams.put("proj_id",String.valueOf(proj_id));
+            doPost(prams, "list", Constant.QUEST_DEVCE_BY_PROJ);
+        }
+
 
     }
 
@@ -128,28 +131,28 @@ public class DeviceListFragment extends BaseFragment{
                 //LogUtil.d(TAG,resultDesc);
                 DialogUtil.hideDialogLoading();
                 if (type.equals("list")) {
-//                    Gson gson = new Gson();
-//                    mLocalDeviceInfoBean = gson.fromJson(resultDesc, LocalDeviceInfoBean.class);
-//                    rooms = mLocalDeviceInfoBean.getRoom();
-//                    equipments = mLocalDeviceInfoBean.getEquipment();
-//                    int rmlen =  rooms.size();
-//                    int devlen = equipments.size();
-//                    for(int i = 0; i < rmlen; i++){
-//                        List<EquipmentBean> equipList = new ArrayList<>();
-//                        for(int j = 0; j < devlen; j++){
-//                            RoomBean  room = rooms.get(i);
-//                            EquipmentBean equipmentBean = equipments.get(j);
-//                            if(room.getEquip_room_id() == equipmentBean.getEquip_room().getEquip_room_id()){
-//                                equipList.add(equipmentBean);
-//                            }
-//                        }
-//                        equipmentList.add(i,equipList);
-//                    }
-//
-//                    //设置适配器
-//                    myExpListViewAdapter.setData(mLocalDeviceInfoBean.getRoom(),equipmentList);
-//                    mExpListView.setAdapter(myExpListViewAdapter);
-//                    myExpListViewAdapter.notifyDataSetChanged();
+                    Gson gson = new Gson();
+                    mLocalDeviceInfoBean = gson.fromJson(resultDesc, LocalDeviceInfoBean.class);
+                    rooms = mLocalDeviceInfoBean.getRoom();
+                    equipments = mLocalDeviceInfoBean.getEquipment();
+                    int rmlen =  rooms.size();
+                    int devlen = equipments.size();
+                    for(int i = 0; i < rmlen; i++){
+                        List<EquipmentBean> equipList = new ArrayList<>();
+                        for(int j = 0; j < devlen; j++){
+                            RoomBean  room = rooms.get(i);
+                            EquipmentBean equipmentBean = equipments.get(j);
+                            if(room.getEquip_room_id() == equipmentBean.getEquip_room().getEquip_room_id()){
+                                equipList.add(equipmentBean);
+                            }
+                        }
+                        equipmentList.add(i,equipList);
+                    }
+
+                    //设置适配器
+                    myExpListViewAdapter.setData(mLocalDeviceInfoBean.getRoom(),equipmentList);
+                    mExpListView.setAdapter(myExpListViewAdapter);
+                    myExpListViewAdapter.notifyDataSetChanged();
                 } else if (type.equals("info")) {
                     Gson gson = new Gson();
                     equInfoBean = gson.fromJson(resultDesc, EquipmentInfoBean.class);
