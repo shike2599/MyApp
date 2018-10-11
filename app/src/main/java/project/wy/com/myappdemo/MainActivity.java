@@ -68,6 +68,7 @@ public class MainActivity extends FragmentActivity{
     private List<ProjectInfoBean> mProjectInfoBeanList = new ArrayList<>();
 
     private DeviceListFragment deviceListFragment;
+    private WarningFragment warningFragment ;
     private DrawerLayout mDrawerLayout;
 
     private ExpandableListView compExpList;
@@ -82,8 +83,6 @@ public class MainActivity extends FragmentActivity{
                     findProjectInfo();
                     break;
                 case END:
-//                    popWindow.setData(mCompanyInfoBean,mProjectInfoBeanList);
-
                     adapter.setData(mCompanyInfoBean,mProjectInfoBeanList);
                     adapter.notifyDataSetChanged();
                     int proj_id = (Integer) ShareUtils.getSharedPreference(
@@ -146,7 +145,6 @@ public class MainActivity extends FragmentActivity{
                     Gson gson = new Gson();
                     ProjectInfoBean projectInfoBean = gson.fromJson(resultDesc, ProjectInfoBean.class);
                     mProjectInfoBeanList.add(projectInfoBean);
-
                 }
             }
 
@@ -164,12 +162,6 @@ public class MainActivity extends FragmentActivity{
         mRg_main.check(R.id.rb_deivelist);
     }
 
-//    @Override
-//    public void setUI(Object object) {
-//
-//        LocalDeviceInfoBean locadevBean = (LocalDeviceInfoBean) object;
-//        deviceListFragment.setDeviceBean(locadevBean);
-//    }
 
     class MyOnCheckedChangeListener implements RadioGroup.OnCheckedChangeListener {
 
@@ -258,9 +250,15 @@ public class MainActivity extends FragmentActivity{
 
         deviceListFragment = new DeviceListFragment();
 
+
         mBaseFragment.add(deviceListFragment);//
-        mBaseFragment.add(new WarningFragment());//
+
+        warningFragment =  new WarningFragment();
+        mBaseFragment.add(warningFragment);//
+
         mBaseFragment.add(new UserFragment());//
+
+        deviceListFragment.setWaringFragment(warningFragment);
     }
 
     private void initView() {
@@ -419,5 +417,4 @@ public class MainActivity extends FragmentActivity{
 
         }
     }
-
 }

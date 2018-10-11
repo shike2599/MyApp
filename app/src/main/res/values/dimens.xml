@@ -60,6 +60,7 @@
     <dimen name="device_info_size">16dp</dimen>
     <dimen name="device_title_size">25dp</dimen>
     <dimen name="mainten_text_sise">14dp</dimen>
+    <dimen name="child_left_meun">12dp</dimen>
     <dimen name="mainten_text_date_sise">15dp</dimen>
     <dimen name="device_list_group_size">19dp</dimen>
     <dimen name="title_button_padding">15dp</dimen>

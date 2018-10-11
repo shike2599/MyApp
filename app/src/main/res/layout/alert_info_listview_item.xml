@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="15dp"
+    >
+   <TextView
+       android:id="@+id/alert_date_textview"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:textSize="@dimen/mainten_text_date_sise"
+       android:textColor="@color/mainten_text_color"
+       android:text="2018-09-09"
+       android:layout_marginLeft="30dp"
+       />
+
+    <TextView
+        android:id="@+id/alert_time_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alert_date_textview"
+        android:text="15:00:00"
+        android:textColor="@color/mainten_text_color"
+        android:textSize="@dimen/mainten_text_date_sise"
+        android:layout_alignRight="@id/alert_date_textview"
+        android:layout_marginTop="8dp"
+
+        />
+    <ImageView
+        android:id="@+id/break_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/matinten_icon"
+        android:layout_toRightOf="@id/alert_date_textview"
+        android:layout_marginLeft="10dp"
+        />
+    <TextView
+        android:id="@+id/alert_deviceName_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/mainten_text_sise"
+        android:text="设备名称"
+        android:layout_toRightOf="@id/break_imageview"
+        android:layout_marginLeft="10dp"
+        />
+    <TextView
+     android:id="@+id/alert_show_content"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:textSize="@dimen/mainten_text_sise"
+     android:text="由于报警内容"
+     android:layout_toRightOf="@id/break_imageview"
+     android:layout_marginLeft="10dp"
+     android:layout_below="@id/alert_deviceName_textview"
+     android:layout_marginTop="7dp"
+    />
+
+    <TextView
+        android:id="@+id/alert_memo_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/mainten_text_sise"
+        android:text="维保备注：正常"
+        android:layout_toRightOf="@id/break_imageview"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/alert_show_content"
+        android:layout_marginTop="7dp"
+        />
+
+</RelativeLayout>

@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import project.wy.com.myappdemo.DeviceInfoActivity;
+import project.wy.com.myappdemo.MainActivity;
 import project.wy.com.myappdemo.MyApp;
 import project.wy.com.myappdemo.R;
 import project.wy.com.myappdemo.adapter.MyExpListViewAdapter;
@@ -54,12 +55,12 @@ public class DeviceListFragment extends BaseFragment {
     private MyExpListViewAdapter myExpListViewAdapter;
     private EquipmentInfoBean equInfoBean;
     private SearchView search_edit;
-    private static List<EquipmentBean> equipments;
-    private List<RoomBean> rooms;
+    private  List<EquipmentBean> equipments;
+    private  List<RoomBean> rooms;
     private LocalDeviceInfoBean mLocalDeviceInfoBean;
     private List<List<EquipmentBean>> equipmentList = new ArrayList<>();
     List<EZDeviceInfo> mDeviceList = null;
-
+    private WarningFragment warningFragment;
     @Override
     protected View initView() {
         View view = View.inflate(mContext, R.layout.deivelist_fargment_layout, null);
@@ -166,6 +167,9 @@ public class DeviceListFragment extends BaseFragment {
                     mLocalDeviceInfoBean = gson.fromJson(resultDesc, LocalDeviceInfoBean.class);
                     rooms = mLocalDeviceInfoBean.getRoom();
                     equipments = mLocalDeviceInfoBean.getEquipment();
+
+                    warningFragment.setLocation(equipmentList,rooms);
+
                     int rmlen = 0;
                     int devlen = 0;
                     if(rooms!=null&&rooms.size()>0){
@@ -227,20 +231,11 @@ public class DeviceListFragment extends BaseFragment {
         });
     }
 
-    public static List<Integer> getDeviceBeanList() {
-        List<Integer> id_list = new ArrayList<>();
-        if (equipments != null) {
-            for (EquipmentBean equipmentBean : equipments) {
-                id_list.add(equipmentBean.getEquip_id());
-            }
-        }
-        return id_list;
-    }
-
     public void setDeviceBean(LocalDeviceInfoBean deviceBean) {
         this.mLocalDeviceInfoBean = deviceBean;
         rooms = mLocalDeviceInfoBean.getRoom();
         equipments = mLocalDeviceInfoBean.getEquipment();
+
         int rmlen = rooms.size();
         int devlen = equipments.size();
         for (int i = 0; i < rmlen; i++) {
@@ -253,12 +248,16 @@ public class DeviceListFragment extends BaseFragment {
                 }
             }
             equipmentList.add(i, equipList);
+            warningFragment.setLocation(equipmentList,rooms);
         }
 
-//        //设置适配器
-
+        //设置适配器
         myExpListViewAdapter.setData(mLocalDeviceInfoBean.getRoom(), equipmentList);
         myExpListViewAdapter.notifyDataSetChanged();
+    }
+
+    public void setWaringFragment(WarningFragment waringFragment) {
+        this.warningFragment = waringFragment;
     }
 
 
@@ -293,6 +292,4 @@ public class DeviceListFragment extends BaseFragment {
             }
         }
     }
-
-
 }

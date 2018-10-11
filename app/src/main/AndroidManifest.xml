@@ -41,8 +41,8 @@
         <activity
             android:name=".camera.realplay.EZRealPlayActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
-        />
+            android:screenOrientation="portrait" />
+
         <receiver
             android:name=".broadcast.MyEZReceiver"
             android:exported="false">
@@ -51,6 +51,8 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".AlertInfoActivity" />
+        <activity android:name=".MeinAndHealthyActivity"></activity>
     </application>
 
 </manifest>

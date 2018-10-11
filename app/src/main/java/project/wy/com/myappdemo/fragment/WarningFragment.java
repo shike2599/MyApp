@@ -7,11 +7,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import project.wy.com.myappdemo.R;
 import project.wy.com.myappdemo.base.BaseFragment;
 import project.wy.com.myappdemo.bean.EquipmentBean;
+import project.wy.com.myappdemo.bean.ProjectInfoBean;
+import project.wy.com.myappdemo.bean.RoomBean;
 import project.wy.com.myappdemo.http.HttpCallback;
 import project.wy.com.myappdemo.untils.Constant;
 import project.wy.com.myappdemo.untils.DialogUtil;
@@ -26,35 +31,86 @@ public class WarningFragment extends BaseFragment {
     private Spinner input_num;
     private Spinner location;
     private ArrayAdapter<Integer> adapter;
+    private ArrayAdapter<String> adapter_loaction;
     private int deivice_id;
-    private EquipmentBean equBean;
+    private int location_position;
+
+    private  List<String> roomName_list = new ArrayList<>() ;
+    private  List<Integer> id_list  = new ArrayList<>();;
+    private  List<List<EquipmentBean>> dataList;
     @Override
     protected View initView() {
         View view = View.inflate(mContext, R.layout.warining_fragment_activity,null);
         commit_btn = view.findViewById(R.id.commit_btn);
         input_num = view.findViewById(R.id.spinner_select_id);
         location = view.findViewById(R.id.spinner_select_location);
+
         input_info = view.findViewById(R.id.device_warn_info);
         input_remark = view.findViewById(R.id.device_warn_rmaker);
         return view;
     }
 
     public void setData(EquipmentBean equBean) {
-        this.equBean = equBean;
         input_num.setSelection(input_num.getCount() - equBean.getEquip_id());
+    }
+
+    public  void setLocation(List<List<EquipmentBean>> dataList,List<RoomBean> roomBeans) {
+        this.dataList = dataList;
+        roomName_list.clear();
+        for(RoomBean roomBean : roomBeans){
+            roomName_list.add(roomBean.getEquip_room_name());
+        }
+
+        if(adapter_loaction!=null){
+            adapter_loaction.notifyDataSetChanged();
+        }
+        if(location!=null){
+            id_list.clear();
+            List<EquipmentBean> list = dataList.get(0);
+            for(EquipmentBean equipmentBeans : list){
+                id_list.add(equipmentBeans.getEquip_id());
+            }
+            adapter = new ArrayAdapter<>(mContext,android.R.layout.simple_spinner_item,id_list);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+            input_num.setAdapter(adapter);
+        }
     }
 
     @Override
     protected void initData() {
         super.initData();
-        adapter = new ArrayAdapter<>(mContext,android.R.layout.simple_spinner_item,DeviceListFragment.getDeviceBeanList());
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        input_num.setAdapter(adapter);
-        input_num.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
+        adapter_loaction = new ArrayAdapter<>(mContext,android.R.layout.simple_spinner_item,
+                roomName_list);
+        adapter_loaction.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        location.setAdapter(adapter_loaction);
+
+        location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                deivice_id = adapter.getItem(position);
+                location_position = position;
+                id_list.clear();
+                List<EquipmentBean> list = dataList.get(position);
+                for(EquipmentBean equipmentBeans : list){
+                    id_list.add(equipmentBeans.getEquip_id());
+                }
+
+                adapter = new ArrayAdapter<>(mContext,android.R.layout.simple_spinner_item,id_list);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                input_num.setAdapter(adapter);
+                input_num.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        deivice_id = adapter.getItem(position);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
             }
 
             @Override
@@ -62,6 +118,11 @@ public class WarningFragment extends BaseFragment {
 
             }
         });
+
+
+
+
+
 
         final String device_wainfo = input_info.getText().toString();
         final String device_remaker = input_remark.getText().toString();
@@ -84,7 +145,7 @@ public class WarningFragment extends BaseFragment {
                         }
 
                         @Override
-                        public void onFailure(int code, String message) {
+                        public void onFailure(int code, String message ) {
                             super.onFailure(code, message);
                             DialogUtil.hideDialogLoading();
                             ToastUtil.showText("服务器异常，上传失败！");
@@ -97,4 +158,10 @@ public class WarningFragment extends BaseFragment {
         });
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
 }
