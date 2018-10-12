@@ -18,7 +18,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.Gson;
-import com.videogo.openapi.EZOpenSDK;
 import com.znq.zbarcode.CaptureActivity;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,11 +25,10 @@ import java.util.List;
 import java.util.Map;
 import project.wy.com.myappdemo.base.BaseFragment;
 import project.wy.com.myappdemo.bean.CompanyInfoBean;
-import project.wy.com.myappdemo.bean.EquipmentBean;
 import project.wy.com.myappdemo.bean.EquipmentInfoBean;
 import project.wy.com.myappdemo.bean.LocalDeviceInfoBean;
 import project.wy.com.myappdemo.bean.ProjectInfoBean;
-import project.wy.com.myappdemo.bean.RoomBean;
+import project.wy.com.myappdemo.bean.SubProInfoBean;
 import project.wy.com.myappdemo.fragment.DeviceListFragment;
 import project.wy.com.myappdemo.fragment.UserFragment;
 import project.wy.com.myappdemo.fragment.WarningFragment;
@@ -41,7 +39,6 @@ import project.wy.com.myappdemo.untils.LogUtil;
 import project.wy.com.myappdemo.untils.OkhttpUtils;
 import project.wy.com.myappdemo.untils.ShareUtils;
 import project.wy.com.myappdemo.untils.ToastUtil;
-import project.wy.com.myappdemo.widget.window.MenuPopupWindow;
 import project.wy.com.myappdemo.widget.window.NormalExpandableListAdapter;
 
 public class MainActivity extends FragmentActivity{
@@ -74,6 +71,7 @@ public class MainActivity extends FragmentActivity{
     private ExpandableListView compExpList;
     private NormalExpandableListAdapter adapter;
 
+    private SubProInfoBean mSubProInfoBean;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -81,9 +79,11 @@ public class MainActivity extends FragmentActivity{
             switch (msg.what) {
                 case SEACH:
                     findProjectInfo();
+                    findSubProInfo();
                     break;
                 case END:
-                    adapter.setData(mCompanyInfoBean,mProjectInfoBeanList);
+                    Log.i(TAG,"mSubProInfoBean============="+mSubProInfoBean);
+                    adapter.setData(mCompanyInfoBean,mProjectInfoBeanList,mSubProInfoBean);
                     adapter.notifyDataSetChanged();
                     int proj_id = (Integer) ShareUtils.getSharedPreference(
                             MainActivity.this,"proj_id",-1);
@@ -103,8 +103,12 @@ public class MainActivity extends FragmentActivity{
             map.put("company_id", comp_id_seach);
             doPost(Constant.QUEST_PRO_INFO, map, "pro");
         }
-        mHandler.sendEmptyMessage(END);
     }
+
+    private void findSubProInfo(){
+        doPost(Constant.QUEST_SUB_PRO_INFO, null, "subpro");
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,11 +145,16 @@ public class MainActivity extends FragmentActivity{
                     Gson gson = new Gson();
                     mCompanyInfoBean = gson.fromJson(resultDesc, CompanyInfoBean.class);
                     mHandler.sendEmptyMessageAtTime(SEACH, 100);
-                } else {
+                } else if(type.equals("pro")){
                     Gson gson = new Gson();
                     ProjectInfoBean projectInfoBean = gson.fromJson(resultDesc, ProjectInfoBean.class);
                     mProjectInfoBeanList.add(projectInfoBean);
+                }else if(type.equals("subpro")){
+                    Gson gson = new Gson();
+                    mSubProInfoBean = gson.fromJson(resultDesc, SubProInfoBean.class);
+                    mHandler.sendEmptyMessage(END);
                 }
+
             }
 
             @Override

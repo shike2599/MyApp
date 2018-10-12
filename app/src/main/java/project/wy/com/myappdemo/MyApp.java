@@ -2,6 +2,8 @@ package project.wy.com.myappdemo;
 
 import android.app.Application;
 import android.content.Context;
+import android.provider.ContactsContract;
+
 import com.videogo.openapi.EZOpenSDK;
 import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
@@ -30,7 +32,7 @@ public class MyApp extends Application {
         /** * 设置是否支持P2P取流,详见api */
         EZOpenSDK.enableP2P(false);
         EZOpenSDK.initLib(this, Constant.APP_KEY);
-        getOpenSDK().setAccessToken("at.1slfn6120god3tr87fhjhznv6t9sa3gm-837m413qvb-06yybxo-xgfbcljr3");
+        getOpenSDK().setAccessToken(Constant.ACCESSTOKE);
     }
 
     //初始化Okhttp

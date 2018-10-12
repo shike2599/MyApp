@@ -27,9 +27,10 @@ public class Constant {
     public static final String  QUEST_MAINTEN_INFO = "http://116.62.186.91:8080/gywyext/moblieAdd/getmaintenance.do";//维保信息
     public static final String  QUEST_MAINTEN_BYID_INFO = "http://116.62.186.91:8080/gywyext/moblieAdd/getMaintenanceById.do";//维保信息
 
+    public static final String QUEST_SUB_PRO_INFO = "http://116.62.186.91:8080/gywyext/moblieAdd/getInitLeft.do";
 
     public static final String  QUEST_DEVCE_PRAMS_INFO = "http://116.62.186.91:8080/gywyext/moblieAdd/getParaById.do";//获取设备特征参数信息
     public static final String  QUEST_DEVCE_BY_PROJ = "http://116.62.186.91:8080/gywyext/moblieAdd/selectBaseInfoByProj.do";//获取项目拿到设备信息
-    public static final String  ACCESSTOKE = "at.2earvrra9u2nd7j82ntup7t70cg4zmdi-86r7nmyy2p-1by02i5-igh7zed4e";//萤石云toke
+    public static final String  ACCESSTOKE = "at.1slfn6120god3tr87fhjhznv6t9sa3gm-837m413qvb-06yybxo-xgfbcljr3";//萤石云toke
     public static final String  APP_KEY = "ca8ff88d26034fa69dd42af5e333fcc9";//萤石云toke
 }

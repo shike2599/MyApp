@@ -1,11 +1,13 @@
 package project.wy.com.myappdemo.widget.window;
 
+import android.os.Build;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,7 +16,10 @@ import java.util.List;
 import project.wy.com.myappdemo.R;
 import project.wy.com.myappdemo.bean.CompanyInfoBean;
 import project.wy.com.myappdemo.bean.MaintenanceInfoBean;
+import project.wy.com.myappdemo.bean.ProjectBean;
 import project.wy.com.myappdemo.bean.ProjectInfoBean;
+import project.wy.com.myappdemo.bean.SubProBean;
+import project.wy.com.myappdemo.bean.SubProInfoBean;
 
 /**
  * @author Richie on 2017.07.31
@@ -27,6 +32,7 @@ public class NormalExpandableListAdapter extends BaseExpandableListAdapter {
     private List<ProjectInfoBean> mProjectInfoBeanList;
     private SparseArray<ImageView> mIndicators;
     private OnGroupExpandedListener mOnGroupExpandedListener;
+    private SubProInfoBean mSubProInfoBean;
 
 
     //根据分组的展开闭合状态设置指示器
@@ -42,9 +48,10 @@ public class NormalExpandableListAdapter extends BaseExpandableListAdapter {
         mIndicators = new SparseArray<>();
     }
 
-public void setData(CompanyInfoBean companyInfoBean,List<ProjectInfoBean> projectInfoBeanList) {
+public void setData(CompanyInfoBean companyInfoBean, List<ProjectInfoBean> projectInfoBeanList, SubProInfoBean subProInfoBean) {
     mCompanyInfoBean = companyInfoBean;
     mProjectInfoBeanList = projectInfoBeanList;
+    mSubProInfoBean = subProInfoBean;
 }
 
     public void setOnGroupExpandedListener(OnGroupExpandedListener onGroupExpandedListener) {
@@ -121,11 +128,23 @@ public void setData(CompanyInfoBean companyInfoBean,List<ProjectInfoBean> projec
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_company_info_child, parent, false);
             childViewHolder = new ChildViewHolder();
             childViewHolder.tvTitle = (TextView) convertView.findViewById(R.id.list_child);
+            childViewHolder.warning = (Button) convertView.findViewById(R.id.warning_child);
+            childViewHolder.wait_mainten  = (Button)convertView.findViewById(R.id.wait_mainten_child);
+            childViewHolder.healthy_state = (Button)convertView.findViewById(R.id.healthy_state_child);
             convertView.setTag(childViewHolder);
         } else {
             childViewHolder = (ChildViewHolder) convertView.getTag();
         }
-        childViewHolder.tvTitle.setText(mProjectInfoBeanList.get(groupPosition).getResult().get(childPosition).getProj_name());
+        ProjectBean projectBean = mProjectInfoBeanList.get(groupPosition).getResult().get(childPosition);
+        childViewHolder.tvTitle.setText(projectBean.getProj_name());
+        List<SubProBean> subProBeans = mSubProInfoBean.getLeft();
+        for(SubProBean subProBean : subProBeans){
+            if(Integer.parseInt(subProBean.getProj_id()) == projectBean.getProj_id()){
+                childViewHolder.warning.setText(subProBean.getAlart()+"");
+                childViewHolder.wait_mainten.setText(subProBean.getNdate()+"");
+                childViewHolder.healthy_state.setText(subProBean.getState()+"");
+            }
+        }
         return convertView;
     }
 
@@ -154,5 +173,9 @@ public void setData(CompanyInfoBean companyInfoBean,List<ProjectInfoBean> projec
 
     private static class ChildViewHolder {
         TextView tvTitle;
+        Button warning;
+        Button wait_mainten;
+        Button healthy_state;
+
     }
 }

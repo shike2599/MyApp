@@ -20,6 +20,7 @@ import project.wy.com.myappdemo.R;
 import project.wy.com.myappdemo.bean.CompanyInfoBean;
 import project.wy.com.myappdemo.bean.LocalDeviceInfoBean;
 import project.wy.com.myappdemo.bean.ProjectInfoBean;
+import project.wy.com.myappdemo.bean.SubProInfoBean;
 import project.wy.com.myappdemo.http.HttpCallback;
 import project.wy.com.myappdemo.untils.Constant;
 import project.wy.com.myappdemo.untils.DialogUtil;
@@ -131,10 +132,10 @@ public class MenuPopupWindow extends PopupWindow {
         }
     }
 
-    public void setData(CompanyInfoBean companyInfoBean,List<ProjectInfoBean> projectInfoBeanList) {
+    public void setData(CompanyInfoBean companyInfoBean, List<ProjectInfoBean> projectInfoBeanList, SubProInfoBean subProInfoBean) {
         this.companyInfoBean = companyInfoBean;
         this.projectInfoBeanList = projectInfoBeanList;
-        adapter.setData(companyInfoBean,projectInfoBeanList);
+        adapter.setData(companyInfoBean,projectInfoBeanList,subProInfoBean);
         adapter.notifyDataSetChanged();
     }
 
