@@ -30,13 +30,12 @@ public class WarningFragment extends BaseFragment {
     private Button commit_btn;
     private Spinner input_num;
     private Spinner location;
-    private ArrayAdapter<Integer> adapter;
+    private ArrayAdapter<String> adapter;
     private ArrayAdapter<String> adapter_loaction;
     private int deivice_id;
-    private int location_position;
 
     private  List<String> roomName_list = new ArrayList<>() ;
-    private  List<Integer> id_list  = new ArrayList<>();;
+    private  List<String> id_list  = new ArrayList<>();;
     private  List<List<EquipmentBean>> dataList;
     @Override
     protected View initView() {
@@ -68,7 +67,7 @@ public class WarningFragment extends BaseFragment {
             id_list.clear();
             List<EquipmentBean> list = dataList.get(0);
             for(EquipmentBean equipmentBeans : list){
-                id_list.add(equipmentBeans.getEquip_id());
+                id_list.add(equipmentBeans.getEquip_name());
             }
             adapter = new ArrayAdapter<>(mContext,android.R.layout.simple_spinner_item,id_list);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -88,11 +87,11 @@ public class WarningFragment extends BaseFragment {
         location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                location_position = position;
+
                 id_list.clear();
-                List<EquipmentBean> list = dataList.get(position);
+                final List<EquipmentBean> list = dataList.get(position);
                 for(EquipmentBean equipmentBeans : list){
-                    id_list.add(equipmentBeans.getEquip_id());
+                    id_list.add(equipmentBeans.getEquip_name());
                 }
 
                 adapter = new ArrayAdapter<>(mContext,android.R.layout.simple_spinner_item,id_list);
@@ -102,7 +101,7 @@ public class WarningFragment extends BaseFragment {
 
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        deivice_id = adapter.getItem(position);
+                        deivice_id = list.get(position).getEquip_id();
                     }
 
                     @Override
@@ -120,15 +119,12 @@ public class WarningFragment extends BaseFragment {
         });
 
 
-
-
-
-
-        final String device_wainfo = input_info.getText().toString();
-        final String device_remaker = input_remark.getText().toString();
         commit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String device_wainfo = input_info.getText().toString().trim();
+                String device_remaker = input_remark.getText().toString().trim();
+
                 if(device_wainfo!=null&&!device_wainfo.equals("")){
                     DialogUtil.showDialogLoading(mContext,"正在上传信息，请稍等...");
                     Map<String,String> parms = new HashMap<>();

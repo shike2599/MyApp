@@ -1,5 +1,7 @@
 package project.wy.com.myappdemo.widget.window;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 import android.util.SparseArray;
@@ -13,6 +15,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import project.wy.com.myappdemo.AlertInfoActivity;
+import project.wy.com.myappdemo.MainActivity;
+import project.wy.com.myappdemo.MeinAndHealthyActivity;
 import project.wy.com.myappdemo.R;
 import project.wy.com.myappdemo.bean.CompanyInfoBean;
 import project.wy.com.myappdemo.bean.MaintenanceInfoBean;
@@ -20,6 +25,8 @@ import project.wy.com.myappdemo.bean.ProjectBean;
 import project.wy.com.myappdemo.bean.ProjectInfoBean;
 import project.wy.com.myappdemo.bean.SubProBean;
 import project.wy.com.myappdemo.bean.SubProInfoBean;
+import project.wy.com.myappdemo.untils.Constant;
+import project.wy.com.myappdemo.untils.LogUtil;
 
 /**
  * @author Richie on 2017.07.31
@@ -33,7 +40,8 @@ public class NormalExpandableListAdapter extends BaseExpandableListAdapter {
     private SparseArray<ImageView> mIndicators;
     private OnGroupExpandedListener mOnGroupExpandedListener;
     private SubProInfoBean mSubProInfoBean;
-
+    private Context context;
+    private int pro_id;
 
     //根据分组的展开闭合状态设置指示器
     public void setIndicatorState(int groupPosition, boolean isExpanded) {
@@ -44,7 +52,8 @@ public class NormalExpandableListAdapter extends BaseExpandableListAdapter {
         }
     }
 
-    public NormalExpandableListAdapter() {
+    public NormalExpandableListAdapter(Context context) {
+        this.context = context;
         mIndicators = new SparseArray<>();
     }
 
@@ -136,13 +145,19 @@ public void setData(CompanyInfoBean companyInfoBean, List<ProjectInfoBean> proje
             childViewHolder = (ChildViewHolder) convertView.getTag();
         }
         ProjectBean projectBean = mProjectInfoBeanList.get(groupPosition).getResult().get(childPosition);
+        pro_id = projectBean.getProj_id();
         childViewHolder.tvTitle.setText(projectBean.getProj_name());
         List<SubProBean> subProBeans = mSubProInfoBean.getLeft();
         for(SubProBean subProBean : subProBeans){
             if(Integer.parseInt(subProBean.getProj_id()) == projectBean.getProj_id()){
-                childViewHolder.warning.setText(subProBean.getAlart()+"");
-                childViewHolder.wait_mainten.setText(subProBean.getNdate()+"");
-                childViewHolder.healthy_state.setText(subProBean.getState()+"");
+                ClickListener clickListener = new ClickListener();
+                childViewHolder.warning.setText("报警"+subProBean.getAlart()+"");
+                childViewHolder.wait_mainten.setText("待维保"+subProBean.getNdate()+"");
+                childViewHolder.healthy_state.setText("健康状态差"+subProBean.getState()+"");
+
+                childViewHolder.warning.setOnClickListener(clickListener);
+                childViewHolder.wait_mainten.setOnClickListener(clickListener);
+                childViewHolder.healthy_state.setOnClickListener(clickListener);
             }
         }
         return convertView;
@@ -178,4 +193,37 @@ public void setData(CompanyInfoBean companyInfoBean, List<ProjectInfoBean> proje
         Button healthy_state;
 
     }
+
+    private class ClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.warning_child:
+                    LogUtil.d(TAG,"-----点击了----");
+                    Intent intent = new Intent();
+                    intent.setClass(context,AlertInfoActivity.class);
+                    intent.putExtra("Proj_id",pro_id);
+                    context.startActivity(intent);
+                    return;
+                case R.id.wait_mainten_child:
+                    LogUtil.d(TAG,"-----点击了----");
+                    Intent intent1 = new Intent();
+                    intent1.setClass(context,MeinAndHealthyActivity.class);
+                    intent1.putExtra("Proj_id",pro_id);
+                    intent1.putExtra("Type","WaitMainten");
+                    context.startActivity(intent1);
+                    return;
+                case R.id.healthy_state_child:
+                    LogUtil.d(TAG,"-----点击了----");
+                    Intent intent2 = new Intent();
+                    intent2.setClass(context,MeinAndHealthyActivity.class);
+                    intent2.putExtra("Proj_id",pro_id);
+                    intent2.putExtra("Type","Healthy");
+                    context.startActivity(intent2);
+                    break;
+            }
+        }
+    }
+
 }

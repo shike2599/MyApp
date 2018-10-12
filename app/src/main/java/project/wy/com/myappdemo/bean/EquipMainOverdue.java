@@ -1,12 +1,13 @@
 package project.wy.com.myappdemo.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by lichee on 2018/10/11.
  */
 
-public class EquipMainOverdue {
+public class EquipMainOverdue implements Serializable{
 
     private List<ListBean> list;
 
@@ -18,7 +19,7 @@ public class EquipMainOverdue {
         this.list = list;
     }
 
-    public static class ListBean {
+    public static class ListBean implements Serializable{
         /**
          * equip_id : 1
          * equip_name : ???

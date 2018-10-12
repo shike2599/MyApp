@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="55dp"
-    android:background="@android:color/holo_blue_light"
+    android:background="#448AFF"
     >
    <ImageView
        android:id="@+id/back_img"

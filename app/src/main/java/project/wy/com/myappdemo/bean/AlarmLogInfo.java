@@ -1,12 +1,13 @@
 package project.wy.com.myappdemo.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by lichee on 2018/10/11.
  */
 
-public class AlarmLogInfo {
+public class AlarmLogInfo implements Serializable{
 
     private List<ListBean> list;
 
@@ -18,7 +19,7 @@ public class AlarmLogInfo {
         this.list = list;
     }
 
-    public static class ListBean {
+    public static class ListBean implements Serializable{
         /**
          * alarm_log_id : 1
          * alarm_log_info : something

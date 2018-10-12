@@ -48,7 +48,7 @@ public class MenuPopupWindow extends PopupWindow {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         contentView = inflater.inflate(R.layout.popup_company_info, null);
         popList = contentView.findViewById(R.id.pop_list);
-        adapter = new NormalExpandableListAdapter();
+        adapter = new NormalExpandableListAdapter(context);
         popList.setAdapter(adapter);
         adapter.setOnGroupExpandedListener(new OnGroupExpandedListener() {
             @Override
