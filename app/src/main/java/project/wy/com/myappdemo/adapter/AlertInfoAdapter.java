@@ -46,7 +46,7 @@ public class AlertInfoAdapter extends BaseAdapter {
             viewHolder.show_device_name = convertView.findViewById(R.id.alert_deviceName_textview);
             viewHolder.show_alert_content = convertView.findViewById(R.id.alert_show_content);
             viewHolder.show_alert_momo = convertView.findViewById(R.id.alert_memo_textview);
-            convertView.setTag(convertView);
+            convertView.setTag(viewHolder);
         }else{
             viewHolder = (AlertInfoAdapter.ViewHolder) convertView.getTag();
         }

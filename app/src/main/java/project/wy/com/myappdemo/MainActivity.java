@@ -307,15 +307,6 @@ public class MainActivity extends FragmentActivity{
                         mProjectInfoBeanList.get(groupPosition).getResult().get(childPosition)!=null){
                     pro_id = mProjectInfoBeanList.get(groupPosition).getResult().get(childPosition).getProj_id();
 
-//                    Button alarm_btn = v.findViewById(R.id.warning_child);
-//                    Button over_btn = v.findViewById(R.id.wait_mainten_child);
-//                    Button healthy_btn = v.findViewById(R.id.healthy_state_child);
-//
-//                    ExpChildBtnClick expChildBtnClick = new ExpChildBtnClick();
-//                    alarm_btn.setOnClickListener(expChildBtnClick);
-//                    over_btn.setOnClickListener(expChildBtnClick);
-//                    healthy_btn.setOnClickListener(expChildBtnClick);
-
                     //保存proj_id,第一次获取
                     ShareUtils.putSharedPreference(MainActivity.this,"proj_id",pro_id);
                     DialogUtil.showDialogLoading(MainActivity.this,"正在查询...");
@@ -378,37 +369,6 @@ public class MainActivity extends FragmentActivity{
 
     }
 
-    //childItem的点击事件
-//    class ExpChildBtnClick implements View.OnClickListener{
-//        @Override
-//        public void onClick(View v) {
-//            switch (v.getId()){
-//                case R.id.warning_child:
-//                    LogUtil.d(TAG,"-----点击了----");
-//                    Intent intent = new Intent();
-//                    intent.setClass(MainActivity.this,AlertInfoActivity.class);
-//                    intent.putExtra("Proj_id",pro_id);
-//                    MainActivity.this.startActivity(intent);
-//                    return;
-//                case R.id.wait_mainten_child:
-//                    LogUtil.d(TAG,"-----点击了----");
-//                    Intent intent1 = new Intent();
-//                    intent1.setClass(MainActivity.this,MeinAndHealthyActivity.class);
-//                    intent1.putExtra("Proj_id",pro_id);
-//                    intent1.putExtra("Type","WaitMainten");
-//                    MainActivity.this.startActivity(intent1);
-//                    return;
-//                case R.id.healthy_state_child:
-//                    LogUtil.d(TAG,"-----点击了----");
-//                    Intent intent2 = new Intent();
-//                    intent2.setClass(MainActivity.this,MeinAndHealthyActivity.class);
-//                    intent2.putExtra("Proj_id",pro_id);
-//                    intent2.putExtra("Type","Healthy");
-//                    MainActivity.this.startActivity(intent2);
-//                    break;
-//            }
-//        }
-//    }
 
     //记录用户首次点击返回键的时间
     private long firstTime = 0;

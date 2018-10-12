@@ -57,7 +57,7 @@ public class MeinAndHealthyActivity extends Activity {
        parms.put("proj_id",String.valueOf(proj_id));
        String type = intent.getStringExtra("Type");
        String URL= "";
-       if(type!=null&&type.equals("")){
+       if(type!=null&&!type.equals("")){
            if(type.equals("WaitMainten")){
               URL = Constant.QUEST_OVERMAINT_BY_PROID;
            }else{
@@ -68,6 +68,7 @@ public class MeinAndHealthyActivity extends Activity {
                @Override
                public void onSuccess(String resultDesc) {
                    super.onSuccess(resultDesc);
+                   LogUtil.d(TAG,resultDesc);
                    DialogUtil.hideDialogLoading();
                    Gson gson = new Gson();
                    EquipMainOverdue equipMainOverdue = gson.fromJson(resultDesc, EquipMainOverdue.class);

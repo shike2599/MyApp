@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".AlertInfoActivity">
     <!--标题栏-->
     <include layout="@layout/titlebar" />
     <ListView
         android:id="@+id/alert_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
         android:divider="#00000000"
         />

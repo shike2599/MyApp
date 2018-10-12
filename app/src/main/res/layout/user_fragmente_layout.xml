@@ -3,8 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
     android:background="@color/white"
     >
     <me.crosswall.lib.coverflow.core.PagerContainer
@@ -38,18 +36,24 @@
             android:layout_height="16dp"
             android:src="@mipmap/ic_circle"/>
     </LinearLayout>
-
-    <LinearLayout
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="2dp"
+    android:background="#30000000"
+    android:layout_marginTop="20dp"
+    />
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/listview_whilte_border"
-        android:layout_marginTop="20dp"
         >
         <ListView
             android:id="@+id/proj_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_width="302dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:scrollbars="none"
+            >
         </ListView>
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>
