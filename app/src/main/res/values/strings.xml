@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyAppDemo</string>
+    <string name="app_name">e巡通</string>
     <string name="device_info">设备信息</string>
     <string name="runing_info">运行信息</string>
     <string name="miantenan_info">维保信息</string>

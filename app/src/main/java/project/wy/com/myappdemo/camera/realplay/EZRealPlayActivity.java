@@ -509,7 +509,6 @@ public class EZRealPlayActivity extends Activity implements OnClickListener, Sur
 
         mHandler = new Handler(this);
         mRecordRotateViewUtil = new RotateViewUtil();
-
         mBroadcastReceiver = new RealPlayBroadcastReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_USER_PRESENT);

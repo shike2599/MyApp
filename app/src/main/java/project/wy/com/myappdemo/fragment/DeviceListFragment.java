@@ -61,6 +61,7 @@ public class DeviceListFragment extends BaseFragment {
     private List<List<EquipmentBean>> equipmentList = new ArrayList<>();
     List<EZDeviceInfo> mDeviceList = null;
     private WarningFragment warningFragment;
+    private int proj_id;
     @Override
     protected View initView() {
         View view = View.inflate(mContext, R.layout.deivelist_fargment_layout, null);
@@ -77,8 +78,10 @@ public class DeviceListFragment extends BaseFragment {
                 DialogUtil.showDialogLoading(mContext, "");
                 //准备数据
                 Map<String, String> params = new HashMap<>();
-                params.put("equip_id", searchKey);
-                doPost(params, "info", Constant.QUEST_DEVICE_INFO);
+                params.put("proj_id", String.valueOf(proj_id));
+                params.put("searchKey", searchKey);
+                Log.i(TAG,"proj_id:"+proj_id+",searchKey:"+searchKey);
+                doPost(params, "info", Constant.QUEST_DEVCE_BY_NAME_OR_EID);
                 return true;
             }
 
@@ -98,7 +101,15 @@ public class DeviceListFragment extends BaseFragment {
                         Log.d(TAG, "-----carmer-----" + groupPosition);
                         // final EZDeviceInfo deviceInfo = mAdapter.getItem(groupPosition);
                         if (mDeviceList != null && mDeviceList.size() > 0) {
-                            final EZDeviceInfo deviceInfo = mDeviceList.get(0);
+                            int index = 0;
+                            for(int i = 0; i < mDeviceList.size(); i++){
+                                if(mDeviceList.get(i).getDeviceName().contains("C6H")){
+                                    index = i;
+                                    Log.i(TAG,"name:"+mDeviceList.get(i).getDeviceName()+",index:"+i);
+                                }
+                            }
+
+                            final EZDeviceInfo deviceInfo = mDeviceList.get(index);
                             if (deviceInfo.getCameraNum() <= 0 || deviceInfo.getCameraInfoList() == null || deviceInfo.getCameraInfoList().size() <= 0) {
                                 Log.d(TAG, "cameralist is null or cameralist size is 0");
                                 return;
@@ -143,7 +154,7 @@ public class DeviceListFragment extends BaseFragment {
         super.initData();
         myExpListViewAdapter = new MyExpListViewAdapter(mContext);
         mExpListView.setAdapter(myExpListViewAdapter);
-        int proj_id = (Integer) ShareUtils.getSharedPreference(mContext, "proj_id", -1);
+        proj_id = (Integer) ShareUtils.getSharedPreference(mContext, "proj_id", -1);
         if (proj_id != -1) {
             DialogUtil.showDialogLoading(mContext, "");
             Map<String, String> prams = new HashMap<>();
