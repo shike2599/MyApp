@@ -52,7 +52,8 @@
         </receiver>
 
         <activity android:name=".AlertInfoActivity" />
-        <activity android:name=".MeinAndHealthyActivity"></activity>
+        <activity android:name=".MeinAndHealthyActivity" />
+        <activity android:name=".WarningNewsActivity"></activity>
     </application>
 
 </manifest>

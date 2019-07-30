@@ -1,5 +1,8 @@
 package project.wy.com.myappdemo.fragment;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.widget.SearchView;
@@ -30,6 +33,7 @@ import project.wy.com.myappdemo.DeviceInfoActivity;
 import project.wy.com.myappdemo.MainActivity;
 import project.wy.com.myappdemo.MyApp;
 import project.wy.com.myappdemo.R;
+import project.wy.com.myappdemo.WarningNewsActivity;
 import project.wy.com.myappdemo.adapter.MyExpListViewAdapter;
 import project.wy.com.myappdemo.base.BaseFragment;
 import project.wy.com.myappdemo.bean.DeviceInfoBean;
@@ -37,6 +41,7 @@ import project.wy.com.myappdemo.bean.EquipmentBean;
 import project.wy.com.myappdemo.bean.EquipmentInfoBean;
 import project.wy.com.myappdemo.bean.LocalDeviceInfoBean;
 import project.wy.com.myappdemo.bean.RoomBean;
+import project.wy.com.myappdemo.bean.WarningNewsListBean;
 import project.wy.com.myappdemo.camera.realplay.EZRealPlayActivity;
 import project.wy.com.myappdemo.camera.realplay.RealPlaySquareInfo;
 import project.wy.com.myappdemo.http.HttpCallback;
@@ -54,6 +59,7 @@ public class DeviceListFragment extends BaseFragment {
     private ExpandableListView mExpListView;
     private MyExpListViewAdapter myExpListViewAdapter;
     private EquipmentInfoBean equInfoBean;
+    public static  WarningNewsListBean warningNewsListBean;
     private SearchView search_edit;
     private  List<EquipmentBean> equipments;
     private  List<RoomBean> rooms;
@@ -160,6 +166,7 @@ public class DeviceListFragment extends BaseFragment {
             Map<String, String> prams = new HashMap<>();
             prams.put("proj_id", String.valueOf(proj_id));
             doPost(prams, "list", Constant.QUEST_DEVCE_BY_PROJ);
+
         }
         new GetCamersInfoListTask().execute();
     }
@@ -212,10 +219,16 @@ public class DeviceListFragment extends BaseFragment {
                     myExpListViewAdapter.setData(mLocalDeviceInfoBean.getRoom(), equipmentList);
                     mExpListView.setAdapter(myExpListViewAdapter);
                     myExpListViewAdapter.notifyDataSetChanged();
+
+                    Map<String, String> prams = new HashMap<>();
+                    prams.put("proj_id", String.valueOf(proj_id));
+                    prams.put("page", String.valueOf(1));
+                    doPost(prams, "news", Constant.QUEST_WARNING_NES_BY_PROID);
+
                 } else if (type.equals("info")) {
                     Gson gson = new Gson();
-                    equInfoBean = gson.fromJson(resultDesc, EquipmentInfoBean.class);
                     Log.i(TAG, "xwz::::" + resultDesc);
+                    equInfoBean = gson.fromJson(resultDesc, EquipmentInfoBean.class);
                     if (equInfoBean.getEquipment() != null) {
                         Intent intent = new Intent();
                         intent.setClass(mContext, DeviceInfoActivity.class);
@@ -225,6 +238,15 @@ public class DeviceListFragment extends BaseFragment {
                         ToastUtil.showText("未查找到设备！！");
                     }
 
+                }else if(type.equals("news")){
+                    Gson gson = new Gson();
+                    Log.i(TAG,"news::::"+resultDesc);
+                    warningNewsListBean = gson.fromJson(resultDesc, WarningNewsListBean.class);
+                    if(warningNewsListBean.getList() != null){
+                        Log.i(TAG,warningNewsListBean.getList().toString());
+                        Intent it = new Intent(getActivity(), WarningNewsActivity.class);
+                        getActivity().startActivity(it);
+                    }
                 }
 
             }
@@ -270,7 +292,6 @@ public class DeviceListFragment extends BaseFragment {
     public void setWaringFragment(WarningFragment waringFragment) {
         this.warningFragment = waringFragment;
     }
-
 
     /**
      * 获取事件消息任务

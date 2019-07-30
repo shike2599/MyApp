@@ -35,6 +35,8 @@ public class Constant {
     public static final String  ACCESSTOKE = "at.30044dhi5s2d15d08mw7z74bc4ns7f2e-26j1yzulkw-07sz3po-5vnhl0hnd";//萤石云toke
     public static final String  APP_KEY = "ca8ff88d26034fa69dd42af5e333fcc9";//萤石云toke
     public static final String  QUEST_AlARM_BY_PROID = "http://116.62.186.91:8080/gywyext/moblieAdd/selectAlarmByA.do";//根据项目拿到报警信息
-    public static final String  QUEST_OVERMAINT_BY_PROID = "http://116.62.186.91:8080/gywyext/moblieAdd/selectEquipmentByN.do";//根据项目拿到报警信息
-    public static final String  QUEST_HEASTA_BY_PROID = "http://116.62.186.91:8080/gywyext/moblieAdd/selectEquipmentByS.do";//根据项目拿到报警信息
+    public static final String  QUEST_OVERMAINT_BY_PROID = "http://116.62.186.91:8080/gywyext/moblieAdd/selectEquipmentByN.do";
+    public static final String  QUEST_HEASTA_BY_PROID = "http://116.62.186.91:8080/gywyext/moblieAdd/selectEquipmentByS.do";
+    public static final String  QUEST_WARNING_NES_BY_PROID = "http://116.62.186.91:8080/gywyext/alarmLog/getAlarmListByPage.do";//根据项目获取报警信息
+
 }
